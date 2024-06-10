@@ -1,0 +1,7 @@
+{
+  "name": "TestIonic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
