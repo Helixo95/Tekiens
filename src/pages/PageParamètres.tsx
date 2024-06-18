@@ -39,7 +39,7 @@ const Paramètres: React.FC = () => {
                     <IonLabel>
                         <IonIcon icon={earthOutline} className="icon" />
                         &nbsp;
-                        <div className="text">{t('settings.langue.title')}</div>
+                        <div className="text">{t('settings.language.title')}</div>
                     </IonLabel>
                 </IonItemDivider>
 

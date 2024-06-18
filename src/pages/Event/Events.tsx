@@ -57,6 +57,10 @@ const ApiComponent: React.FC<{ filter: string }> = ({ filter }) => {
         );
     }
 
+    /**
+     * Method to return the filtered data depending of the user's choice
+     * @returns return the filtered data depending of the user's choice
+     */
     const getFilteredEvents = () => {
         const currentDate = new Date();
         switch (filter) {
@@ -76,33 +80,37 @@ const ApiComponent: React.FC<{ filter: string }> = ({ filter }) => {
 
     const filteredEvents = getFilteredEvents();
 
+    /**
+     * Function to return a message if we don't have any events
+     * @returns the message we need to display if we don't have any event
+     */
     const noDataMessage = () => {
         switch (filter) {
             case 'futur':
                 return (
                     <IonContent className='ion-padding'>
-                        <h1>{t('events.filter.futur.message.title')}</h1>
+                        <h1 className='title'>{t('events.filter.futur.message.title')}</h1>
                         <div className='justify-text'><IonLabel>{t('events.filter.futur.message.text')}</IonLabel></div>
                     </IonContent>
                 );
             case 'ongoing':
                 return (
                     <IonContent className='ion-padding'>
-                        <h1>{t('events.filter.ongoing.message.title')}</h1>
+                        <h1 className='title'>{t('events.filter.ongoing.message.title')}</h1>
                         <div className='justify-text'><IonLabel>{t('events.filter.ongoing.message.text')}</IonLabel></div>
                     </IonContent>
                 );
             case 'past':
                 return (
                     <IonContent className='ion-padding'>
-                        <h1>{t('events.filter.past.message.title')}</h1>
+                        <h1 className='title'>{t('events.filter.past.message.title')}</h1>
                         <div className='justify-text'><IonLabel>{t('events.filter.past.message.text')}</IonLabel></div>
                     </IonContent>
                 );
             default:
                 return (
                     <IonContent className='ion-padding'>
-                        <h1>{t('events.filter.all.message.title')}</h1>
+                        <h1 className='title'>{t('events.filter.all.message.title')}</h1>
                         <div className='justify-text'><IonLabel>{t('events.filter.all.message.text')}</IonLabel></div>
                     </IonContent>
                 );
@@ -115,7 +123,7 @@ const ApiComponent: React.FC<{ filter: string }> = ({ filter }) => {
                 <IonGrid>
                     {filteredEvents.map((event: SomeEventsData) => (
                         <IonCard key={event.id} button={true} href={'/event/' + event.id}>
-                            <IonImg alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+                            <img alt="" src={"https://tekiens.net/" + event.poster} />
                             <IonCardHeader>
                                 <IonCardTitle>{event.title}</IonCardTitle>
                             </IonCardHeader>
