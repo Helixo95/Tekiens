@@ -2,10 +2,11 @@ import { IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } 
 import { Redirect, Route } from 'react-router'
 import { homeOutline, starOutline, calendarOutline, readerOutline, addOutline } from 'ionicons/icons';
 import Accueil from "./PageAccueil";
-import Associations from './PageAssociations';
 import Événements from './PageÉvénements';
 import Favoris from './PageFavoris';
 import Plus from './PagePlus';
+import Associations from './MainPages/Associations';
+import APICalls from './API/APICalls';
 import { useTranslation } from 'react-i18next';
 
 const Tabs: React.FC = () => {
