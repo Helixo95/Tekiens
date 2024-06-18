@@ -12,7 +12,7 @@ export interface GlobalAssociationData {
 
 export interface AssociationMainData {
     id: any;
-    name: any;
+    names: any;
     theme: any;
     logo: any;
     color: any;

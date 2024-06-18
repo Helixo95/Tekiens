@@ -1,18 +1,23 @@
-.assos-title{
+.detail-asso-title{
     text-decoration: underline;
 }
 
-.assos-description{
+.detail-asso-description{
     display: flex;
     text-align: justify;
     text-justify: inter-word;
 }
 
-.socials-button{   
-    --border-radius: 10px;
+
+.detail-socials-button{   
+    --border-radius: 15px;
     --border-style: solid;
-    --border-width: 2px;
+    --border-width: 1px;
     --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
   
     --ripple-color: deeppink;
+}
+
+.detail-asso-image{
+    padding-bottom: 10%;
 }
