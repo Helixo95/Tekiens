@@ -3,7 +3,7 @@ import { earthOutline, notificationsOutline, schoolOutline, colorPaletteOutline 
 import HeaderTitleBack from "../components/HeaderTitleBack";
 import { useTheme } from '../contexts/ThemeContext';
 import { useTranslation } from 'react-i18next';
-import './IconText.css'
+import '../theme/IconText.css'
 
 const Paramètres: React.FC = () => {
     const { theme, setTheme } = useTheme();

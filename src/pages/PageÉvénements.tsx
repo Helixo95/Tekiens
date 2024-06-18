@@ -1,7 +1,7 @@
 import { IonAlert, IonButton, IonContent, IonImg, IonLabel, IonPage, IonSegment, IonSegmentButton } from '@ionic/react'
 import HeaderTitle from '../components/HeaderTitle';
 import { useTranslation } from 'react-i18next';
-import Events from '../components/ApiEvents';
+import Events from './Event/Events';
 
 const Événements: React.FC = () => {
     // Use to translte the page

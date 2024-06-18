@@ -2,7 +2,7 @@ import { IonContent, IonIcon, IonItem, IonList, IonPage } from '@ionic/react';
 import HeaderTitle from '../components/HeaderTitle';
 import { settingsOutline, logInOutline, happyOutline, helpCircleOutline, linkOutline } from 'ionicons/icons';
 import { useTranslation } from 'react-i18next';
-import './IconText.css'
+import '../theme/IconText.css'
 
 function Plus() {
     // Use to translte the page
