@@ -1,7 +1,4 @@
-import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -32,22 +29,46 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import { IonReactRouter } from "@ionic/react-router";
+import { Redirect, Route } from "react-router";
+import Tabs from './pages/Tabs';
+import Paramètres from './pages/PageParamètres';
+import Liens from './pages/PageLiens';
+import FAQ from './pages/PageFAQ';
+import { ThemeProvider } from './contexts/ThemeContext';
+import './MultiLang.js'
+import React from 'react';
+import EventDetails from './pages/EventDetails';
 
 setupIonicReact();
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/home">
-          <Home />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
-);
+const App: React.FC = () => {
+
+  return (
+    <React.StrictMode>
+      <React.Suspense>
+        <IonApp>
+          <ThemeProvider>
+            <IonReactRouter>
+              <IonRouterOutlet>
+                <Route path="/" exact={true} >
+                  <Redirect to='/app/accueil' />
+                </Route>
+
+                <Route path="/app" render={() => <Tabs />} />
+
+                <Route path="/event/:id" render={() => <EventDetails />} />
+
+                <Route path="/paramètres" render={() => <Paramètres />} exact={true} />
+                <Route path="/faq" render={() => <FAQ />} exact={true} />
+                <Route path="/liens" render={() => <Liens />} exact={true} />
+              </IonRouterOutlet>
+            </IonReactRouter>
+          </ThemeProvider>
+        </IonApp>
+      </React.Suspense>
+    </React.StrictMode>
+  );
+}
 
 export default App;

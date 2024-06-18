@@ -1,0 +1,81 @@
+{
+    "accueil" : {
+        "title" : "Home"
+    },
+
+    "associations" : {
+        "title" : "Associations"
+    },
+
+    "evenements" : {
+        "title" : "Events"
+    },
+
+    "evenement" : {
+        "title" : "Event"
+    },
+
+    "favoris" : {
+        "title" : "Favorites"
+    },
+
+    "plus" : {
+        "title" : "Plus"
+    },
+
+    "parametres" : {
+        "title" : "Settings",
+        
+        "notifications" : {
+            "title" : "Notifications",
+            "text" : "Disable notifications"
+        },
+
+        "langue" : {
+            "title" : "Language"
+        },
+
+        "apparence" : {
+            "title" : "Appearance",
+            "theme" : {
+                "defaut" : "Default theme"
+            }
+        },
+
+        "campus" : {
+            "title" : "Campus",
+            "label" : "Campus choice",
+            "site" : {
+                "parc" : "Parc site",
+                "saint-martin" : "Saint-Martin site",
+                "neuville" : "Neuville site",
+                "chenes" : "Chênes site",
+                "pau" : "Pau site"
+            }
+        }
+    },
+
+    "connexion" : {
+        "title" : "Connexion"
+    },
+
+    "mon-association" : {
+        "title" : "My association"
+    },
+
+    "faq" : {
+        "title" : "FAQ"
+    },
+
+    "liens-ecole" : {
+        "title" : "School links",
+        "lien" : {
+            "site" : "CY Tech web site",
+            "mycy" : "MyCY",
+            "celcat" : "Celcat : schedule",
+            "cours" : "Cours : learning platform",
+            "glpi" : "GLPI : IT support",
+            "doc" : "CY Tech documentation"
+        }
+    }
+}

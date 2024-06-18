@@ -1,0 +1,81 @@
+{
+    "accueil" : {
+        "title" : "Accueil"
+    },
+
+    "associations" : {
+        "title" : "Associations"
+    },
+
+    "evenements" : {
+        "title" : "Événements"
+    },
+
+    "evenement" : {
+        "title" : "Événement"
+    },
+
+    "favoris" : {
+        "title" : "Favoris"
+    },
+
+    "plus" : {
+        "title" : "Plus"
+    },
+
+    "parametres" : {
+        "title" : "Paramètres",
+        
+        "notifications" : {
+            "title" : "Notifications",
+            "text" : "Désactiver les notifications"
+        },
+
+        "langue" : {
+            "title" : "Langue"
+        },
+
+        "apparence" : {
+            "title" : "Apparence",
+            "theme" : {
+                "defaut" : "Par défaut"
+            }
+        },
+
+        "campus" : {
+            "title" : "Campus",
+            "label" : "Choix campus",
+            "site" : {
+                "parc" : "Site du Parc",
+                "saint-martin" : "Site de Saint-Martin",
+                "neuville" : "Site de Neuville",
+                "chenes" : "Site des Chênes",
+                "pau" : "Site de Pau"
+            }
+        }
+    },
+
+    "connexion" : {
+        "title" : "Connexion"
+    },
+
+    "mon-association" : {
+        "title" : "Mon association"
+    },
+
+    "faq" : {
+        "title" : "FAQ"
+    },
+
+    "liens-ecole" : {
+        "title" : "Liens de l'école",
+        "lien" : {
+            "site" : "Site de CY Tech",
+            "mycy" : "MyCY",
+            "celcat" : "Celcat : emploi du temps",
+            "cours" : "Cours : plateforme pédagogique",
+            "glpi" : "GLPI : support informatique",
+            "doc" : "Documentation CY Tech"
+        }
+    }
+}
