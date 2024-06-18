@@ -29,7 +29,7 @@ const Tabs: React.FC = () => {
             <IonTabBar slot='bottom'>
                 <IonTabButton tab='accueil' href='/app/accueil'>
                     <IonIcon icon={homeOutline} />
-                    <IonLabel>{t('accueil.title')}</IonLabel>
+                    <IonLabel>{t('home.title')}</IonLabel>
                 </IonTabButton>
 
                 <IonTabButton tab='associations' href='/app/associations'>
@@ -39,12 +39,12 @@ const Tabs: React.FC = () => {
 
                 <IonTabButton tab='événements' href='/app/événements'>
                     <IonIcon icon={calendarOutline} />
-                    <IonLabel>{t('evenements.title')}</IonLabel>
+                    <IonLabel>{t('events.title')}</IonLabel>
                 </IonTabButton>
 
                 <IonTabButton tab='favoris' href='/app/favoris'>
                     <IonIcon icon={starOutline} />
-                    <IonLabel>{t('favoris.title')}</IonLabel>
+                    <IonLabel>{t('favorites.title')}</IonLabel>
                 </IonTabButton>
 
                 <IonTabButton tab='plus' href='/app/plus'>

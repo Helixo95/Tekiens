@@ -2,30 +2,38 @@ import { IonAlert, IonButton, IonContent, IonImg, IonLabel, IonPage, IonSegment,
 import HeaderTitle from '../components/HeaderTitle';
 import { useTranslation } from 'react-i18next';
 import Events from './Event/Events';
+import { useState } from 'react';
 
 const Événements: React.FC = () => {
     // Use to translte the page
     const { t } = useTranslation();
 
+    const [filter, setFilter] = useState('futur');
+
+    const handleFilterChange = (event: CustomEvent) => {
+        setFilter(event.detail.value);
+    };
+
     return (
         <IonPage>
-            <HeaderTitle>{t('evenements.title')}</HeaderTitle>
-            <IonSegment value='all'>
-                <IonSegmentButton value='all'>
-                    <IonLabel>Tous</IonLabel>
+            <HeaderTitle>{t('events.title')}</HeaderTitle>
+            <IonSegment scrollable={true} value={filter} onIonChange={handleFilterChange}>
+                <IonSegmentButton value='futur'>
+                    <IonLabel>{t('events.filter.futur.label')}</IonLabel>
+                </IonSegmentButton>
+                <IonSegmentButton value='ongoing'>
+                    <IonLabel>{t('events.filter.ongoing.label')}</IonLabel>
                 </IonSegmentButton>
                 <IonSegmentButton value='past'>
-                    <IonLabel>Passés</IonLabel>
+                    <IonLabel>{t('events.filter.past.label')}</IonLabel>
                 </IonSegmentButton>
-                <IonSegmentButton value='now'>
-                    <IonLabel>En cours</IonLabel>
-                </IonSegmentButton>
-                <IonSegmentButton value='future'>
-                    <IonLabel>Futurs</IonLabel>
+
+                <IonSegmentButton value='all'>
+                    <IonLabel>{t('events.filter.all.label')}</IonLabel>
                 </IonSegmentButton>
             </IonSegment>
             <IonContent>
-                <Events />
+                <Events filter={filter} />
             </IonContent>
         </IonPage>
     );

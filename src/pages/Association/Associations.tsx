@@ -1,4 +1,4 @@
-import { IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRow, IonSpinner, IonTabButton, IonToolbar } from "@ionic/react";
+import { IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonImg, IonPage, IonRow, IonSpinner, IonTabButton, IonToolbar } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { getAssosMainInfos } from "../../Tools/APIFetch";
 import { AssociationMainData } from "../../Tools/Interfaces/AssosInterface";
@@ -34,7 +34,7 @@ const Associations: React.FC = () => {
                 {data.map(value =>
                   <IonCol key={value.id} size="11" size-md="4" size-lg="2">
                     <IonCard className="asso-card" button={true} href={"/association/" + value.id}>
-                      <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+                      <IonImg alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
                       <IonCardHeader>
                         <IonCardTitle style={{ color: value.color }} className="asso-title">{value.name[0]}</IonCardTitle>
                         <IonCardSubtitle style={{ color: value.color }} className="assos-sub">{value.theme}</IonCardSubtitle>

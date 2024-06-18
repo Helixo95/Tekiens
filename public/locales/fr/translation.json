@@ -1,5 +1,5 @@
 {
-    "accueil" : {
+    "home" : {
         "title" : "Accueil"
     },
 
@@ -7,15 +7,49 @@
         "title" : "Associations"
     },
 
-    "evenements" : {
-        "title" : "Événements"
+    "events" : {
+        "title" : "Événements",
+
+        "filter" : {
+            "futur" : {
+                "label" : "À venir",
+                "message" : {
+                    "title" : "Aucun événement à venir",
+                    "text" : "Revenez plus tard, ou consultez la liste des événements passés ou présent."
+                }
+            },
+
+            "ongoing" : {
+                "label" : "En cours",
+                "message" : {
+                    "title" : "Aucun événement en ce moment",
+                    "text" : "Revenez plus tard, ou consultez la liste des événements passés ou futures."
+                }
+            },
+
+            "past" : {
+                "label" : "Passés",
+                "message" : {
+                    "title" : " Aucun événement passés",
+                    "text" : "Revenez plus tard, ou consultez la liste des événements passés ou présent."
+                }
+            },
+
+            "all" : {
+                "label" : "Tous",
+                "message" : {
+                    "title" : "Aucun événement",
+                    "text" : "Revenez plus tard quand il y aura des évènements"
+                }
+            }
+        }
     },
 
-    "evenement" : {
+    "event" : {
         "title" : "Événement"
     },
 
-    "favoris" : {
+    "favorites" : {
         "title" : "Favoris"
     },
 
@@ -23,7 +57,7 @@
         "title" : "Plus"
     },
 
-    "parametres" : {
+    "settings" : {
         "title" : "Paramètres",
         
         "notifications" : {
@@ -31,14 +65,14 @@
             "text" : "Désactiver les notifications"
         },
 
-        "langue" : {
+        "language" : {
             "title" : "Langue"
         },
 
         "apparence" : {
             "title" : "Apparence",
             "theme" : {
-                "defaut" : "Par défaut"
+                "default" : "Par défaut"
             }
         },
 
@@ -59,7 +93,7 @@
         "title" : "Connexion"
     },
 
-    "mon-association" : {
+    "my-association" : {
         "title" : "Mon association"
     },
 
@@ -67,9 +101,9 @@
         "title" : "FAQ"
     },
 
-    "liens-ecole" : {
+    "schools-links" : {
         "title" : "Liens de l'école",
-        "lien" : {
+        "link" : {
             "site" : "Site de CY Tech",
             "mycy" : "MyCY",
             "celcat" : "Celcat : emploi du temps",

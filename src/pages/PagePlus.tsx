@@ -17,7 +17,7 @@ function Plus() {
                         <IonIcon icon={settingsOutline} className="icon" />
                         &nbsp;
                         &nbsp;
-                        <div className="text">{t('parametres.title')}</div>
+                        <div className="text">{t('settings.title')}</div>
                     </IonItem>
                     <IonItem routerLink='/app/plus'>
                         <IonIcon icon={logInOutline} className="icon" />
@@ -29,7 +29,7 @@ function Plus() {
                         <IonIcon icon={happyOutline} />
                         &nbsp;
                         &nbsp;
-                        <div className="text">{t('mon-association.title')}</div>
+                        <div className="text">{t('my-association.title')}</div>
                     </IonItem>
                     <IonItem routerLink='/faq'>
                         <IonIcon icon={helpCircleOutline} className="icon" />
@@ -41,7 +41,7 @@ function Plus() {
                         <IonIcon icon={linkOutline} className="icon" />
                         &nbsp;
                         &nbsp;
-                        <div className="text">{t('liens-ecole.title')}</div>
+                        <div className="text">{t('schools-links.title')}</div>
                     </IonItem>
                 </IonList>
             </IonContent>

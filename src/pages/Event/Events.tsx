@@ -6,7 +6,7 @@ import { SomeEventsData, ApiResponseEvents } from '../../Tools/Interfaces/EventI
 import '../../theme/Event/Events.css';
 
 
-const ApiComponent: React.FC = () => {
+const ApiComponent: React.FC<{ filter: string }> = ({ filter }) => {
     // Use to translate the page
     const { t, i18n } = useTranslation();
 
@@ -46,7 +46,7 @@ const ApiComponent: React.FC = () => {
         };
 
         fetchData();
-    }, []);
+    }, [filter]);
 
     if (loading) {
         return (
@@ -57,12 +57,65 @@ const ApiComponent: React.FC = () => {
         );
     }
 
+    const getFilteredEvents = () => {
+        const currentDate = new Date();
+        switch (filter) {
+            case 'futur':
+                return data.filter(event => new Date(event.date + 'Z') > currentDate);
+            case 'ongoing':
+                return data.filter(event => {
+                    const eventDate = new Date(event.date + 'Z');
+                    return eventDate.toDateString() === currentDate.toDateString();
+                });
+            case 'past':
+                return data.filter(event => new Date(event.date + 'Z') < currentDate);
+            default:
+                return data;
+        }
+    };
+
+    const filteredEvents = getFilteredEvents();
+
+    const noDataMessage = () => {
+        switch (filter) {
+            case 'futur':
+                return (
+                    <IonContent className='ion-padding'>
+                        <h1>{t('events.filter.futur.message.title')}</h1>
+                        <div className='justify-text'><IonLabel>{t('events.filter.futur.message.text')}</IonLabel></div>
+                    </IonContent>
+                );
+            case 'ongoing':
+                return (
+                    <IonContent className='ion-padding'>
+                        <h1>{t('events.filter.ongoing.message.title')}</h1>
+                        <div className='justify-text'><IonLabel>{t('events.filter.ongoing.message.text')}</IonLabel></div>
+                    </IonContent>
+                );
+            case 'past':
+                return (
+                    <IonContent className='ion-padding'>
+                        <h1>{t('events.filter.past.message.title')}</h1>
+                        <div className='justify-text'><IonLabel>{t('events.filter.past.message.text')}</IonLabel></div>
+                    </IonContent>
+                );
+            default:
+                return (
+                    <IonContent className='ion-padding'>
+                        <h1>{t('events.filter.all.message.title')}</h1>
+                        <div className='justify-text'><IonLabel>{t('events.filter.all.message.text')}</IonLabel></div>
+                    </IonContent>
+                );
+        }
+    };
+
     return (
         <IonContent>
-            {data.length > 0 ? (
+            {filteredEvents.length > 0 ? (
                 <IonGrid>
-                    {data.map((event: SomeEventsData) => (
+                    {filteredEvents.map((event: SomeEventsData) => (
                         <IonCard key={event.id} button={true} href={'/event/' + event.id}>
+                            <IonImg alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
                             <IonCardHeader>
                                 <IonCardTitle>{event.title}</IonCardTitle>
                             </IonCardHeader>
@@ -112,7 +165,7 @@ const ApiComponent: React.FC = () => {
                     ))}
                 </IonGrid>
             ) : (
-                <IonLabel>No data available</IonLabel>
+                noDataMessage()
             )}
         </IonContent>
     );
