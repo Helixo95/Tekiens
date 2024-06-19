@@ -25,7 +25,7 @@ const AssociationCards: React.FC<{segValue: string}> = ({segValue}) =>{
       }
   }, [segValue]);
     return (
-        <IonContent>
+        <>
         {
           filteredData ?
             <IonGrid className="asso-grid">
@@ -51,7 +51,7 @@ const AssociationCards: React.FC<{segValue: string}> = ({segValue}) =>{
               </IonTabButton>
             </IonContent>
         }
-      </IonContent>
+      </>
     );
 }
 

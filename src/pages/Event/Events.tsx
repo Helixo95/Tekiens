@@ -141,7 +141,7 @@ const EventsComponents: React.FC<{ apiHref: string, showFavorites?: boolean }> =
     };
 
     return (
-        <IonContent>
+        <>
             {!showFavorites &&
                 <IonSegment scrollable={true} value={filter} onIonChange={handleFilterChange}>
                     <IonSegmentButton value='futur'>
@@ -217,7 +217,7 @@ const EventsComponents: React.FC<{ apiHref: string, showFavorites?: boolean }> =
             ) : (
                 noDataMessage()
             )}
-        </IonContent>
+        </>
     );
 };
 
