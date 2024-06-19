@@ -40,6 +40,7 @@ import './MultiLang.js'
 import React from 'react';
 import EventDetails from './pages/Event/EventDetails';
 import AssociationDetails from './pages/Association/AssociationDetail';
+import AssociationEvents from './pages/Association/AssociationEvents';
 
 setupIonicReact();
 
@@ -59,6 +60,7 @@ const App: React.FC = () => {
                 <Route path="/app" render={() => <Tabs />} />
 
                 <Route path="/association/:id" render={() => <AssociationDetails />} exact={true} />
+                <Route path="/association/:id/events" render={() => <AssociationEvents />} exact={true} />
 
                 <Route path="/event/:id" render={() => <EventDetails />} />
 
