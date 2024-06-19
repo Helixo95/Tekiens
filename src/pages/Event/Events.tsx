@@ -1,4 +1,5 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonLabel, IonRow, IonSegment, IonSegmentButton, IonSpinner, IonTabButton } from '@ionic/react';
+import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonIcon, IonImg, IonItem, IonLabel, IonList, IonRow, IonSegment, IonSegmentButton, IonSpinner, IonTabButton } from '@ionic/react';
+
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SomeEventsData, ApiResponseEvents } from '../../Tools/Interfaces/EventInterface'
