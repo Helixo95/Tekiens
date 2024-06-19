@@ -6,7 +6,7 @@ import { SomeEventsData, ApiResponseEvents } from '../../Tools/Interfaces/EventI
 import '../../theme/Event/Events.css';
 
 
-const ApiComponent: React.FC<{ api: string }> = ({ api }) => {
+const ApiComponent: React.FC<{ apiHref: string }> = ({ apiHref }) => {
     // Use to translate the page
     const { t, i18n } = useTranslation();
 
@@ -17,7 +17,7 @@ const ApiComponent: React.FC<{ api: string }> = ({ api }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('https://tekiens.net/api/' + api);
+                const response = await fetch('https://tekiens.net/api/' + apiHref);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
