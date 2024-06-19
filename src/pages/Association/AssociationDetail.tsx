@@ -2,17 +2,22 @@ import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardT
 import { useEffect, useState } from "react";
 import { getAssoInformationByID } from "../../Tools/APIFetch";
 import { useParams } from "react-router";
-import { logoDiscord, logoInstagram, paperPlane, logoLinkedin, globeOutline, leafOutline, atOutline, logoFacebook, locationOutline, extensionPuzzleOutline, calendarOutline } from 'ionicons/icons';
+import { logoDiscord, logoInstagram, paperPlane, logoLinkedin, globeOutline, leafOutline, atOutline, logoFacebook, locationOutline, extensionPuzzleOutline, calendarOutline, addOutline, addCircle, removeCircleOutline, call } from 'ionicons/icons';
 import { GlobalAssociationData, SocialsData } from '../../Tools/Interfaces/AssosInterface';
 import { parseText } from "../../Tools/DOMParser";
+import { isAssoFollowed, managedSubscription } from "../../Tools/LocalStorage/AssoCalls";
 
 import "../../theme/Association/AssociationDetail.css";
 import HeaderTitleBack from "../../components/HeaderTitleBack";
+import { useTranslation } from "react-i18next";
 
 
 const AssociationDetails: React.FC = () => {
+    // Use to translte the page
+    const { t, i18n } = useTranslation();
     const [data, setData] = useState<GlobalAssociationData | null>(null);
     const [description, setDescription] = useState<string>("");
+    const [isFollowed, setIsFollowed] = useState(false);
     const { id } = useParams<{ id: string }>(); // Retrieve the asso id from the URL
 
     // List all the used logos in an associative array
@@ -28,7 +33,8 @@ const AssociationDetails: React.FC = () => {
             const result = await getAssoInformationByID(id);
             if (result) {
                 setData(result);
-                parseText(result.description, setDescription);
+                parseText(result.description ? result.description : "", setDescription);
+                setIsFollowed(isAssoFollowed(id));
             }
         }
 
@@ -47,7 +53,7 @@ const AssociationDetails: React.FC = () => {
                                 <IonCardTitle style={{color: data.color}}>{data.names[0]}</IonCardTitle>
 
                                 <img className="detail-asso-image"  width="40%" src={"https://tekiens.net/data/"+data.id+"/logo-0.webp"}/>
-                                <div dangerouslySetInnerHTML={{ __html: description }}></div>
+                                {description == "" ? <div><IonText>{t('associations.no-description')}</IonText></div>: <div dangerouslySetInnerHTML={{ __html: description }}></div>}
                             </IonCardContent>
                         </IonCard>
                     </IonContent>
@@ -64,7 +70,7 @@ const AssociationDetails: React.FC = () => {
                             href={"/association/"+data.id+"/events"}>
                                     <IonIcon icon={calendarOutline} style={{color: data.color}}/>
                                 </IonButton>
-        
+
                             <IonItem>
                                 <IonIcon icon={locationOutline} style={{ color: data.color }} />
                                 <IonText style={{ color: data.color }}>{data.campus}</IonText>
@@ -72,6 +78,11 @@ const AssociationDetails: React.FC = () => {
                             <IonItem>
                                 <IonIcon icon={extensionPuzzleOutline} style={{ color: data.color }} />
                                 <IonText style={{ color: data.color }}>{data.theme}</IonText>
+                            </IonItem>
+
+                            <IonItem lines="none">
+                                <IonIcon icon={isFollowed ? removeCircleOutline : addCircle} 
+                                style={{color: data.color}} slot="end" size="large" onClick={() => managedSubscription(!isFollowed, data.id, setIsFollowed)}/>
                             </IonItem>
 
                         </IonToolbar>

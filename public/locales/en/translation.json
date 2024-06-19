@@ -4,7 +4,12 @@
     },
 
     "associations" : {
-        "title" : "Associations"
+        "title" : "Associations",
+        "no-description": "No description available",
+        "tab-active": "Active",
+        "tab-over": "Over",
+        "tab-all": "All"
+
     },
 
     "events" : {
