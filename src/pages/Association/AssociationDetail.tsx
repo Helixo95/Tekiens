@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonPage, IonSpinner, IonTabButton, IonText, IonTitle, IonToolbar } from "@ionic/react";
+import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardTitle, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonPage, IonSpinner, IonTabButton, IonText, IonTitle, IonToolbar } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { getAssoInformationByID } from "../../Tools/APIFetch";
 import { useParams } from "react-router";
