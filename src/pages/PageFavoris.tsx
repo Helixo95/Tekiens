@@ -7,13 +7,12 @@ import Events from "./Event/Events";
 const PageFavoris: React.FC = () => {
     // Use to translte the page
     const { t } = useTranslation();
-    
+
     return (
         <IonPage>
-            <HeaderTitle>{t('favorites.title')}</HeaderTitle>
-            <AssociationCards segValue={"sub"}/>
-
-            <IonContent>
+            <HeaderTitle>{t('favorite.title')}</HeaderTitle>
+            <IonContent >
+                <AssociationCards segValue={"sub"} />
                 <Events apiHref="events" showFavorites={true} />
             </IonContent>
         </IonPage>

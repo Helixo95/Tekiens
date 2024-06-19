@@ -92,10 +92,10 @@ const EventsComponents: React.FC<{ apiHref: string, showFavorites?: boolean }> =
     const noDataMessage = () => {
         if (showFavorites) {
             return (
-                <IonContent className='ion-padding'>
+                <div className='ion-padding'>
                     <h1 className='title'>{t('favorite.filter.events.message.title')}</h1>
                     <div className='justify-text'><IonLabel>{t('favorite.filter.events.message.text')}</IonLabel></div>
-                </IonContent>
+                </div>
             );
         }
 
@@ -103,31 +103,31 @@ const EventsComponents: React.FC<{ apiHref: string, showFavorites?: boolean }> =
 
             case 'futur':
                 return (
-                    <IonContent className='ion-padding'>
+                    <div className='ion-padding'>
                         <h1 className='title'>{t('events.filter.futur.message.title')}</h1>
                         <div className='justify-text'><IonLabel>{t('events.filter.futur.message.text')}</IonLabel></div>
-                    </IonContent>
+                    </div>
                 );
             case 'ongoing':
                 return (
-                    <IonContent className='ion-padding'>
+                    <div className='ion-padding'>
                         <h1 className='title'>{t('events.filter.ongoing.message.title')}</h1>
                         <div className='justify-text'><IonLabel>{t('events.filter.ongoing.message.text')}</IonLabel></div>
-                    </IonContent>
+                    </div>
                 );
             case 'past':
                 return (
-                    <IonContent className='ion-padding'>
+                    <div className='ion-padding'>
                         <h1 className='title'>{t('events.filter.past.message.title')}</h1>
                         <div className='justify-text'><IonLabel>{t('events.filter.past.message.text')}</IonLabel></div>
-                    </IonContent>
+                    </div>
                 );
             default:
                 return (
-                    <IonContent className='ion-padding'>
+                    <div className='ion-padding'>
                         <h1 className='title'>{t('events.filter.all.message.title')}</h1>
                         <div className='justify-text'><IonLabel>{t('events.filter.all.message.text')}</IonLabel></div>
-                    </IonContent>
+                    </div>
                 );
         }
     };
@@ -141,7 +141,7 @@ const EventsComponents: React.FC<{ apiHref: string, showFavorites?: boolean }> =
     };
 
     return (
-        <IonContent>
+        <>
             {!showFavorites &&
                 <IonSegment scrollable={true} value={filter} onIonChange={handleFilterChange}>
                     <IonSegmentButton value='futur'>
@@ -217,7 +217,7 @@ const EventsComponents: React.FC<{ apiHref: string, showFavorites?: boolean }> =
             ) : (
                 noDataMessage()
             )}
-        </IonContent>
+        </>
     );
 };
 
