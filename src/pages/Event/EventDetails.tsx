@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import HeaderTitleBack from '../../components/HeaderTitleBack'
-import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonLabel, IonPage, IonRow, IonSpinner, IonTabButton, IonText } from '@ionic/react'
+import { IonButton, IonCol, IonContent, IonGrid, IonLabel, IonPage, IonRow, IonSpinner, IonTabButton, IonText } from '@ionic/react'
 import { useParams } from 'react-router'
 import { ApiResponseEvent, AllEventsData } from '../../Tools/Interfaces/EventInterface'
 import { useTranslation } from 'react-i18next'
@@ -12,6 +12,7 @@ const EventDetails: React.FC = () => {
     // Use to translte the page
     const { t, i18n } = useTranslation();
 
+    // Use to get the event's id
     const { id } = useParams<{ id: string }>();
 
     const [eventData, setEventData] = useState<AllEventsData | null>(null);
@@ -41,7 +42,7 @@ const EventDetails: React.FC = () => {
                 // Combine the event data with association details
                 const eventWithAssociation = {
                     ...event,
-                    associationName: associationResult.data.names[0], // Use the first name (assuming it's primary)
+                    associationName: associationResult.data.names[0],
                     associationColor: associationResult.data.color,
                 };
 
@@ -58,6 +59,7 @@ const EventDetails: React.FC = () => {
         fetchData();
     }, [id]);
 
+    // Loading appears while waiting for data
     if (loading) {
         return (
             <IonTabButton disabled>
@@ -66,6 +68,7 @@ const EventDetails: React.FC = () => {
         );
     }
 
+    // We check if we have the data we want
     if (!eventData) {
         return (
             <IonContent>
@@ -75,7 +78,7 @@ const EventDetails: React.FC = () => {
     }
 
     /**
-     * Method to return a string with the right format to a date, format : YYYY-MM-DD HH:MM:SS
+     * Function to return a string with the right format to a date, format : YYYY-MM-DD HH:MM:SS
      * @param date the string in the right format
      * @returns the date from the string
      */
@@ -83,6 +86,11 @@ const EventDetails: React.FC = () => {
         return new Date(date + 'Z').toLocaleString('FR-fr', { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
     }
 
+    /**
+     * Function to return the duration of an event in days, hours and minutes
+     * @param event the event we want to calculat the duration
+     * @returns the event's duration in days, hours and minutes
+     */
     const duration = (event: AllEventsData) => {
         if (!event.duration)
             return undefined;
@@ -92,6 +100,35 @@ const EventDetails: React.FC = () => {
         return `${days}j ${hours}h ${minutes}min`.replace(/0j /, '').replace(/0h /, '').replace(/ 0min/, '');
     }
 
+    /**
+     * Function to darken a color with a set amount
+     * @param hex the color we want to darken
+     * @param amount the amount we want to darken the color
+     * @returns the new darker color
+     */
+    const darkenColor = (hex: string | undefined, amount = 20) => {
+        if (hex) {
+
+            hex = hex.slice(1);
+
+            let num = parseInt(hex, 16);
+
+            let r = (num >> 16) - amount;
+            let g = ((num >> 8) & 0x00FF) - amount;
+            let b = (num & 0x0000FF) - amount;
+
+            r = Math.max(r, 0);
+            g = Math.max(g, 0);
+            b = Math.max(b, 0);
+
+            return "#" + (r << 16 | g << 8 | b).toString(16).padStart(6, '0');
+        }
+
+        return '#000000';
+    }
+
+    const TEST = '#c2003144';
+    console.log(TEST);
 
     return (
         <IonPage>
@@ -144,7 +181,6 @@ const EventDetails: React.FC = () => {
                         <IonText><div dangerouslySetInnerHTML={{ __html: description }}></div></IonText>
                     </IonRow>
                     <IonCol />
-
 
                     <IonRow>
                         <div style={{ backgroundColor: eventData.associationColor, width: '100%', height: '3px' }} />
@@ -224,7 +260,7 @@ const EventDetails: React.FC = () => {
                             </IonLabel>
                         </IonRow>
                     }
-
+                    <IonButton style={{ '--background': eventData.associationColor, '--background-activated': darkenColor(eventData.associationColor) }}>Enregistrer l'évènement</IonButton>
                 </IonGrid>
             </IonContent>
         </IonPage >
