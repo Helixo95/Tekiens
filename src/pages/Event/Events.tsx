@@ -7,7 +7,7 @@ import { SomeEventsData, ApiResponseEvents } from '../../Tools/Interfaces/EventI
 import '../../theme/Event/Events.css';
 
 
-const ApiComponent: React.FC<{ apiHref: string }> = ({ apiHref }) => {
+const EventsComponents: React.FC<{ apiHref: string, showFavorites?: boolean }> = ({ apiHref, showFavorites = false }) => {
     // Use to translate the page
     const { t, i18n } = useTranslation();
 
@@ -48,7 +48,7 @@ const ApiComponent: React.FC<{ apiHref: string }> = ({ apiHref }) => {
         };
 
         fetchData();
-    }, [filter]);
+    }, [filter, apiHref]);
 
     if (loading) {
         return (
@@ -65,6 +65,11 @@ const ApiComponent: React.FC<{ apiHref: string }> = ({ apiHref }) => {
      */
     const getFilteredEvents = () => {
         const currentDate = new Date();
+        if (showFavorites) {
+            const savedEvents = JSON.parse(localStorage.getItem('savedEvents') || '[]');
+            return data.filter(event => savedEvents.includes(event.id));
+        }
+
         switch (filter) {
             case 'futur':
                 return data.filter(event => new Date(event.date + 'Z') > currentDate);
@@ -80,14 +85,22 @@ const ApiComponent: React.FC<{ apiHref: string }> = ({ apiHref }) => {
         }
     };
 
-    const filteredEvents = getFilteredEvents();
-
     /**
      * Function to return a message if we don't have any events
      * @returns the message we need to display if we don't have any event
      */
     const noDataMessage = () => {
+        if (showFavorites) {
+            return (
+                <IonContent className='ion-padding'>
+                    <h1 className='title'>{t('favorite.filter.events.message.title')}</h1>
+                    <div className='justify-text'><IonLabel>{t('favorite.filter.events.message.text')}</IonLabel></div>
+                </IonContent>
+            );
+        }
+
         switch (filter) {
+
             case 'futur':
                 return (
                     <IonContent className='ion-padding'>
@@ -119,30 +132,39 @@ const ApiComponent: React.FC<{ apiHref: string }> = ({ apiHref }) => {
         }
     };
 
+    /**
+     * Function to handle if we change the filter
+     * @param event the IonChange event we observe
+     */
     const handleFilterChange = (event: CustomEvent) => {
         setFilter(event.detail.value);
     };
 
     return (
         <IonContent>
-            <IonSegment scrollable={true} value={filter} onIonChange={handleFilterChange}>
-                <IonSegmentButton value='futur'>
-                    <IonLabel>{t('events.filter.futur.label')}</IonLabel>
-                </IonSegmentButton>
-                <IonSegmentButton value='ongoing'>
-                    <IonLabel>{t('events.filter.ongoing.label')}</IonLabel>
-                </IonSegmentButton>
-                <IonSegmentButton value='past'>
-                    <IonLabel>{t('events.filter.past.label')}</IonLabel>
-                </IonSegmentButton>
+            {!showFavorites &&
+                <IonSegment scrollable={true} value={filter} onIonChange={handleFilterChange}>
+                    <IonSegmentButton value='futur'>
+                        <IonLabel>{t('events.filter.futur.label')}</IonLabel>
+                    </IonSegmentButton>
 
-                <IonSegmentButton value='all'>
-                    <IonLabel>{t('events.filter.all.label')}</IonLabel>
-                </IonSegmentButton>
-            </IonSegment>
-            {filteredEvents.length > 0 ? (
+                    <IonSegmentButton value='ongoing'>
+                        <IonLabel>{t('events.filter.ongoing.label')}</IonLabel>
+                    </IonSegmentButton>
+
+                    <IonSegmentButton value='past'>
+                        <IonLabel>{t('events.filter.past.label')}</IonLabel>
+                    </IonSegmentButton>
+
+                    <IonSegmentButton value='all'>
+                        <IonLabel>{t('events.filter.all.label')}</IonLabel>
+                    </IonSegmentButton>
+                </IonSegment>
+            }
+
+            {getFilteredEvents().length > 0 ? (
                 <IonGrid>
-                    {filteredEvents.map((event: SomeEventsData) => (
+                    {getFilteredEvents().map((event: SomeEventsData) => (
                         <IonCard key={event.id} button={true} href={'/event/' + event.id}>
                             <img alt="" src={"https://tekiens.net/" + event.poster} />
                             <IonCardHeader>
@@ -188,7 +210,6 @@ const ApiComponent: React.FC<{ apiHref: string }> = ({ apiHref }) => {
                                     </IonRow>
                                 </IonGrid>
 
-
                             </IonCardContent>
                         </IonCard>
                     ))}
@@ -200,4 +221,4 @@ const ApiComponent: React.FC<{ apiHref: string }> = ({ apiHref }) => {
     );
 };
 
-export default ApiComponent;
+export default EventsComponents;

@@ -1,6 +1,8 @@
-import { IonPage } from "@ionic/react";
+import { IonContent, IonPage } from "@ionic/react";
 import HeaderTitle from "../components/HeaderTitle";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import Events from "./Event/Events";
 
 const PageFavoris: React.FC = () => {
     // Use to translte the page
@@ -8,7 +10,10 @@ const PageFavoris: React.FC = () => {
 
     return (
         <IonPage>
-            <HeaderTitle>{t('favorites.title')}</HeaderTitle>
+            <HeaderTitle>{t('favorite.title')}</HeaderTitle>
+            <IonContent>
+                <Events apiHref="events" showFavorites={true} />
+            </IonContent>
         </IonPage>
     )
 }
