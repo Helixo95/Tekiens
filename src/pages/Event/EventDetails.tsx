@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import HeaderTitleBack from '../../components/HeaderTitleBack'
-import { IonButton, IonCol, IonContent, IonGrid, IonLabel, IonPage, IonRow, IonSpinner, IonTabButton, IonText } from '@ionic/react'
+import { IonButton, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonPage, IonRow, IonSpinner, IonTabButton, IonText, IonToast } from '@ionic/react'
 import { useParams } from 'react-router'
 import { ApiResponseEvent, AllEventsData } from '../../Tools/Interfaces/EventInterface'
 import { useTranslation } from 'react-i18next'
 import '../../theme/Event/EventDetails .css'
 import { getEventStatus } from '../../Tools/eventStatus'
 import { parseText } from '../../Tools/DOMParser'
+import { add, bookmarkOutline, bookmark, pushOutline, push, book } from 'ionicons/icons'
 
 const EventDetails: React.FC = () => {
     // Use to translte the page
@@ -15,9 +16,12 @@ const EventDetails: React.FC = () => {
     // Use to get the event's id
     const { id } = useParams<{ id: string }>();
 
+    let savedEvents: number[] = [];
+
     const [eventData, setEventData] = useState<AllEventsData | null>(null);
     const [description, setDescription] = useState<string>("");
     const [loading, setLoading] = useState(true);
+    const [isSaved, setIsSaved] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -48,6 +52,11 @@ const EventDetails: React.FC = () => {
 
                 setEventData(eventWithAssociation);
                 await parseText(eventWithAssociation.description, setDescription);
+
+                const savedEvents = JSON.parse(localStorage.getItem("savedEvents") || "[]");
+                if (savedEvents.includes(event.id)) {
+                    setIsSaved(true);
+                }
 
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -127,15 +136,48 @@ const EventDetails: React.FC = () => {
         return '#000000';
     }
 
-    const TEST = '#c2003144';
-    console.log(TEST);
+    const saveEvent = () => {
+        const savedEvents = JSON.parse(localStorage.getItem("savedEvents") || "[]");
+
+        if (savedEvents.includes(eventData.id)) {
+            savedEvents.pop(eventData.id);
+            localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
+            setIsSaved(false);
+        } else {
+            savedEvents.push(eventData.id);
+            localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
+            setIsSaved(true);
+        }
+    }
 
     return (
         <IonPage>
             <HeaderTitleBack back="/app/événements">{t('event.title')}</HeaderTitleBack>
 
             <IonContent>
-                {<img alt="" src={"https://tekiens.net/" + eventData.poster} width="100%" />}
+                <IonToast
+                    trigger="saveEvent"
+                    position="bottom"
+                    swipeGesture="vertical"
+                    message={isSaved ? "évènement enregistré" : "évènement supprimé"}
+                    duration={1000}
+                />
+
+                <IonFab slot="fixed" horizontal="end" vertical="bottom">
+                    <IonFabButton style={{ '--background': eventData.associationColor, '--background-activated': darkenColor(eventData.associationColor) }}>
+                        <IonIcon icon={add}></IonIcon>
+                    </IonFabButton>
+                    <IonFabList side="top">
+                        <IonFabButton onClick={saveEvent} id="saveEvent">
+                            <IonIcon icon={isSaved ? bookmark : bookmarkOutline} />
+                        </IonFabButton>
+                        <IonFabButton>
+                            <IonIcon icon={pushOutline} />
+                        </IonFabButton>
+                    </IonFabList>
+                </IonFab>
+
+                <img alt="" src={"https://tekiens.net/" + eventData.poster} width="100%" />
                 <IonGrid className='ion-padding'>
                     <IonRow className='info'>
                         <IonLabel style={{ color: eventData.associationColor }}>{eventData.associationName}</IonLabel>
@@ -260,8 +302,13 @@ const EventDetails: React.FC = () => {
                             </IonLabel>
                         </IonRow>
                     }
-                    <IonButton style={{ '--background': eventData.associationColor, '--background-activated': darkenColor(eventData.associationColor) }}>Enregistrer l'évènement</IonButton>
+                    {/*savedEvents.includes(eventData.id) ?
+                        <IonButton style={{ '--background': eventData.associationColor, '--background-activated': darkenColor(eventData.associationColor) }} onClick={saveEvent}>Enregistrer l'évènement</IonButton>
+                        :
+                        <IonButton style={{ '--background': eventData.associationColor, '--background-activated': darkenColor(eventData.associationColor) }} >Pas enregistrer l'évènement</IonButton>
+                    */}
                 </IonGrid>
+                <div style={{ marginTop: '15%' }} />
             </IonContent>
         </IonPage >
     )

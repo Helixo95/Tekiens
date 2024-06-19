@@ -49,8 +49,26 @@
         "title" : "Event"
     },
 
-    "favorites" : {
-        "title" : "Favorites"
+    "favorite" : {
+        "title" : "Favorite",
+
+        "filter" : {
+            "events" : {
+                "label" : "Events",
+                "message" : {
+                    "title" : "You don't have favorite event",
+                    "text" : "Go to an event page to add it to your favorite."
+                }
+            },
+
+            "assos" : {
+                "label" : "Associations",
+                "message" : {
+                    "title" : "You don't follow any association",
+                    "text" : "Go to an association page to follow it."
+                }
+            }
+        }
     },
 
     "plus" : {
