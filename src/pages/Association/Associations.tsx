@@ -24,8 +24,10 @@ const Associations: React.FC = () => {
         <IonSegmentButton value="over"><IonLabel>{t('associations.tab-over')}</IonLabel></IonSegmentButton>
         <IonSegmentButton value="all"><IonLabel>{t('associations.tab-all')}</IonLabel></IonSegmentButton>
       </IonSegment>
-
-      <AssociationCards segValue={desiredSeg}/>
+      
+      <IonContent>
+        <AssociationCards segValue={desiredSeg}/>
+      </IonContent>
     </IonPage>
   );
 };
