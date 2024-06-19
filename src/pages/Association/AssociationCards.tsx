@@ -1,13 +1,15 @@
-import { IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonRow, IonSpinner, IonTabButton } from "@ionic/react";
+import { IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonLabel, IonRow, IonSpinner, IonTabButton, IonTitle } from "@ionic/react";
 import { AssociationMainData } from "../../Tools/Interfaces/AssosInterface";
 import { useEffect, useState } from "react";
 import { getAllAssosMainInfos } from "../../Tools/APIFetch";
 import { filterData } from "../../Tools/LocalStorage/AssoCalls";
+import { useTranslation } from "react-i18next";
 
 const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
   // Hooks updated with the assos information when the page is mounted
   const [data, setData] = useState<AssociationMainData[] | null>(null);
   const [filteredData, setFilteredData] = useState<AssociationMainData[] | null>(null);
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,28 +24,36 @@ const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
     if (data) {
       filterData(segValue, data, setFilteredData);
     }
+    console.log(filteredData);
   }, [segValue]);
 
   return (
         <>
         {
           filteredData ?
-            <IonGrid className="asso-grid">
-              <IonRow>
+          filteredData.length > 0 ?
+              <IonGrid className="asso-grid">
+                <IonRow>
+                  {
+                      filteredData.map(value =>
+                      <IonCol key={value.id} size="11" size-md="4" size-lg="2">
+                        <IonCard className="asso-card" button={true} href={"/association/" + value.id}>
+                          <img alt="logo" className="asso-image" src={"https://tekiens.net/data/"+value.id+"/logo-0.webp"} />
+                          <IonCardHeader>
+                            <IonCardTitle style={{ color: value.color }} className="card-asso-title">{value.names[0]}</IonCardTitle>
+                            <IonCardSubtitle style={{ color: value.color }} className="card-assos-sub">{value.theme}</IonCardSubtitle>
+                          </IonCardHeader>
+                        </IonCard>
+                      </IonCol>)                   
+                  }    
+                </IonRow> 
+              </IonGrid> :
+            
+            <div className="ion-padding">
+              <h1 className="title">{t('favorite.filter.assos.message.title')}</h1>
+              <div className="justify-text"><IonLabel>{t('favorite.filter.assos.message.text')}</IonLabel></div>
+            </div>
 
-                {filteredData.map(value =>
-                  <IonCol key={value.id} size="11" size-md="4" size-lg="2">
-                    <IonCard className="asso-card" button={true} href={"/association/" + value.id}>
-                      <img alt="logo" className="asso-image" src={"https://tekiens.net/data/"+value.id+"/logo-0.webp"} />
-                      <IonCardHeader>
-                        <IonCardTitle style={{ color: value.color }} className="card-asso-title">{value.names[0]}</IonCardTitle>
-                        <IonCardSubtitle style={{ color: value.color }} className="card-assos-sub">{value.theme}</IonCardSubtitle>
-                      </IonCardHeader>
-                    </IonCard>
-                  </IonCol>
-                )}
-              </IonRow>
-            </IonGrid>
             :
             <IonContent>
               <IonTabButton disabled>
