@@ -98,7 +98,7 @@ const EventDetails: React.FC = () => {
             <HeaderTitleBack back="/app/événements">{t('event.title')}</HeaderTitleBack>
 
             <IonContent>
-                {<img alt="" src={"https://tekiens.net/" + eventData.poster} />}
+                {<img alt="" src={"https://tekiens.net/" + eventData.poster} width="100%" />}
                 <IonGrid className='ion-padding'>
                     <IonRow className='info'>
                         <IonLabel style={{ color: eventData.associationColor }}>{eventData.associationName}</IonLabel>

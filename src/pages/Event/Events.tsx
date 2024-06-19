@@ -1,4 +1,4 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonIcon, IonImg, IonItem, IonLabel, IonList, IonRow, IonSpinner, IonTabButton } from '@ionic/react';
+import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonIcon, IonImg, IonItem, IonLabel, IonList, IonRow, IonSegment, IonSegmentButton, IonSpinner, IonTabButton } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SomeEventsData, ApiResponseEvents } from '../../Tools/Interfaces/EventInterface'
@@ -6,17 +6,18 @@ import { SomeEventsData, ApiResponseEvents } from '../../Tools/Interfaces/EventI
 import '../../theme/Event/Events.css';
 
 
-const ApiComponent: React.FC<{ filter: string }> = ({ filter }) => {
+const ApiComponent: React.FC<{ api: string }> = ({ api }) => {
     // Use to translate the page
     const { t, i18n } = useTranslation();
 
     const [data, setData] = useState<SomeEventsData[]>([]);
     const [loading, setLoading] = useState(true);
+    const [filter, setFilter] = useState('futur');
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('https://tekiens.net/api/events');
+                const response = await fetch('https://tekiens.net/api/' + api);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -117,8 +118,27 @@ const ApiComponent: React.FC<{ filter: string }> = ({ filter }) => {
         }
     };
 
+    const handleFilterChange = (event: CustomEvent) => {
+        setFilter(event.detail.value);
+    };
+
     return (
         <IonContent>
+            <IonSegment scrollable={true} value={filter} onIonChange={handleFilterChange}>
+                <IonSegmentButton value='futur'>
+                    <IonLabel>{t('events.filter.futur.label')}</IonLabel>
+                </IonSegmentButton>
+                <IonSegmentButton value='ongoing'>
+                    <IonLabel>{t('events.filter.ongoing.label')}</IonLabel>
+                </IonSegmentButton>
+                <IonSegmentButton value='past'>
+                    <IonLabel>{t('events.filter.past.label')}</IonLabel>
+                </IonSegmentButton>
+
+                <IonSegmentButton value='all'>
+                    <IonLabel>{t('events.filter.all.label')}</IonLabel>
+                </IonSegmentButton>
+            </IonSegment>
             {filteredEvents.length > 0 ? (
                 <IonGrid>
                     {filteredEvents.map((event: SomeEventsData) => (
