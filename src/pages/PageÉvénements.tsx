@@ -10,22 +10,8 @@ const Événements: React.FC = () => {
     return (
         <IonPage>
             <HeaderTitle>{t('evenements.title')}</HeaderTitle>
-            <IonSegment value='all'>
-                <IonSegmentButton value='all'>
-                    <IonLabel>Tous</IonLabel>
-                </IonSegmentButton>
-                <IonSegmentButton value='past'>
-                    <IonLabel>Passés</IonLabel>
-                </IonSegmentButton>
-                <IonSegmentButton value='now'>
-                    <IonLabel>En cours</IonLabel>
-                </IonSegmentButton>
-                <IonSegmentButton value='future'>
-                    <IonLabel>Futurs</IonLabel>
-                </IonSegmentButton>
-            </IonSegment>
             <IonContent>
-                <Events />
+                <Events apiHref='events'/>
             </IonContent>
         </IonPage>
     );
