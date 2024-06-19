@@ -1,19 +1,27 @@
-import { IonContent, IonPage } from "@ionic/react";
+import { IonContent, IonLabel, IonPage, IonSegment, IonSegmentButton, IonTabBar } from "@ionic/react";
 import HeaderTitle from "../components/HeaderTitle";
 import { useTranslation } from "react-i18next";
 import AssociationCards from "./Association/AssociationCards";
 import Events from "./Event/Events";
+import { useEffect, useState } from "react";
 
 const PageFavoris: React.FC = () => {
     // Use to translte the page
     const { t } = useTranslation();
 
+    const [desiredSeg, setDesiredSeg] = useState("assos");
+
     return (
         <IonPage>
+            <IonSegment value={desiredSeg} onIonChange={(event: CustomEvent) => setDesiredSeg(event.detail.value)}>
+                <IonSegmentButton value="assos"><IonLabel>{t('favorite.filter.assos.label')}</IonLabel></IonSegmentButton>
+                <IonSegmentButton value="events"><IonLabel>{t('favorite.filter.events.label')}</IonLabel></IonSegmentButton>
+            </IonSegment>
             <HeaderTitle>{t('favorite.title')}</HeaderTitle>
-            <IonContent >
-                <AssociationCards segValue={"sub"} />
-                <Events apiHref="events" showFavorites={true} />
+            <IonContent>
+                {desiredSeg == "assos" ?                 
+                <AssociationCards segValue={"sub"}/> :
+                <Events apiHref="events" showFavorites={true} />}
             </IonContent>
         </IonPage>
     )
