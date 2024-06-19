@@ -31,15 +31,15 @@ import '@ionic/react/css/palettes/dark.system.css';
 import './theme/variables.css';
 import { IonReactRouter } from "@ionic/react-router";
 import { Redirect, Route } from "react-router";
-import Tabs from './pages/Tabs';
+import Tabs from './components/Tabs';
 import Paramètres from './pages/PageParamètres';
 import Liens from './pages/PageLiens';
 import FAQ from './pages/PageFAQ';
 import { ThemeProvider } from './contexts/ThemeContext';
 import './MultiLang.js'
 import React from 'react';
-import EventDetails from './pages/EventDetails';
-import AssociationDetails from './pages/MainPages/AssociationDetail';
+import EventDetails from './pages/Event/EventDetails';
+import AssociationDetails from './pages/Association/AssociationDetail';
 
 setupIonicReact();
 

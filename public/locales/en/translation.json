@@ -1,5 +1,5 @@
 {
-    "accueil" : {
+    "home" : {
         "title" : "Home"
     },
 
@@ -7,15 +7,49 @@
         "title" : "Associations"
     },
 
-    "evenements" : {
-        "title" : "Events"
+    "events" : {
+        "title" : "Events",
+
+        "filter" : {
+            "futur" : {
+                "label" : "Upcoming",
+                "message" : {
+                    "title" : "No upcoming events",
+                    "text" : "Come back later, or consult the list of past or present events."
+                }
+            },
+
+            "ongoing" : {
+                "label" : "Ongoing",
+                "message" : {
+                    "title" : "No ongoing events",
+                    "text" : "Come back later, or consult the list of past or future events."
+                }
+            },
+
+            "past" : {
+                "label" : "Past",
+                "message" : {
+                    "title" : "No past events",
+                    "text" : "Revenez plus tard, ou consultez la liste des événements passés ou présent."
+                }
+            },
+
+            "all" : {
+                "label" : "All",
+                "message" : {
+                    "title" : "No events",
+                    "text" : "Come back later when there are events."
+                }
+            }
+        }
     },
 
-    "evenement" : {
+    "event" : {
         "title" : "Event"
     },
 
-    "favoris" : {
+    "favorites" : {
         "title" : "Favorites"
     },
 
@@ -23,7 +57,7 @@
         "title" : "Plus"
     },
 
-    "parametres" : {
+    "settings" : {
         "title" : "Settings",
         
         "notifications" : {
@@ -31,14 +65,14 @@
             "text" : "Disable notifications"
         },
 
-        "langue" : {
+        "language" : {
             "title" : "Language"
         },
 
         "apparence" : {
             "title" : "Appearance",
             "theme" : {
-                "defaut" : "Default theme"
+                "default" : "Default theme"
             }
         },
 
@@ -59,7 +93,7 @@
         "title" : "Connexion"
     },
 
-    "mon-association" : {
+    "my-association" : {
         "title" : "My association"
     },
 
@@ -67,9 +101,9 @@
         "title" : "FAQ"
     },
 
-    "liens-ecole" : {
+    "schools-links" : {
         "title" : "School links",
-        "lien" : {
+        "link" : {
             "site" : "CY Tech web site",
             "mycy" : "MyCY",
             "celcat" : "Celcat : schedule",

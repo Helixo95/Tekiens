@@ -1,21 +1,23 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonIcon, IonImg, IonItem, IonLabel, IonList, IonRow, IonSpinner, IonTabButton } from '@ionic/react';
+import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonLabel, IonRow, IonSegment, IonSegmentButton, IonSpinner, IonTabButton } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import './ApiEvents.css';
-import { SomeEventsData, ApiResponseEvents } from './EventInterface'
+import { SomeEventsData, ApiResponseEvents } from '../../Tools/Interfaces/EventInterface'
+
+import '../../theme/Event/Events.css';
 
 
-const ApiComponent: React.FC = () => {
-    // Use to translte the page
+const ApiComponent: React.FC<{ apiHref: string }> = ({ apiHref }) => {
+    // Use to translate the page
     const { t, i18n } = useTranslation();
 
     const [data, setData] = useState<SomeEventsData[]>([]);
     const [loading, setLoading] = useState(true);
+    const [filter, setFilter] = useState('futur');
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('https://tekiens.net/api/events');
+                const response = await fetch('https://tekiens.net/api/' + apiHref);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -45,7 +47,7 @@ const ApiComponent: React.FC = () => {
         };
 
         fetchData();
-    }, []);
+    }, [filter]);
 
     if (loading) {
         return (
@@ -56,12 +58,92 @@ const ApiComponent: React.FC = () => {
         );
     }
 
+    /**
+     * Method to return the filtered data depending of the user's choice
+     * @returns return the filtered data depending of the user's choice
+     */
+    const getFilteredEvents = () => {
+        const currentDate = new Date();
+        switch (filter) {
+            case 'futur':
+                return data.filter(event => new Date(event.date + 'Z') > currentDate);
+            case 'ongoing':
+                return data.filter(event => {
+                    const eventDate = new Date(event.date + 'Z');
+                    return eventDate.toDateString() === currentDate.toDateString();
+                });
+            case 'past':
+                return data.filter(event => new Date(event.date + 'Z') < currentDate);
+            default:
+                return data;
+        }
+    };
+
+    const filteredEvents = getFilteredEvents();
+
+    /**
+     * Function to return a message if we don't have any events
+     * @returns the message we need to display if we don't have any event
+     */
+    const noDataMessage = () => {
+        switch (filter) {
+            case 'futur':
+                return (
+                    <IonContent className='ion-padding'>
+                        <h1 className='title'>{t('events.filter.futur.message.title')}</h1>
+                        <div className='justify-text'><IonLabel>{t('events.filter.futur.message.text')}</IonLabel></div>
+                    </IonContent>
+                );
+            case 'ongoing':
+                return (
+                    <IonContent className='ion-padding'>
+                        <h1 className='title'>{t('events.filter.ongoing.message.title')}</h1>
+                        <div className='justify-text'><IonLabel>{t('events.filter.ongoing.message.text')}</IonLabel></div>
+                    </IonContent>
+                );
+            case 'past':
+                return (
+                    <IonContent className='ion-padding'>
+                        <h1 className='title'>{t('events.filter.past.message.title')}</h1>
+                        <div className='justify-text'><IonLabel>{t('events.filter.past.message.text')}</IonLabel></div>
+                    </IonContent>
+                );
+            default:
+                return (
+                    <IonContent className='ion-padding'>
+                        <h1 className='title'>{t('events.filter.all.message.title')}</h1>
+                        <div className='justify-text'><IonLabel>{t('events.filter.all.message.text')}</IonLabel></div>
+                    </IonContent>
+                );
+        }
+    };
+
+    const handleFilterChange = (event: CustomEvent) => {
+        setFilter(event.detail.value);
+    };
+
     return (
         <IonContent>
-            {data.length > 0 ? (
+            <IonSegment scrollable={true} value={filter} onIonChange={handleFilterChange}>
+                <IonSegmentButton value='futur'>
+                    <IonLabel>{t('events.filter.futur.label')}</IonLabel>
+                </IonSegmentButton>
+                <IonSegmentButton value='ongoing'>
+                    <IonLabel>{t('events.filter.ongoing.label')}</IonLabel>
+                </IonSegmentButton>
+                <IonSegmentButton value='past'>
+                    <IonLabel>{t('events.filter.past.label')}</IonLabel>
+                </IonSegmentButton>
+
+                <IonSegmentButton value='all'>
+                    <IonLabel>{t('events.filter.all.label')}</IonLabel>
+                </IonSegmentButton>
+            </IonSegment>
+            {filteredEvents.length > 0 ? (
                 <IonGrid>
-                    {data.map((event: SomeEventsData) => (
+                    {filteredEvents.map((event: SomeEventsData) => (
                         <IonCard key={event.id} button={true} href={'/event/' + event.id}>
+                            <img alt="" src={"https://tekiens.net/" + event.poster} />
                             <IonCardHeader>
                                 <IonCardTitle>{event.title}</IonCardTitle>
                             </IonCardHeader>
@@ -82,7 +164,7 @@ const ApiComponent: React.FC = () => {
                                         </IonCol>
 
                                         <IonCol>
-                                            <IonGrid className='infos-grid' style={{ color: 'black' }}>
+                                            <IonGrid className='infos-grid'>
                                                 <IonRow className='info'>
                                                     <IonLabel style={{ color: event.associationColor }}>{event.associationName}</IonLabel>
                                                 </IonRow>
@@ -111,7 +193,7 @@ const ApiComponent: React.FC = () => {
                     ))}
                 </IonGrid>
             ) : (
-                <IonLabel>No data available</IonLabel>
+                noDataMessage()
             )}
         </IonContent>
     );

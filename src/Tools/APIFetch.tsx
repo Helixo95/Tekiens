@@ -20,20 +20,36 @@ async function fetchAPIResult(url: any){
  * Fetch and return via the API the (id, name, theme and logo path and color) of all the associations
  * @return An array containing associative array of the differents attributes or null if the query failed
  */
-export async function getAssosMainInfos(){
+export async function getAllAssosMainInfos(){
     const response = await fetchAPIResult("https://tekiens.net/api/assos");
     if(!response){
         return null;
     }
     
-    const data = response.data;
-    let mainInfos = [];
-    for(let i = 0; i < data.length; i++){
-        let currentData = data[i];
-        mainInfos.push({id: currentData.id, name: currentData.names, theme: currentData.theme, logo: currentData.logo, color: currentData.color});
+    return response.data;
+}
+
+/**
+ * Retrieve either the active associations or the finished ones and return its main infos
+ * @param bChooseActive Choose the active associations instead of the finished ones
+ * @return An array containing associative array of the differents attributes or null if the query failed
+ */
+export async function getAssosFilteredInfos(bChooseActive: boolean){
+    const response = await fetchAPIResult("https://tekiens.net/api/assos");
+    if(!response){
+        return null;
     }
 
-    return mainInfos;
+    const data = response.data;
+    return data
+        .filter((currentData: any) => bChooseActive ? currentData.end === null : currentData.end !== null)
+        .map((currentData: any) => ({
+            id: currentData.id,
+            name: currentData.names,
+            theme: currentData.theme,
+            logo: currentData.logo,
+            color: currentData.color
+        }));
 }
 
 /** Return the informations of an asso in function of its id
