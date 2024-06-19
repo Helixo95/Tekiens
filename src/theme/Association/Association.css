@@ -4,14 +4,20 @@
     justify-content: center;
     text-align: center;
   
-    border: solid 1px #17002c;
     color: #fff;
 }
 
 .asso-card{
     width: 100%;
-    height: 90%;
+    height: 92%;
+    background-size: cover;
+
 }
+
+.asso-image{
+    width: 100%;
+}
+
 
 .asso-title{
     font-weight: 1000;

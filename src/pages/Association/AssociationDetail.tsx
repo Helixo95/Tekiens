@@ -1,12 +1,13 @@
-import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonLabel, IonPage, IonSpinner, IonTabButton, IonText, IonTitle, IonToolbar } from "@ionic/react";
+import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonPage, IonSpinner, IonTabButton, IonText, IonTitle, IonToolbar } from "@ionic/react";
 import { useEffect, useState } from "react";
-import { getAssoInformationByID } from "../API/APIFetch";
+import { getAssoInformationByID } from "../../Tools/APIFetch";
 import { useParams } from "react-router";
-import { logoDiscord, logoInstagram, paperPlane, logoLinkedin, globeOutline, leafOutline, atOutline, logoFacebook, locationOutline, extensionPuzzleOutline } from 'ionicons/icons';
-import { GlobalAssociationData, SocialsData } from '../GlobalInterface';
-import { parseText } from "../API/Tools/DOMParser";
+import { logoDiscord, logoInstagram, paperPlane, logoLinkedin, globeOutline, leafOutline, atOutline, logoFacebook, locationOutline, extensionPuzzleOutline, calendarOutline } from 'ionicons/icons';
+import { GlobalAssociationData, SocialsData } from '../../Tools/Interfaces/AssosInterface';
+import { parseText } from "../../Tools/DOMParser";
 
-import "./AssociationDetail.css";
+import "../../theme/Association/AssociationDetail.css";
+import HeaderTitleBack from "../../components/HeaderTitleBack";
 
 
 const AssociationDetails: React.FC = () => {
@@ -27,7 +28,7 @@ const AssociationDetails: React.FC = () => {
             const result = await getAssoInformationByID(id);
             if (result) {
                 setData(result);
-                await parseText(result.description, setDescription);
+                parseText(result.description, setDescription);
             }
         }
 
@@ -37,21 +38,15 @@ const AssociationDetails: React.FC = () => {
 
     return (
         <IonPage>
-            <IonToolbar>
-                <IonHeader>
-                    <IonButtons>
-                        <IonBackButton defaultHref='/app/associations' style={{ color: data?.color }} />
-                    </IonButtons>
-                </IonHeader>
-
-                {data ? <IonTitle style={{ color: data?.color }} className="assos-title">{Array.isArray(data.names) ? data.names[0] : data.names}</IonTitle> : ""}
-            </IonToolbar>
-
+            <HeaderTitleBack back="/app/associations" children={undefined} />
             {data ?
                 <>
                     <IonContent>
-                        <IonCard className="assos-description">
+                        <IonCard className="detail-asso-description">
                             <IonCardContent>
+                                <IonCardTitle style={{color: data.color}}>{data.names[0]}</IonCardTitle>
+
+                                <img className="detail-asso-image"  width="40%" src={"https://tekiens.net/data/"+data.id+"/logo-0.webp"}/>
                                 <div dangerouslySetInnerHTML={{ __html: description }}></div>
                             </IonCardContent>
                         </IonCard>
@@ -60,28 +55,32 @@ const AssociationDetails: React.FC = () => {
                     <IonFooter translucent={true}>
                         <IonToolbar slot="bottom">
                             {data.socials.map((val: SocialsData) =>
-                                <IonButton fill="clear" key={val.id} onClick={() => window.open(val.link, '_system', 'location=yes')} className="socials-button" style={{ '--border-color': data.color }}>
+                                <IonButton fill="clear" key={val.id} onClick={() => window.open(val.link, '_system', 'location=yes')} className="detail-socials-button" style={{ '--border-color': data.color }}>
                                     <IonIcon icon={logos[val.id]} style={{ color: data.color }} />
                                 </IonButton>
                             )}
 
-                            <IonButton fill="clear" shape="round" className="socials-button" style={{ '--border-color': data.color }} disabled={true}>
+                            <IonButton fill="clear" className="detail-socials-button" style={{'--border-color': data.color}} 
+                            href={"/association/"+data.id+"/events"}>
+                                    <IonIcon icon={calendarOutline} style={{color: data.color}}/>
+                                </IonButton>
+        
+                            <IonItem>
                                 <IonIcon icon={locationOutline} style={{ color: data.color }} />
                                 <IonText style={{ color: data.color }}>{data.campus}</IonText>
-                            </IonButton>
-
-                            <IonButton fill="clear" shape="round" className="socials-button" style={{ '--border-color': data.color }} disabled={true}>
+                            </IonItem>
+                            <IonItem>
                                 <IonIcon icon={extensionPuzzleOutline} style={{ color: data.color }} />
                                 <IonText style={{ color: data.color }}>{data.theme}</IonText>
-                            </IonButton>
+                            </IonItem>
 
                         </IonToolbar>
-                        <IonGrid>
-
-                        </IonGrid>
                     </IonFooter>
                 </>
-                : ""
+                : 
+                <IonContent>
+                    <IonSpinner name="circular" />
+                </IonContent>
             }
 
 

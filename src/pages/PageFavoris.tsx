@@ -8,7 +8,7 @@ const PageFavoris: React.FC = () => {
 
     return (
         <IonPage>
-            <HeaderTitle>{t('favoris.title')}</HeaderTitle>
+            <HeaderTitle>{t('favorites.title')}</HeaderTitle>
         </IonPage>
     )
 }

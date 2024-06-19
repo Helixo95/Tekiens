@@ -19,7 +19,7 @@ const Accueil: React.FC = () => {
 
   return (
     <IonPage>
-      <HeaderTitle>{t('accueil.title')}</HeaderTitle>
+      <HeaderTitle>{t('home.title')}</HeaderTitle>
       <IonContent>
         <ListGroup items={items} heading={"Cities"} onSelectecItem={handleSelectItem} />
         <IonButton id="asso-alert" color={'primary'} disabled={selectedAsso === ""}>Choisir</IonButton>

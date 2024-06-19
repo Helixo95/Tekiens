@@ -4,7 +4,7 @@ import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-http-backend';
 
 i18n.use(LanguageDetector).use(initReactI18next).use(Backend).init({
-    lng: 'fr',
+    lng: localStorage.getItem("language"),
     fallbackLng: 'fr',
     returnObjects: true,
   });
