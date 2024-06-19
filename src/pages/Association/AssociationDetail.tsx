@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonPage, IonSpinner, IonTabButton, IonText, IonTitle, IonToolbar } from "@ionic/react";
+import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardTitle, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonPage, IonSpinner, IonTabButton, IonText, IonTitle, IonToolbar } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { getAssoInformationByID } from "../../Tools/APIFetch";
 import { useParams } from "react-router";
@@ -7,6 +7,7 @@ import { GlobalAssociationData, SocialsData } from '../../Tools/Interfaces/Assos
 import { parseText } from "../../Tools/DOMParser";
 
 import "../../theme/Association/AssociationDetail.css";
+import HeaderTitleBack from "../../components/HeaderTitleBack";
 
 
 const AssociationDetails: React.FC = () => {
@@ -37,23 +38,13 @@ const AssociationDetails: React.FC = () => {
 
     return (
         <IonPage>
-            <IonToolbar>
-                <IonHeader>
-                    <IonButtons>
-                        <IonBackButton defaultHref='/app/associations' style={{ color: data?.color }} />
-                    </IonButtons>
-                </IonHeader>
-
-                {data ? <div>
-                            <IonTitle style={{ color: data?.color }} className="detail-asso-title">{Array.isArray(data.names) ? data.names[0] : data.names}</IonTitle> 
-                        </div>: ""}
-            </IonToolbar>
-
+            <HeaderTitleBack back="/app/associations" children={undefined} />
             {data ?
                 <>
                     <IonContent>
                         <IonCard className="detail-asso-description">
                             <IonCardContent>
+                                <IonCardTitle style={{color: data.color}}>{data.names[0]}</IonCardTitle>
                                 <img className="detail-asso-image"  width="40%" src={"https://tekiens.net/data/"+data.id+"/logo-0.webp"}/>
                                 <div dangerouslySetInnerHTML={{ __html: description }}></div>
                             </IonCardContent>
@@ -70,7 +61,7 @@ const AssociationDetails: React.FC = () => {
 
 
                             <IonButton fill="clear" className="detail-socials-button" style={{'--border-color': data.color}} 
-                            href={"https://tekiens.net/api/assos/"+data.id+"/events"}>
+                            href={"/association/"+data.id+"/events"}>
                                     <IonIcon icon={calendarOutline} style={{color: data.color}}/>
                                 </IonButton>
                             <IonItem>
