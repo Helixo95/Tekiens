@@ -1,4 +1,4 @@
-import {IonButton, IonCard, IonCardContent, IonCardTitle, IonContent, IonFooter, IonIcon, IonItem, IonPage, IonSpinner, IonText, IonToolbar } from "@ionic/react";
+import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonPage, IonSpinner, IonTabButton, IonText, IonTitle, IonToolbar } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { getAssoInformationByID } from "../../Tools/APIFetch";
 import { useParams } from "react-router";
@@ -45,6 +45,7 @@ const AssociationDetails: React.FC = () => {
                         <IonCard className="detail-asso-description">
                             <IonCardContent>
                                 <IonCardTitle style={{color: data.color}}>{data.names[0]}</IonCardTitle>
+
                                 <img className="detail-asso-image"  width="40%" src={"https://tekiens.net/data/"+data.id+"/logo-0.webp"}/>
                                 <div dangerouslySetInnerHTML={{ __html: description }}></div>
                             </IonCardContent>
@@ -59,11 +60,11 @@ const AssociationDetails: React.FC = () => {
                                 </IonButton>
                             )}
 
-
                             <IonButton fill="clear" className="detail-socials-button" style={{'--border-color': data.color}} 
                             href={"/association/"+data.id+"/events"}>
                                     <IonIcon icon={calendarOutline} style={{color: data.color}}/>
                                 </IonButton>
+        
                             <IonItem>
                                 <IonIcon icon={locationOutline} style={{ color: data.color }} />
                                 <IonText style={{ color: data.color }}>{data.campus}</IonText>

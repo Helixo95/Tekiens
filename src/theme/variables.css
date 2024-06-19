@@ -60,12 +60,12 @@ ion-tab-button {
 	}
 }
 
-.questionTitle {
+.title {
 	font-weight: bold;
 	color: var(--ion-color-primary);
 }
 
-.questionSecondTitle {
+.second-title {
 	font-weight: bold;
 	color: var(--ion-color-medium);
 }

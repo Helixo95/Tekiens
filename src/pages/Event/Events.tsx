@@ -1,4 +1,5 @@
 import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonIcon, IonImg, IonItem, IonLabel, IonList, IonRow, IonSegment, IonSegmentButton, IonSpinner, IonTabButton } from '@ionic/react';
+
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SomeEventsData, ApiResponseEvents } from '../../Tools/Interfaces/EventInterface'
@@ -164,7 +165,7 @@ const ApiComponent: React.FC<{ apiHref: string }> = ({ apiHref }) => {
                                         </IonCol>
 
                                         <IonCol>
-                                            <IonGrid className='infos-grid' style={{ color: 'black' }}>
+                                            <IonGrid className='infos-grid'>
                                                 <IonRow className='info'>
                                                     <IonLabel style={{ color: event.associationColor }}>{event.associationName}</IonLabel>
                                                 </IonRow>
