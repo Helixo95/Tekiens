@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { getAllAssosMainInfos } from "../../Tools/APIFetch";
 import { filterData } from "../../Tools/LocalStorage/AssoCalls";
 
-const AssociationCards: React.FC<{segValue: string}> = ({segValue}) =>{
-// Hooks updated with the assos information when the page is mounted
+const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
+  // Hooks updated with the assos information when the page is mounted
   const [data, setData] = useState<AssociationMainData[] | null>(null);
   const [filteredData, setFilteredData] = useState<AssociationMainData[] | null>(null);
 
@@ -19,12 +19,12 @@ const AssociationCards: React.FC<{segValue: string}> = ({segValue}) =>{
   }, []);
 
   useEffect(() => {
-    if(data)
-      {
-        filterData(segValue, data, setFilteredData);
-      }
+    if (data) {
+      filterData(segValue, data, setFilteredData);
+    }
   }, [segValue]);
-    return (
+
+  return (
         <>
         {
           filteredData ?

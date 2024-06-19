@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 const PageFavoris: React.FC = () => {
     // Use to translte the page
     const { t } = useTranslation();
+
     const [desiredSeg, setDesiredSeg] = useState("assos");
 
     return (
