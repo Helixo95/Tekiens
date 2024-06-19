@@ -61,7 +61,7 @@
             "events" : {
                 "label" : "Événements",
                 "message" : {
-                    "title" : "Nous n'avez aucun évènement favori",
+                    "title" : "Vous n'avez aucun évènement favori",
                     "text" : "Aller sur la page d'un évènement pour l'ajouter à vos favoris."
                 }
             },
@@ -69,7 +69,7 @@
             "assos" : {
                 "label" : "Associations",
                 "message" : {
-                    "title" : "Nous ne suivez aucune association",
+                    "title" : "Vous ne suivez aucune association",
                     "text" : "Aller sur la page d'une assiciation pour la suivre."
                 }
             }
