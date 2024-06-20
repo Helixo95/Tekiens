@@ -1,25 +1,23 @@
-import { IonContent, IonLabel, IonPage, IonSegment, IonSegmentButton } from '@ionic/react';
-
+import { IonContent, IonLabel, IonSegment, IonSegmentButton } from '@ionic/react';
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import '../../theme/Event/Events.css';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import '@ionic/react/css/ionic-swiper.css';
+
 import FuturEventsComponent from '../../components/EventComponent/FuturEventsComponent';
 import OngoingEventsComponent from '../../components/EventComponent/OngoingEventsComponent';
 import PastEventsComponent from '../../components/EventComponent/PastEventsComponent';
 import AllEventsComponent from '../../components/EventComponent/AllEventsComponent';
-import HeaderTitle from '../../components/HeaderTitle';
 
+import 'swiper/css';
+import '@ionic/react/css/ionic-swiper.css';
+import '../../theme/Event/Events.css';
 
 const EventsComponents: React.FC<{ apiHref: string }> = ({ apiHref }) => {
     // Use to translate the page
     const { t } = useTranslation();
 
     const [filter, setFilter] = useState('futur');
+    const [activeIndex, setActiveIndex] = useState(0);
 
     const swiperRef = useRef<any>(null);
 
@@ -31,15 +29,17 @@ const EventsComponents: React.FC<{ apiHref: string }> = ({ apiHref }) => {
         setFilter(newFilter);
         const newIndex = segments.findIndex(segment => segment === newFilter);
         swiperRef.current?.swiper.slideTo(newIndex);
+        setActiveIndex(newIndex);
     };
 
     const handleSlideChange = (swiper: any) => {
         const newIndex = swiper.activeIndex;
         setFilter(segments[newIndex]);
+        setActiveIndex(newIndex);
     };
 
     return (
-        <IonContent>
+        <>
             <IonSegment scrollable={true} value={filter} onIonChange={handleSegmentChange}>
                 <IonSegmentButton value='futur'>
                     <IonLabel>{t('events.filter.futur.label')}</IonLabel>
@@ -57,40 +57,34 @@ const EventsComponents: React.FC<{ apiHref: string }> = ({ apiHref }) => {
                     <IonLabel>{t('events.filter.all.label')}</IonLabel>
                 </IonSegmentButton>
             </IonSegment>
+            <IonContent>
 
-            <Swiper
-                ref={swiperRef}
-                onSlideChange={handleSlideChange}
-                initialSlide={0}
-                className="full-screen"
-                loop={false}
-            >
-                <SwiperSlide key={0} className="full-screen">
-                    <div className='ion-content-scroll'>
-                        <FuturEventsComponent apiHref={apiHref} />
-                    </div>
-                </SwiperSlide>
+                <Swiper
+                    ref={swiperRef}
+                    onSlideChange={handleSlideChange}
+                    initialSlide={0}
+                    loop={false}
+                    freeMode={true}
+                >
+                    <SwiperSlide key={0}>
+                        {activeIndex === 0 && <FuturEventsComponent apiHref={apiHref} />}
+                    </SwiperSlide>
 
-                <SwiperSlide key={1} className="full-screen">
-                    <div className='ion-content-scroll'>
-                        <OngoingEventsComponent apiHref={apiHref} />
-                    </div>
-                </SwiperSlide>
+                    <SwiperSlide key={1}>
+                        {activeIndex === 1 && <OngoingEventsComponent apiHref={apiHref} />}
+                    </SwiperSlide>
 
-                <SwiperSlide key={2} className="full-screen">
-                    <div className='ion-content-scroll'>
-                        <PastEventsComponent apiHref={apiHref} />
-                    </div>
-                </SwiperSlide>
+                    <SwiperSlide key={2}>
+                        {activeIndex === 2 && <PastEventsComponent apiHref={apiHref} />}
+                    </SwiperSlide>
 
-                <SwiperSlide key={3} className="full-screen">
-                    <div className='ion-content-scroll'>
-                        <AllEventsComponent apiHref={apiHref} />
-                    </div>
-                </SwiperSlide>
+                    <SwiperSlide key={3}>
+                        {activeIndex === 3 && <AllEventsComponent apiHref={apiHref} />}
+                    </SwiperSlide>
 
-            </Swiper>
-        </IonContent>
+                </Swiper>
+            </IonContent>
+        </>
     );
 };
 
