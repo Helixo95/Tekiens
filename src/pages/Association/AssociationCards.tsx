@@ -24,7 +24,6 @@ const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
     if (data) {
       filterData(segValue, data, setFilteredData);
     }
-    console.log(filteredData);
   }, [segValue]);
 
   return (

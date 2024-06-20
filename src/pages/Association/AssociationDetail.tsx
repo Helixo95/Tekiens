@@ -82,12 +82,12 @@ const AssociationDetails: React.FC = () => {
                             href={"/association/"+data.id+"/events"}>
                                     <IonIcon icon={calendarOutline} style={{color: data.color}}/>
                                 </IonButton>
-
+                                
                             <IonItem>
                                 <IonIcon icon={locationOutline} style={{ color: data.color }} />
                                 <IonText style={{ color: data.color }}>{data.campus}</IonText>
                             </IonItem>
-                            <IonItem>
+                            <IonItem lines="none">
                                 <IonIcon icon={extensionPuzzleOutline} style={{ color: data.color }} />
                                 <IonText style={{ color: data.color }}>{data.theme}</IonText>
                             </IonItem>
