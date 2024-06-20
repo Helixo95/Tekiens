@@ -3,10 +3,10 @@ import { useRef, useState } from "react";
 import HeaderTitle from "../../components/HeaderTitle";
 import "../../theme/Association/Association.css";
 import AssociationCards from "./AssociationCards";
-import { useTranslation } from "react-i18next";
 import { Swiper, SwiperClass, SwiperRef, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
+import { useTranslation } from "react-i18next";
 
 const Associations: React.FC = () => {
   const { t } = useTranslation();

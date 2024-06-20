@@ -6,6 +6,7 @@ export interface SomeEventsData {
     date: string;
     place: string;
     associationName?: string;
+    associationCampus?: string;
     associationColor?: string;
 }
 

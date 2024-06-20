@@ -6,6 +6,7 @@
     "associations" : {
         "tab-title" : "Associations",
         "title" : "Liste des associations",
+
         "no-description": "Aucune description disponible",
         "tab-active": "Active",
         "tab-over": "Terminées",
@@ -18,8 +19,7 @@
         "favorite" : {
             "add" : "Association ajouté aux favoris",
             "remove" : "Association supprimé des favoris"
-        }
-    
+        }    
     },
 
     "events" : {
@@ -105,25 +105,25 @@
         },
 
         "language" : {
-            "title" : "Langue"
+            "title" : "Langue",
+            "label" : "Choix de la langue"
         },
 
-        "apparence" : {
+        "theme" : {
             "title" : "Apparence",
-            "theme" : {
+            "label" : "Choix du thème",
+            "themes" : {
                 "default" : "Par défaut"
             }
         },
 
         "campus" : {
             "title" : "Campus",
-            "label" : "Choix campus",
+            "label" : "Choix du campus",
             "site" : {
-                "parc" : "Site du Parc",
-                "saint-martin" : "Site de Saint-Martin",
-                "neuville" : "Site de Neuville",
-                "chenes" : "Site des Chênes",
-                "pau" : "Site de Pau"
+                "all" : "Tous",
+                "cergy" : "Cergy",
+                "pau" : "Pau"
             }
         }
     },

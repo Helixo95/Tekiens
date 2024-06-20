@@ -19,9 +19,9 @@ const PageFavoris: React.FC = () => {
             </IonSegment>
             <HeaderTitle>{t('favorite.title')}</HeaderTitle>
             <IonContent>
-                {desiredSeg == "assos" ?                 
-                <AssociationCards segValue={"sub"}/> :
-                <FavoriteEventsComponent />}
+                {desiredSeg == "assos" ?
+                    <AssociationCards segValue={"sub"} /> :
+                    <FavoriteEventsComponent />}
             </IonContent>
         </IonPage>
     )
