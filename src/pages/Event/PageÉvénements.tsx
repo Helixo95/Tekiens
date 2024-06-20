@@ -11,7 +11,7 @@ const Événements: React.FC = () => {
         <IonPage>
             <HeaderTitle>{t('events.title')}</HeaderTitle>
             <IonContent>
-                <Events apiHref="events" />
+                <Events />
             </IonContent>
         </IonPage>
     );
