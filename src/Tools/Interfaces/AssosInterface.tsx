@@ -16,6 +16,8 @@ export interface AssociationMainData {
     theme: any;
     logo: any;
     color: any;
+    campus: string;
+
 }
 
 export interface SocialsData{
