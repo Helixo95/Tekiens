@@ -34,8 +34,14 @@ function filterByCampus(data: AssociationMainData[]) {
     if (!data) {
         return [];
     }
+
     const campus = localStorage.getItem("selectedCampus") || 'all';
-    return data.filter((currentData) => campus == "all" ? true : campus == currentData.campus);
+
+    if (campus == "all") {
+        return data;
+    }
+
+    return data.filter(currentData => currentData.campus === campus);
 }
 
 /** Return an array of all the subscribed assos */
