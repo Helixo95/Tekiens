@@ -82,8 +82,8 @@ const Paramètres: React.FC = () => {
                 </IonItemDivider>
 
                 <IonItem lines="none">
-                    <IonSelect label={t('settings.campus.label')} value={localStorage.getItem('selectedCampus') || ""} onIonChange={(e) => changeCampus(e.detail.value)}>
-                        <IonSelectOption value="">{t('settings.campus.site.all')}</IonSelectOption>
+                    <IonSelect label={t('settings.campus.label')} value={localStorage.getItem('selectedCampus') || "all"} onIonChange={(e) => changeCampus(e.detail.value)}>
+                        <IonSelectOption value="all">{t('settings.campus.site.all')}</IonSelectOption>
                         <IonSelectOption value="Cergy">{t('settings.campus.site.cergy')}</IonSelectOption>
                         <IonSelectOption value="Pau">{t('settings.campus.site.pau')}</IonSelectOption>
                     </IonSelect>

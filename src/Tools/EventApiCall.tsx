@@ -31,7 +31,7 @@ const useEventData = (apiHref: string) => {
                     };
                 }));
 
-                selectedCampus == "" ? setData(eventsWithAssociations.reverse()) : setData(eventsWithAssociations.filter(event => event.associationCampus === selectedCampus).reverse());
+                selectedCampus == "all" ? setData(eventsWithAssociations.reverse()) : setData(eventsWithAssociations.filter(event => event.associationCampus === selectedCampus).reverse());
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {
