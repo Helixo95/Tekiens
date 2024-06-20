@@ -3,8 +3,13 @@ import { useRef, useState } from "react";
 import HeaderTitle from "../../components/HeaderTitle";
 import "../../theme/Association/Association.css";
 import AssociationCards from "./AssociationCards";
+
 import { useTranslation } from "react-i18next";
 
+function filterData(filterChoice: string, data: any, callback: Function) {
+  if (!data) {
+    return;
+  }
 
 import { Swiper, SwiperClass, SwiperRef, SwiperSlide} from 'swiper/react';
 import 'swiper/css';
@@ -43,6 +48,7 @@ const Associations: React.FC = () => {
           <IonSegmentButton value={'all'}>
             <IonLabel>{t('associations.tab-all')}</IonLabel>
           </IonSegmentButton>
+
       </IonSegment>
 
       <IonContent>
@@ -54,6 +60,7 @@ const Associations: React.FC = () => {
             </SwiperSlide>
           ))}
         </Swiper>
+
       </IonContent>
 
     </IonPage>
