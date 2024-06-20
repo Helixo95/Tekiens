@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import HeaderTitleBack from '../../components/HeaderTitleBack'
-import { IonButton, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonPage, IonRow, IonSpinner, IonTabButton, IonText, IonToast } from '@ionic/react'
+import { IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonPage, IonRow, IonSpinner, IonTabButton, IonText, IonToast } from '@ionic/react'
 import { useParams } from 'react-router'
 import { ApiResponseEvent, AllEventsData } from '../../Tools/Interfaces/EventInterface'
 import { useTranslation } from 'react-i18next'
 import '../../theme/Event/EventDetails .css'
-import { getEventStatus } from '../../Tools/eventStatus'
+import { getEventStatus, darkenColor, formatDate, duration } from '../../Tools/EventTools'
 import { parseText } from '../../Tools/DOMParser'
 import { add, starOutline, star, pushOutline, push } from 'ionicons/icons'
 
@@ -86,56 +86,6 @@ const EventDetails: React.FC = () => {
         );
     }
 
-    /**
-     * Function to return a string with the right format to a date, format : YYYY-MM-DD HH:MM:SS
-     * @param date the string in the right format
-     * @returns the date from the string
-     */
-    const formatDate = (date: string) => {
-        return new Date(date + 'Z').toLocaleString('FR-fr', { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
-    }
-
-    /**
-     * Function to return the duration of an event in days, hours and minutes
-     * @param event the event we want to calculat the duration
-     * @returns the event's duration in days, hours and minutes
-     */
-    const duration = (event: AllEventsData) => {
-        if (!event.duration)
-            return undefined;
-        var days = Math.floor(event.duration / 60 / 24);
-        var hours = Math.floor(event.duration / 60) % 24;
-        var minutes = event.duration % 60;
-        return `${days}j ${hours}h ${minutes}min`.replace(/0j /, '').replace(/0h /, '').replace(/ 0min/, '');
-    }
-
-    /**
-     * Function to darken a color with a set amount
-     * @param hex the color we want to darken
-     * @param amount the amount we want to darken the color
-     * @returns the new darker color
-     */
-    const darkenColor = (hex: string | undefined, amount = 20) => {
-        if (hex) {
-
-            hex = hex.slice(1);
-
-            let num = parseInt(hex, 16);
-
-            let r = (num >> 16) - amount;
-            let g = ((num >> 8) & 0x00FF) - amount;
-            let b = (num & 0x0000FF) - amount;
-
-            r = Math.max(r, 0);
-            g = Math.max(g, 0);
-            b = Math.max(b, 0);
-
-            return "#" + (r << 16 | g << 8 | b).toString(16).padStart(6, '0');
-        }
-
-        return '#000000';
-    }
-
     const saveEvent = () => {
         const savedEvents = JSON.parse(localStorage.getItem("savedEvents") || "[]");
 
@@ -168,10 +118,10 @@ const EventDetails: React.FC = () => {
                         <IonIcon icon={add}></IonIcon>
                     </IonFabButton>
                     <IonFabList side="top">
-                        <IonFabButton onClick={saveEvent} id="saveEvent">
+                        <IonFabButton onClick={saveEvent} id="saveEvent" style={{ '--border-color': eventData.associationColor }}>
                             <IonIcon icon={isSaved ? star : starOutline} style={{ color: eventData.associationColor }} />
                         </IonFabButton>
-                        <IonFabButton>
+                        <IonFabButton style={{ '--border-color': eventData.associationColor }}>
                             <IonIcon icon={pushOutline} style={{ color: eventData.associationColor }} />
                         </IonFabButton>
                     </IonFabList>
