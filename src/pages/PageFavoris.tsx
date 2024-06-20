@@ -1,9 +1,9 @@
 import { IonContent, IonLabel, IonPage, IonSegment, IonSegmentButton, IonTabBar } from "@ionic/react";
 import HeaderTitle from "../components/HeaderTitle";
 import { useTranslation } from "react-i18next";
+import FavoriteEventsComponent from '../components/EventComponent/FavoriteEventsComponent';
 import AssociationCards from "./Association/AssociationCards";
-import Events from "./Event/Events";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const PageFavoris: React.FC = () => {
     // Use to translte the page
@@ -21,7 +21,7 @@ const PageFavoris: React.FC = () => {
             <IonContent>
                 {desiredSeg == "assos" ?                 
                 <AssociationCards segValue={"sub"}/> :
-                <Events apiHref="events" showFavorites={true} />}
+                <FavoriteEventsComponent />}
             </IonContent>
         </IonPage>
     )

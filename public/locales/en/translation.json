@@ -4,23 +4,35 @@
     },
 
     "associations" : {
-        "title" : "Associations",
+        "tab-title" : "Associations",
+        "title" : "Associations list",
+
         "no-description": "No description available",
         "tab-active": "Active",
         "tab-over": "Over",
         "tab-all": "All"
+    },
+
+    "association" : {
+        "title" : "Association",
+
+        "favorite" : {
+            "add" : "Association added to favorite",
+            "remove" : "association removed from favorites"
+        }
 
     },
 
     "events" : {
-        "title" : "Events",
+        "tab-title" : "Events",
+        "title" : "Events list",
 
         "filter" : {
             "futur" : {
                 "label" : "Upcoming",
                 "message" : {
                     "title" : "No upcoming events",
-                    "text" : "Come back later, or consult the list of past or present events."
+                    "text" : "Come back later, or consult the list of past or ongoing events."
                 }
             },
 
@@ -28,7 +40,7 @@
                 "label" : "Ongoing",
                 "message" : {
                     "title" : "No ongoing events",
-                    "text" : "Come back later, or consult the list of past or future events."
+                    "text" : "Come back later, or consult the list of past or futur events."
                 }
             },
 
@@ -36,7 +48,7 @@
                 "label" : "Past",
                 "message" : {
                     "title" : "No past events",
-                    "text" : "Revenez plus tard, ou consultez la liste des événements passés ou présent."
+                    "text" : "Come back later, or consult the list of ongoing or futur events."
                 }
             },
 
@@ -51,7 +63,12 @@
     },
 
     "event" : {
-        "title" : "Event"
+        "title" : "Event",
+
+        "favorite" : {
+            "add" : "Event added to favorite",
+            "remove" : "Event removed from favorite"
+        }
     },
 
     "favorite" : {

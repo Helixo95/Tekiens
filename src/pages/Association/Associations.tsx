@@ -49,8 +49,10 @@ const Associations: React.FC = () => {
           ref={swiperRef}
         >
           {categories.map((val, index) => (
+            
             <SwiperSlide key={index}>
               {index === activeIndex && <AssociationCards segValue={val} />}
+              
             </SwiperSlide>
           ))}
         </Swiper>
