@@ -1,8 +1,8 @@
-import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardTitle, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonPage, IonSpinner, IonTabButton, IonText, IonTitle, IonToolbar } from "@ionic/react";
+import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardTitle, IonContent, IonFab, IonFabButton, IonFabList, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonPage, IonSpinner, IonTabButton, IonText, IonTitle, IonToolbar } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { getAssoInformationByID } from "../../Tools/APIFetch";
 import { useParams } from "react-router";
-import { logoDiscord, logoInstagram, paperPlane, logoLinkedin, globeOutline, leafOutline, atOutline, logoFacebook, locationOutline, extensionPuzzleOutline, calendarOutline, addOutline, addCircle, removeCircleOutline, call } from 'ionicons/icons';
+import { logoDiscord, logoInstagram, paperPlane, logoLinkedin, globeOutline, leafOutline, atOutline, logoFacebook, locationOutline, extensionPuzzleOutline, calendarOutline, addOutline, addCircle, removeCircleOutline, call, pulseOutline, colorFill, add, starSharp, starOutline } from 'ionicons/icons';
 import { GlobalAssociationData, SocialsData } from '../../Tools/Interfaces/AssosInterface';
 import { parseText } from "../../Tools/DOMParser";
 import { isAssoFollowed, managedSubscription } from "../../Tools/LocalStorage/AssoCalls";
@@ -59,18 +59,31 @@ const AssociationDetails: React.FC = () => {
                         </IonCard>
                     </IonContent>
 
+                    <IonFab slot="fixed" vertical="bottom" horizontal="end">
+                                <IonFabButton className="detail-socials-button" style={{'--border-color': data.color, '--background': data.color}}>
+                                    <IonIcon icon={add} />
+                                </IonFabButton>
+                                    <IonFabList side="top">
+                                      
+                                        {data.socials.map((val: SocialsData, index) =>
+                                            <IonFabButton key={index} onClick={() => window.open(val.link, '_system', 'location=yes')} className="detail-socials-button" style={{ '--border-color': data.color }}>
+                                                <IonIcon icon={logos[val.id]} style={{ color: data.color }} />
+                                            </IonFabButton>
+                                        )}
+
+                                        <IonFabButton className="detail-socials-button" onClick={() => managedSubscription(!isFollowed, data.id, setIsFollowed)} style={{'--border-color': data.color}}>
+                                        <IonIcon icon={isFollowed ? starSharp : starOutline} style={{color: data.color}}/>
+                                        </IonFabButton>
+                                        
+                                    </IonFabList>
+                                </IonFab>
+
                     <IonFooter translucent={true}>
                         <IonToolbar slot="bottom">
-                            {data.socials.map((val: SocialsData) =>
-                                <IonButton fill="clear" key={val.id} onClick={() => window.open(val.link, '_system', 'location=yes')} className="detail-socials-button" style={{ '--border-color': data.color }}>
-                                    <IonIcon icon={logos[val.id]} style={{ color: data.color }} />
+                            <IonButton fill="clear" className="detail-socials-button" style={{'--border-color': data.color}} 
+                            href={"/association/"+data.id+"/events"}>
+                                    <IonIcon icon={calendarOutline} style={{color: data.color}}/>
                                 </IonButton>
-                            )}
-
-                            <IonButton fill="clear" className="detail-socials-button" style={{ '--border-color': data.color }}
-                                href={"/association/" + data.id + "/events"}>
-                                <IonIcon icon={calendarOutline} style={{ color: data.color }} />
-                            </IonButton>
 
                             <IonItem>
                                 <IonIcon icon={locationOutline} style={{ color: data.color }} />
@@ -80,12 +93,6 @@ const AssociationDetails: React.FC = () => {
                                 <IonIcon icon={extensionPuzzleOutline} style={{ color: data.color }} />
                                 <IonText style={{ color: data.color }}>{data.theme}</IonText>
                             </IonItem>
-
-                            <IonItem lines="none">
-                                <IonIcon icon={isFollowed ? removeCircleOutline : addCircle} 
-                                style={{color: data.color}} slot="end" size="large" onClick={() => managedSubscription(!isFollowed, data.id, setIsFollowed)}/>
-                            </IonItem>
-
                         </IonToolbar>
                     </IonFooter>
                 </>
