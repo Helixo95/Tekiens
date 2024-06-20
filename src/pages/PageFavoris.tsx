@@ -10,6 +10,8 @@ const PageFavoris: React.FC = () => {
     const { t } = useTranslation();
 
     const [desiredSeg, setDesiredSeg] = useState("assos");
+    const emptyTitle = t('favorite.filter.assos.message.title');
+    const emptyMessage = t('favorite.filter.assos.message.text');
 
     return (
         <IonPage>
@@ -20,7 +22,7 @@ const PageFavoris: React.FC = () => {
             <HeaderTitle>{t('favorite.title')}</HeaderTitle>
             <IonContent>
                 {desiredSeg == "assos" ?
-                    <AssociationCards segValue={"sub"} /> :
+                    <AssociationCards segValue={"sub"} emptyTitle={emptyTitle} emptyMessage={emptyMessage}/> :
                     <FavoriteEventsComponent />}
             </IonContent>
         </IonPage>

@@ -15,6 +15,9 @@ const Associations: React.FC = () => {
   const swiperRef = useRef<SwiperRef>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const emptyTitle = t('associations.message.title');
+  const emptyMessage = t('associations.message.text');
+
   // Handle change in desired segment
   const handleSegmentChange = (event: CustomEvent) => {
     const newFilter = event.detail.value;
@@ -30,7 +33,7 @@ const Associations: React.FC = () => {
   
   return (
     <IonPage>
-      <HeaderTitle>Liste des associations</HeaderTitle>
+      <HeaderTitle>{t('associations.title')}</HeaderTitle>
       <IonSegment value={filter} onIonChange={handleSegmentChange}>
         <IonSegmentButton value={'active'}>
           <IonLabel>{t('associations.tab-active')}</IonLabel>
@@ -51,7 +54,7 @@ const Associations: React.FC = () => {
           {categories.map((val, index) => (
             
             <SwiperSlide key={index}>
-              {index === activeIndex && <AssociationCards segValue={val} />}
+              {index === activeIndex && <AssociationCards segValue={val} emptyTitle={emptyTitle} emptyMessage={emptyMessage}/>}
               
             </SwiperSlide>
           ))}

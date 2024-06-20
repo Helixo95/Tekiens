@@ -6,7 +6,7 @@ import { filterData } from "../../Tools/LocalStorage/AssoCalls";
 import { useTranslation } from "react-i18next";
 import "../../theme/Association/Association.css";
 
-const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
+const AssociationCards: React.FC<{ segValue: string, emptyTitle: string, emptyMessage: string }> = ({ segValue, emptyTitle, emptyMessage }) => {
   // Hooks updated with the assos information when the page is mounted
   const [data, setData] = useState<AssociationMainData[] | null>(null);
   const [filteredData, setFilteredData] = useState<AssociationMainData[] | null>(null);
@@ -50,8 +50,8 @@ const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
               </IonGrid> :
             
             <div className="ion-padding">
-              <h1 className="title">{t('favorite.filter.assos.message.title')}</h1>
-              <div className="justify-text"><IonLabel>{t('favorite.filter.assos.message.text')}</IonLabel></div>
+              <h1 className="title">{emptyTitle}</h1>
+              <div className="justify-text"><IonLabel>{t(emptyMessage)}</IonLabel></div>
             </div>
 
             :
