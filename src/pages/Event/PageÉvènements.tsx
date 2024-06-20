@@ -1,4 +1,4 @@
-import { IonContent, IonPage } from '@ionic/react'
+import { IonPage } from '@ionic/react'
 import HeaderTitle from '../../components/HeaderTitle';
 import { useTranslation } from 'react-i18next';
 import Events from './Events';
@@ -10,9 +10,7 @@ const Événements: React.FC = () => {
     return (
         <IonPage>
             <HeaderTitle>{t('events.title')}</HeaderTitle>
-            <IonContent>
-                <Events apiHref="events" />
-            </IonContent>
+            <Events apiHref="events" />
         </IonPage>
     );
 }
