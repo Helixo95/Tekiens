@@ -14,6 +14,8 @@ const PageFavoris: React.FC = () => {
     const { t } = useTranslation();
 
     const [desiredSeg, setDesiredSeg] = useState("assos");
+    const emptyTitle = t('favorite.filter.assos.message.title');
+    const emptyMessage = t('favorite.filter.assos.message.text');
     const [activeIndex, setActiveIndex] = useState(0);
 
     // Used by the swiper to reference the segment value
@@ -51,7 +53,7 @@ const PageFavoris: React.FC = () => {
                 >
 
                     <SwiperSlide key={0}>
-                        {activeIndex === 0 && <AssociationCards segValue={"sub"} />}
+                        {activeIndex === 0 && <AssociationCards segValue={"sub"} emptyTitle={emptyTitle} emptyMessage={emptyMessage} />}
                     </SwiperSlide>
 
                     <SwiperSlide key={1}>

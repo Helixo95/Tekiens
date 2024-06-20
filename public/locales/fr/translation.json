@@ -10,7 +10,12 @@
         "no-description": "Aucune description disponible",
         "tab-active": "Active",
         "tab-over": "Terminées",
-        "tab-all": "Toutes"
+        "tab-all": "Toutes",
+
+        "message": {
+            "title": "Aucune Associations",
+            "text": "Il n'y a aucune associations qui à été trouvé pour cette catégorie où campus"
+        }
     },
 
     "association" : {
