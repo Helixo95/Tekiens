@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getAllAssosMainInfos } from "../../Tools/APIFetch";
 import { filterData } from "../../Tools/LocalStorage/AssoCalls";
 import { useTranslation } from "react-i18next";
+import "../../theme/Association/Association.css";
 
 const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
   // Hooks updated with the assos information when the page is mounted
@@ -24,7 +25,6 @@ const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
     if (data) {
       filterData(segValue, data, setFilteredData);
     }
-    console.log(filteredData);
   }, [segValue]);
 
   return (
@@ -38,7 +38,7 @@ const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
                       filteredData.map(value =>
                       <IonCol key={value.id} size="11" size-md="4" size-lg="2">
                         <IonCard className="asso-card" button={true} href={"/association/" + value.id}>
-                          <img alt="logo" className="asso-image" src={"https://tekiens.net/data/"+value.id+"/logo-0.webp"} />
+                          <img alt="logo" className="asso-image-size" src={"https://tekiens.net/data/"+value.id+"/logo-0.webp"} style={{ width: '100%' }} />
                           <IonCardHeader>
                             <IonCardTitle style={{ color: value.color }} className="card-asso-title">{value.names[0]}</IonCardTitle>
                             <IonCardSubtitle style={{ color: value.color }} className="card-assos-sub">{value.theme}</IonCardSubtitle>

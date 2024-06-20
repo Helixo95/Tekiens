@@ -6,7 +6,7 @@
     "associations" : {
         "tab-title" : "Associations",
         "title" : "Liste des associations",
-        
+
         "no-description": "Aucune description disponible",
         "tab-active": "Active",
         "tab-over": "Terminées",
