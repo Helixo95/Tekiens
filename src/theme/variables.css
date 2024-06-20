@@ -78,3 +78,11 @@ ion-tab-button {
 .header-ios ion-toolbar:last-of-type {
 	box-shadow: 0px 1px 5px black;
 }
+
+.ios .all-screen-swipe {
+	height: 84vh;
+}
+
+.md .all-screen-swipe {
+	height: 82vh;
+}

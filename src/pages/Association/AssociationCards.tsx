@@ -28,9 +28,9 @@ const AssociationCards: React.FC<{ segValue: string, emptyTitle: string, emptyMe
   }, [segValue, localStorage.getItem("selectedCampus")]);
 
   return (
-        <>
-        {
-          filteredData ?
+    <>
+      {
+        filteredData ?
           filteredData.length > 0 ?
               <IonGrid className="asso-grid">
                 <IonRow>
@@ -49,20 +49,19 @@ const AssociationCards: React.FC<{ segValue: string, emptyTitle: string, emptyMe
                 </IonRow> 
               </IonGrid> :
             
-            <div className="ion-padding">
+            <div className="ion-padding all-screen-swipe" >
               <h1 className="title">{emptyTitle}</h1>
               <div className="justify-text"><IonLabel>{t(emptyMessage)}</IonLabel></div>
             </div>
-
-            :
-            <IonContent>
-              <IonTabButton disabled>
-                <IonSpinner name="circular"></IonSpinner>
-              </IonTabButton>
-            </IonContent>
-        }
-      </>
-    );
+          :
+          <IonContent>
+            <IonTabButton disabled>
+              <IonSpinner name="circular"></IonSpinner>
+            </IonTabButton>
+          </IonContent>
+      }
+    </>
+  );
 }
 
 export default AssociationCards;

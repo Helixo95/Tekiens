@@ -5,7 +5,7 @@ const useEventData = (apiHref: string) => {
     const [data, setData] = useState<SomeEventsData[]>([]);
     const [loading, setLoading] = useState(true);
 
-    const selectedCampus = localStorage.getItem('selectedCampus');
+    const selectedCampus = localStorage.getItem('selectedCampus') || 'all';
 
     useEffect(() => {
         const fetchData = async () => {

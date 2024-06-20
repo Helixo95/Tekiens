@@ -4,7 +4,7 @@ import { IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon,
 import { useParams } from 'react-router'
 import { ApiResponseEvent, AllEventsData } from '../../Tools/Interfaces/EventInterface'
 import { useTranslation } from 'react-i18next'
-import '../../theme/Event/EventDetails .css'
+import '../../theme/Event/EventDetails.css'
 import { getEventStatus, darkenColor, formatDate, duration } from '../../Tools/EventTools'
 import { parseText } from '../../Tools/DOMParser'
 import { add, starOutline, star, pushOutline, push } from 'ionicons/icons'
