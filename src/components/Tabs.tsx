@@ -2,7 +2,7 @@ import { IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } 
 import { Redirect, Route } from 'react-router'
 import { homeOutline, starOutline, calendarOutline, readerOutline, addOutline } from 'ionicons/icons';
 import Accueil from "../pages/PageAccueil";
-import Événements from '../pages/Event/PageÉvénements';
+import Événements from '../pages/Event/PageÉvènements';
 import Favoris from '../pages/PageFavoris';
 import Plus from '../pages/PagePlus';
 import Associations from '../pages/Association/Associations';

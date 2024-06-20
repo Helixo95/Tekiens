@@ -6,14 +6,14 @@ import HeaderTitleBack from "../../components/HeaderTitleBack";
 
 
 const AssociationEvents: React.FC = () => {
-    const {id} = useParams<{id: string}>();
-    return(
-    <IonPage>
-        <IonContent>
-            <HeaderTitleBack back={"/association/"+id}>Événement</HeaderTitleBack>
-            <Events apiHref={"assos/"+id+"/events"}/>
-        </IonContent>
-    </IonPage>);
+    const { id } = useParams<{ id: string }>();
+    return (
+        <IonPage>
+            <IonContent>
+                <HeaderTitleBack back={"/association/" + id}>Événement</HeaderTitleBack>
+                <Events apiHref={"assos/" + id + "/events"} />
+            </IonContent>
+        </IonPage>);
 }
 
 export default AssociationEvents;

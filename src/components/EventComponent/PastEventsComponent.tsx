@@ -4,7 +4,7 @@ import { ApiResponseEvents, SomeEventsData } from '../../Tools/Interfaces/EventI
 import { IonGrid, IonLabel, IonSpinner, IonTabButton } from '@ionic/react';
 import EventCardComponent from './EventCardComponent';
 
-const FuturEventsComponent: React.FC = () => {
+const FuturEventsComponent: React.FC<{ apiHref: string }> = ({ apiHref }) => {
     // Use to translate the page
     const { t } = useTranslation();
 
@@ -14,7 +14,7 @@ const FuturEventsComponent: React.FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('https://tekiens.net/api/events');
+                const response = await fetch('https://tekiens.net/api/' + apiHref);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -44,7 +44,7 @@ const FuturEventsComponent: React.FC = () => {
         };
 
         fetchData();
-    }, []);
+    }, [apiHref]);
 
     if (loading) {
         return (

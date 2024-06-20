@@ -1,4 +1,4 @@
-import { IonContent, IonLabel, IonSegment, IonSegmentButton } from '@ionic/react';
+import { IonContent, IonLabel, IonPage, IonSegment, IonSegmentButton } from '@ionic/react';
 
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,9 +12,10 @@ import FuturEventsComponent from '../../components/EventComponent/FuturEventsCom
 import OngoingEventsComponent from '../../components/EventComponent/OngoingEventsComponent';
 import PastEventsComponent from '../../components/EventComponent/PastEventsComponent';
 import AllEventsComponent from '../../components/EventComponent/AllEventsComponent';
+import HeaderTitle from '../../components/HeaderTitle';
 
 
-const EventsComponents: React.FC = () => {
+const EventsComponents: React.FC<{ apiHref: string }> = ({ apiHref }) => {
     // Use to translate the page
     const { t } = useTranslation();
 
@@ -22,6 +23,7 @@ const EventsComponents: React.FC = () => {
 
     const swiperRef = useRef<any>(null);
 
+    // Used by the swiper to reference the segment value
     const segments = ['futur', 'ongoing', 'past', 'all'];
 
     const handleSegmentChange = (event: CustomEvent) => {
@@ -65,25 +67,25 @@ const EventsComponents: React.FC = () => {
             >
                 <SwiperSlide key={0} className="full-screen">
                     <div className='ion-content-scroll'>
-                        <FuturEventsComponent />
+                        <FuturEventsComponent apiHref={apiHref} />
                     </div>
                 </SwiperSlide>
 
                 <SwiperSlide key={1} className="full-screen">
                     <div className='ion-content-scroll'>
-                        <OngoingEventsComponent />
+                        <OngoingEventsComponent apiHref={apiHref} />
                     </div>
                 </SwiperSlide>
 
                 <SwiperSlide key={2} className="full-screen">
                     <div className='ion-content-scroll'>
-                        <PastEventsComponent />
+                        <PastEventsComponent apiHref={apiHref} />
                     </div>
                 </SwiperSlide>
 
                 <SwiperSlide key={3} className="full-screen">
                     <div className='ion-content-scroll'>
-                        <AllEventsComponent />
+                        <AllEventsComponent apiHref={apiHref} />
                     </div>
                 </SwiperSlide>
 
