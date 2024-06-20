@@ -10,7 +10,12 @@
         "no-description": "No description available",
         "tab-active": "Active",
         "tab-over": "Over",
-        "tab-all": "All"
+        "tab-all": "All",
+
+        "message": {
+            "title": "No Associations",
+            "text": "There's no associations to be found in this category or campus"
+        }
     },
 
     "association" : {
