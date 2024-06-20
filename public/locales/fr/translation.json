@@ -5,7 +5,12 @@
 
     "associations" : {
         "tab-title" : "Associations",
-        "title" : "Liste des associations"
+        "title" : "Liste des associations",
+        
+        "no-description": "Aucune description disponible",
+        "tab-active": "Active",
+        "tab-over": "Terminées",
+        "tab-all": "Toutes"
     },
 
     "association" : {
@@ -14,7 +19,7 @@
         "favorite" : {
             "add" : "Association ajouté aux favoris",
             "remove" : "Association supprimé des favoris"
-        }
+        }    
     },
 
     "events" : {
@@ -26,7 +31,7 @@
                 "label" : "À venir",
                 "message" : {
                     "title" : "Aucun événement à venir",
-                    "text" : "Revenez plus tard, ou consultez la liste des événements passés ou présent."
+                    "text" : "Revenez plus tard, ou consultez la liste des événements passés ou en cours."
                 }
             },
 
@@ -34,7 +39,7 @@
                 "label" : "En cours",
                 "message" : {
                     "title" : "Aucun événement en ce moment",
-                    "text" : "Revenez plus tard, ou consultez la liste des événements passés ou futures."
+                    "text" : "Revenez plus tard, ou consultez la liste des événements passés ou à venir."
                 }
             },
 
@@ -42,7 +47,7 @@
                 "label" : "Passés",
                 "message" : {
                     "title" : " Aucun événement passés",
-                    "text" : "Revenez plus tard, ou consultez la liste des événements passés ou présent."
+                    "text" : "Revenez plus tard, ou consultez la liste des événements passés ou en cours."
                 }
             },
 
@@ -72,7 +77,7 @@
             "events" : {
                 "label" : "Événements",
                 "message" : {
-                    "title" : "Nous n'avez aucun évènement favori",
+                    "title" : "Vous n'avez aucun évènement favori",
                     "text" : "Aller sur la page d'un évènement pour l'ajouter à vos favoris."
                 }
             },
@@ -80,7 +85,7 @@
             "assos" : {
                 "label" : "Associations",
                 "message" : {
-                    "title" : "Nous ne suivez aucune association",
+                    "title" : "Vous ne suivez aucune association",
                     "text" : "Aller sur la page d'une assiciation pour la suivre."
                 }
             }

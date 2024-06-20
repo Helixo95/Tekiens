@@ -10,25 +10,3 @@
 .info {
     padding: 5px;
 }
-
-.full-screen {
-    height: 100%;
-}
-
-.swiper-container {
-    height: 100%;
-}
-
-.swiper-slide {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    height: 100%;
-    overflow-y: auto;
-}
-
-.ion-content-scroll {
-    height: 100%;
-    overflow-y: auto;
-}

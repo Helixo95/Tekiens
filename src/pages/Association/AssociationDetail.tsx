@@ -1,10 +1,11 @@
-import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardTitle, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonPage, IonSpinner, IonTabButton, IonText, IonTitle, IonToolbar } from "@ionic/react";
+import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardTitle, IonContent, IonFab, IonFabButton, IonFabList, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonPage, IonSpinner, IonTabButton, IonText, IonTitle, IonToolbar } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { getAssoInformationByID } from "../../Tools/APIFetch";
 import { useParams } from "react-router";
-import { logoDiscord, logoInstagram, paperPlane, logoLinkedin, globeOutline, leafOutline, atOutline, logoFacebook, locationOutline, extensionPuzzleOutline, calendarOutline } from 'ionicons/icons';
+import { logoDiscord, logoInstagram, paperPlane, logoLinkedin, globeOutline, leafOutline, atOutline, logoFacebook, locationOutline, extensionPuzzleOutline, calendarOutline, addOutline, addCircle, removeCircleOutline, call, pulseOutline, colorFill, add, starSharp, starOutline } from 'ionicons/icons';
 import { GlobalAssociationData, SocialsData } from '../../Tools/Interfaces/AssosInterface';
 import { parseText } from "../../Tools/DOMParser";
+import { isAssoFollowed, managedSubscription } from "../../Tools/LocalStorage/AssoCalls";
 
 import "../../theme/Association/AssociationDetail.css";
 import HeaderTitleBack from "../../components/HeaderTitleBack";
@@ -14,9 +15,10 @@ import { useTranslation } from "react-i18next";
 const AssociationDetails: React.FC = () => {
     // Use to translate the page
     const { t } = useTranslation();
-
+        
     const [data, setData] = useState<GlobalAssociationData | null>(null);
     const [description, setDescription] = useState<string>("");
+    const [isFollowed, setIsFollowed] = useState(false);
     const { id } = useParams<{ id: string }>(); // Retrieve the asso id from the URL
 
     // List all the used logos in an associative array
@@ -32,7 +34,8 @@ const AssociationDetails: React.FC = () => {
             const result = await getAssoInformationByID(id);
             if (result) {
                 setData(result);
-                parseText(result.description, setDescription);
+                parseText(result.description ? result.description : "", setDescription);
+                setIsFollowed(isAssoFollowed(id));
             }
         }
 
@@ -50,24 +53,37 @@ const AssociationDetails: React.FC = () => {
                             <IonCardContent>
                                 <IonCardTitle style={{ color: data.color }}>{data.names[0]}</IonCardTitle>
 
-                                <img className="detail-asso-image" width="40%" src={"https://tekiens.net/data/" + data.id + "/logo-0.webp"} />
-                                <div dangerouslySetInnerHTML={{ __html: description }}></div>
+                                <img className="detail-asso-image"  width="40%" src={"https://tekiens.net/data/"+data.id+"/logo-0.webp"}/>
+                                {description == "" ? <div><IonText>{t('associations.no-description')}</IonText></div>: <div dangerouslySetInnerHTML={{ __html: description }}></div>}
                             </IonCardContent>
                         </IonCard>
                     </IonContent>
 
+                    <IonFab slot="fixed" vertical="bottom" horizontal="end">
+                                <IonFabButton className="detail-socials-button" style={{'--border-color': data.color, '--background': data.color}}>
+                                    <IonIcon icon={add} />
+                                </IonFabButton>
+                                    <IonFabList side="top">
+                                      
+                                        {data.socials.map((val: SocialsData, index) =>
+                                            <IonFabButton key={index} onClick={() => window.open(val.link, '_system', 'location=yes')} className="detail-socials-button" style={{ '--border-color': data.color }}>
+                                                <IonIcon icon={logos[val.id]} style={{ color: data.color }} />
+                                            </IonFabButton>
+                                        )}
+
+                                        <IonFabButton className="detail-socials-button" onClick={() => managedSubscription(!isFollowed, data.id, setIsFollowed)} style={{'--border-color': data.color}}>
+                                        <IonIcon icon={isFollowed ? starSharp : starOutline} style={{color: data.color}}/>
+                                        </IonFabButton>
+                                        
+                                    </IonFabList>
+                                </IonFab>
+
                     <IonFooter translucent={true}>
                         <IonToolbar slot="bottom">
-                            {data.socials.map((val: SocialsData) =>
-                                <IonButton fill="clear" key={val.id} onClick={() => window.open(val.link, '_system', 'location=yes')} className="detail-socials-button" style={{ '--border-color': data.color }}>
-                                    <IonIcon icon={logos[val.id]} style={{ color: data.color }} />
+                            <IonButton fill="clear" className="detail-socials-button" style={{'--border-color': data.color}} 
+                            href={"/association/"+data.id+"/events"}>
+                                    <IonIcon icon={calendarOutline} style={{color: data.color}}/>
                                 </IonButton>
-                            )}
-
-                            <IonButton fill="clear" className="detail-socials-button" style={{ '--border-color': data.color }}
-                                href={"/association/" + data.id + "/events"}>
-                                <IonIcon icon={calendarOutline} style={{ color: data.color }} />
-                            </IonButton>
 
                             <IonItem>
                                 <IonIcon icon={locationOutline} style={{ color: data.color }} />
@@ -77,7 +93,6 @@ const AssociationDetails: React.FC = () => {
                                 <IonIcon icon={extensionPuzzleOutline} style={{ color: data.color }} />
                                 <IonText style={{ color: data.color }}>{data.theme}</IonText>
                             </IonItem>
-
                         </IonToolbar>
                     </IonFooter>
                 </>

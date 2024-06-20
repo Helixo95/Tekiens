@@ -4,6 +4,8 @@ import { ApiResponseEvents, SomeEventsData } from '../../Tools/Interfaces/EventI
 import { IonGrid, IonLabel, IonSpinner, IonTabButton } from '@ionic/react';
 import EventCardComponent from './EventCardComponent';
 
+import '../../theme/Event/EventsComponent.css';
+
 const FuturEventsComponent: React.FC = () => {
     // Use to translate the page
     const { t } = useTranslation();
@@ -73,7 +75,7 @@ const FuturEventsComponent: React.FC = () => {
                     ))}
                 </IonGrid>
             ) : (
-                <div className='ion-padding'>
+                <div className='ion-padding all-screen-swipe'>
                     <h1 className='title'>{t('favorite.filter.events.message.title')}</h1>
                     <div className='justify-text'><IonLabel>{t('favorite.filter.events.message.text')}</IonLabel></div>
                 </div>
