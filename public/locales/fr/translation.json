@@ -105,25 +105,25 @@
         },
 
         "language" : {
-            "title" : "Langue"
+            "title" : "Langue",
+            "label" : "Choix de la langue"
         },
 
-        "apparence" : {
+        "theme" : {
             "title" : "Apparence",
-            "theme" : {
+            "label" : "Choix du thème",
+            "themes" : {
                 "default" : "Par défaut"
             }
         },
 
         "campus" : {
             "title" : "Campus",
-            "label" : "Choix campus",
+            "label" : "Choix du campus",
             "site" : {
-                "parc" : "Site du Parc",
-                "saint-martin" : "Site de Saint-Martin",
-                "neuville" : "Site de Neuville",
-                "chenes" : "Site des Chênes",
-                "pau" : "Site de Pau"
+                "all" : "Tous",
+                "cergy" : "Cergy",
+                "pau" : "Pau"
             }
         }
     },
