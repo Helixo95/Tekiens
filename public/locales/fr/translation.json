@@ -5,7 +5,12 @@
 
     "associations" : {
         "tab-title" : "Associations",
-        "title" : "Liste des associations"
+        "title" : "Liste des associations",
+        
+        "no-description": "Aucune description disponible",
+        "tab-active": "Active",
+        "tab-over": "Terminées",
+        "tab-all": "Toutes"
     },
 
     "association" : {
@@ -14,12 +19,7 @@
         "favorite" : {
             "add" : "Association ajouté aux favoris",
             "remove" : "Association supprimé des favoris"
-        }
-        "no-description": "Aucune description disponible",
-        "tab-active": "Active",
-        "tab-over": "Terminées",
-        "tab-all": "Toutes"
-    
+        }    
     },
 
     "events" : {

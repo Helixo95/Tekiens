@@ -5,7 +5,12 @@
 
     "associations" : {
         "tab-title" : "Associations",
-        "title" : "Associations list"
+        "title" : "Associations list",
+
+        "no-description": "No description available",
+        "tab-active": "Active",
+        "tab-over": "Over",
+        "tab-all": "All"
     },
 
     "association" : {
@@ -15,11 +20,6 @@
             "add" : "Association added to favorite",
             "remove" : "association removed from favorites"
         }
-
-        "no-description": "No description available",
-        "tab-active": "Active",
-        "tab-over": "Over",
-        "tab-all": "All"
 
     },
 
