@@ -9,25 +9,34 @@ export function filterData(filterChoice: string, data: AssociationMainData[], ca
     if(!data){
       return;
     }
-  
+    let campusFilteredData = filterByCampus(data);
     let result = [];
     switch(filterChoice){
       case 'all':
-        callback(data);
+        callback(campusFilteredData);
         break;
   
       case 'sub':
         const subed = getSubscribedAsso();
-        result = data.filter((currentData: any) => subed.includes(currentData.id));
+        result = campusFilteredData.filter((currentData: any) => subed.includes(currentData.id));
         callback(result);
         break;
       
       default:
           const bChooseActive = filterChoice == 'active';
-          result = data.filter((currentData: any) => bChooseActive ? currentData.end === null : currentData.end !== null);
+          result = campusFilteredData.filter((currentData: any) => bChooseActive ? currentData.end === null : currentData.end !== null);
           callback(result);
     }
-  }
+}
+
+
+function filterByCampus(data: AssociationMainData[]){
+    if(!data){
+        return [];
+    }
+    const campus = localStorage.getItem("selectedCampus");
+    return data.filter((currentData) => campus == "all" ? true : campus == currentData.campus);
+}
 
 /** Return an array of all the subscribed assos */
 export function getSubscribedAsso(){
