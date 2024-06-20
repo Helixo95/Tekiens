@@ -25,7 +25,7 @@ const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
     if (data) {
       filterData(segValue, data, setFilteredData);
     }
-  }, [segValue]);
+  }, [segValue, localStorage.getItem("selectedCampus")]);
 
   return (
         <>
