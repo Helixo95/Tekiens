@@ -4,11 +4,17 @@
     },
 
     "associations" : {
-        "title" : "Associations"
+        "tab-title" : "Associations",
+        "title" : "Liste des associations"
+    },
+
+    "association" : {
+        "title" : "Association"
     },
 
     "events" : {
-        "title" : "Événements",
+        "tab-title" : "Évènements",
+        "title" : "Liste des événements",
 
         "filter" : {
             "futur" : {

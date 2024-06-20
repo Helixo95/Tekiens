@@ -5,13 +5,14 @@ import { AssociationMainData } from "../../Tools/Interfaces/AssosInterface";
 import HeaderTitle from "../../components/HeaderTitle";
 
 import "../../theme/Association/Association.css";
+import { useTranslation } from "react-i18next";
 
-function filterData(filterChoice: string, data: any, callback: Function){
-  if(!data){
+function filterData(filterChoice: string, data: any, callback: Function) {
+  if (!data) {
     return;
   }
 
-  if(filterChoice == 'all'){
+  if (filterChoice == 'all') {
     callback(data);
     return;
   }
@@ -24,6 +25,9 @@ function filterData(filterChoice: string, data: any, callback: Function){
 }
 
 const Associations: React.FC = () => {
+  // Use to translate the page
+  const { t } = useTranslation();
+
   // Hooks updated with the assos information when the page is mounted
   const [data, setData] = useState<AssociationMainData[] | null>(null);
   const [filtereddata, setFilteredData] = useState<AssociationMainData[] | null>(null);
@@ -42,11 +46,11 @@ const Associations: React.FC = () => {
   useEffect(() => {
     filterData(segValue, data, setFilteredData);
   }, [segValue]);
- 
+
   return (
     <IonPage>
 
-      <HeaderTitle>Liste des associations</HeaderTitle>
+      <HeaderTitle>{t('associations.title')}</HeaderTitle>
 
       <IonSegment value={segValue} onIonChange={(event: CustomEvent) => setSegValue(event.detail.value)}>
         <IonSegmentButton value="active"><IonLabel>Active</IonLabel></IonSegmentButton>
@@ -63,7 +67,7 @@ const Associations: React.FC = () => {
                 {filtereddata.map(value =>
                   <IonCol key={value.id} size="11" size-md="4" size-lg="2">
                     <IonCard className="asso-card" button={true} href={"/association/" + value.id}>
-                      <img alt="logo" className="asso-image" src={"https://tekiens.net/data/"+value.id+"/logo-0.webp"} />
+                      <img alt="logo" className="asso-image" src={"https://tekiens.net/data/" + value.id + "/logo-0.webp"} />
                       <IonCardHeader>
                         <IonCardTitle style={{ color: value.color }} className="card-asso-title">{value.names[0]}</IonCardTitle>
                         <IonCardSubtitle style={{ color: value.color }} className="card-assos-sub">{value.theme}</IonCardSubtitle>
