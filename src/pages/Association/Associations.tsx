@@ -52,12 +52,12 @@ const Associations: React.FC = () => {
 
       <HeaderTitle>{t('associations.title')}</HeaderTitle>
 
-      <IonSegment value={segValue} onIonChange={(event: CustomEvent) => setSegValue(event.detail.value)}>
-        <IonSegmentButton value="active"><IonLabel>Active</IonLabel></IonSegmentButton>
-        <IonSegmentButton value="over"><IonLabel>Over</IonLabel></IonSegmentButton>
-        <IonSegmentButton value="all"><IonLabel>All</IonLabel></IonSegmentButton>
+      <IonSegment value={desiredSeg} onIonChange={(event: CustomEvent) => setDesiredSeg(event.detail.value)}>
+        <IonSegmentButton value="active"><IonLabel>{t('associations.tab-active')}</IonLabel></IonSegmentButton>
+        <IonSegmentButton value="over"><IonLabel>{t('associations.tab-over')}</IonLabel></IonSegmentButton>
+        <IonSegmentButton value="all"><IonLabel>{t('associations.tab-all')}</IonLabel></IonSegmentButton>
       </IonSegment>
-
+      
       <IonContent>
         {
           filtereddata ?
@@ -84,6 +84,8 @@ const Associations: React.FC = () => {
               </IonTabButton>
             </IonContent>
         }
+        <AssociationCards segValue={desiredSeg}/>
+
       </IonContent>
     </IonPage>
   );
