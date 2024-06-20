@@ -29,14 +29,6 @@ export function filterData(filterChoice: string, data: AssociationMainData[], ca
     }
   }
 
-
-
-/** Retrun wheter or not the localStorage is a valid array  */
-function isStorageEmpty(data: string | null){
-    if(!data){return false;}
-    return !Array.isArray(JSON.parse(data));
-}
-
 /** Return an array of all the subscribed assos */
 export function getSubscribedAsso(){
     const data = localStorage.getItem("assos");
