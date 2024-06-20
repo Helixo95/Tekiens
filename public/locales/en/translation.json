@@ -106,12 +106,14 @@
         },
 
         "language" : {
-            "title" : "Language"
+            "title" : "Language",
+            "label" : "Language choice"
         },
 
-        "apparence" : {
+        "theme" : {
             "title" : "Appearance",
-            "theme" : {
+            "label" : "Theme choice",
+            "themes" : {
                 "default" : "Default theme"
             }
         },
@@ -120,11 +122,9 @@
             "title" : "Campus",
             "label" : "Campus choice",
             "site" : {
-                "parc" : "Parc site",
-                "saint-martin" : "Saint-Martin site",
-                "neuville" : "Neuville site",
-                "chenes" : "Chênes site",
-                "pau" : "Pau site"
+                "all" : "All",
+                "cergy" : "Cergy",
+                "pau" : "Pau"
             }
         }
     },
