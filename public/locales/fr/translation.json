@@ -4,7 +4,17 @@
     },
 
     "associations" : {
-        "title" : "Associations",
+        "tab-title" : "Associations",
+        "title" : "Liste des associations"
+    },
+
+    "association" : {
+        "title" : "Association",
+
+        "favorite" : {
+            "add" : "Association ajouté aux favoris",
+            "remove" : "Association supprimé des favoris"
+        }
         "no-description": "Aucune description disponible",
         "tab-active": "En cours",
         "tab-over": "Terminées",
@@ -13,14 +23,15 @@
     },
 
     "events" : {
-        "title" : "Événements",
+        "tab-title" : "Évènements",
+        "title" : "Liste des événements",
 
         "filter" : {
             "futur" : {
                 "label" : "À venir",
                 "message" : {
                     "title" : "Aucun événement à venir",
-                    "text" : "Revenez plus tard, ou consultez la liste des événements passés ou présent."
+                    "text" : "Revenez plus tard, ou consultez la liste des événements passés ou en cours."
                 }
             },
 
@@ -28,7 +39,7 @@
                 "label" : "En cours",
                 "message" : {
                     "title" : "Aucun événement en ce moment",
-                    "text" : "Revenez plus tard, ou consultez la liste des événements passés ou futures."
+                    "text" : "Revenez plus tard, ou consultez la liste des événements passés ou à venir."
                 }
             },
 
@@ -36,7 +47,7 @@
                 "label" : "Passés",
                 "message" : {
                     "title" : " Aucun événement passés",
-                    "text" : "Revenez plus tard, ou consultez la liste des événements passés ou présent."
+                    "text" : "Revenez plus tard, ou consultez la liste des événements passés ou en cours."
                 }
             },
 
@@ -51,7 +62,12 @@
     },
 
     "event" : {
-        "title" : "Événement"
+        "title" : "Événement",
+
+        "favorite" : {
+            "add" : "Évènement ajouté aux favoris",
+            "remove" : "Évènement supprimé des favoris"
+        }
     },
 
     "favorite" : {

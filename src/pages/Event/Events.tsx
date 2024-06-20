@@ -1,223 +1,96 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonIcon, IonImg, IonItem, IonLabel, IonList, IonRow, IonSegment, IonSegmentButton, IonSpinner, IonTabButton } from '@ionic/react';
+import { IonContent, IonLabel, IonPage, IonSegment, IonSegmentButton } from '@ionic/react';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SomeEventsData, ApiResponseEvents } from '../../Tools/Interfaces/EventInterface'
 
 import '../../theme/Event/Events.css';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import '@ionic/react/css/ionic-swiper.css';
+import FuturEventsComponent from '../../components/EventComponent/FuturEventsComponent';
+import OngoingEventsComponent from '../../components/EventComponent/OngoingEventsComponent';
+import PastEventsComponent from '../../components/EventComponent/PastEventsComponent';
+import AllEventsComponent from '../../components/EventComponent/AllEventsComponent';
+import HeaderTitle from '../../components/HeaderTitle';
 
-const EventsComponents: React.FC<{ apiHref: string, showFavorites?: boolean }> = ({ apiHref, showFavorites = false }) => {
+
+const EventsComponents: React.FC<{ apiHref: string }> = ({ apiHref }) => {
     // Use to translate the page
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
-    const [data, setData] = useState<SomeEventsData[]>([]);
-    const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState('futur');
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('https://tekiens.net/api/' + apiHref);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
+    const swiperRef = useRef<any>(null);
 
-                const result: ApiResponseEvents = await response.json();
+    // Used by the swiper to reference the segment value
+    const segments = ['futur', 'ongoing', 'past', 'all'];
 
-                const eventsWithAssociations: SomeEventsData[] = await Promise.all(result.data.map(async (event) => {
-                    const associationResponse = await fetch(`https://tekiens.net/api/assos/${event.asso_id}`);
-                    if (!associationResponse.ok) {
-                        throw new Error(`Failed to fetch association ${event.asso_id}`);
-                    }
-                    const associationResult = await associationResponse.json();
-                    return {
-                        ...event,
-                        associationName: associationResult.data.names[0], // Use the first name (assuming it's primary)
-                        associationColor: associationResult.data.color,
-                    };
-                }));
-
-                setData(eventsWithAssociations.reverse());
-
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [filter, apiHref]);
-
-    if (loading) {
-        return (
-            // To center the loading circle
-            <IonTabButton disabled>
-                <IonSpinner name='circular' />
-            </IonTabButton>
-        );
-    }
-
-    /**
-     * Method to return the filtered data depending of the user's choice
-     * @returns return the filtered data depending of the user's choice
-     */
-    const getFilteredEvents = () => {
-        const currentDate = new Date();
-        if (showFavorites) {
-            const savedEvents = JSON.parse(localStorage.getItem('savedEvents') || '[]');
-            return data.filter(event => savedEvents.includes(event.id));
-        }
-
-        switch (filter) {
-            case 'futur':
-                return data.filter(event => new Date(event.date + 'Z') > currentDate);
-            case 'ongoing':
-                return data.filter(event => {
-                    const eventDate = new Date(event.date + 'Z');
-                    return eventDate.toDateString() === currentDate.toDateString();
-                });
-            case 'past':
-                return data.filter(event => new Date(event.date + 'Z') < currentDate);
-            default:
-                return data;
-        }
+    const handleSegmentChange = (event: CustomEvent) => {
+        const newFilter = event.detail.value;
+        setFilter(newFilter);
+        const newIndex = segments.findIndex(segment => segment === newFilter);
+        swiperRef.current?.swiper.slideTo(newIndex);
     };
 
-    /**
-     * Function to return a message if we don't have any events
-     * @returns the message we need to display if we don't have any event
-     */
-    const noDataMessage = () => {
-        if (showFavorites) {
-            return (
-                <div className='ion-padding'>
-                    <h1 className='title'>{t('favorite.filter.events.message.title')}</h1>
-                    <div className='justify-text'><IonLabel>{t('favorite.filter.events.message.text')}</IonLabel></div>
-                </div>
-            );
-        }
-
-        switch (filter) {
-
-            case 'futur':
-                return (
-                    <div className='ion-padding'>
-                        <h1 className='title'>{t('events.filter.futur.message.title')}</h1>
-                        <div className='justify-text'><IonLabel>{t('events.filter.futur.message.text')}</IonLabel></div>
-                    </div>
-                );
-            case 'ongoing':
-                return (
-                    <div className='ion-padding'>
-                        <h1 className='title'>{t('events.filter.ongoing.message.title')}</h1>
-                        <div className='justify-text'><IonLabel>{t('events.filter.ongoing.message.text')}</IonLabel></div>
-                    </div>
-                );
-            case 'past':
-                return (
-                    <div className='ion-padding'>
-                        <h1 className='title'>{t('events.filter.past.message.title')}</h1>
-                        <div className='justify-text'><IonLabel>{t('events.filter.past.message.text')}</IonLabel></div>
-                    </div>
-                );
-            default:
-                return (
-                    <div className='ion-padding'>
-                        <h1 className='title'>{t('events.filter.all.message.title')}</h1>
-                        <div className='justify-text'><IonLabel>{t('events.filter.all.message.text')}</IonLabel></div>
-                    </div>
-                );
-        }
-    };
-
-    /**
-     * Function to handle if we change the filter
-     * @param event the IonChange event we observe
-     */
-    const handleFilterChange = (event: CustomEvent) => {
-        setFilter(event.detail.value);
+    const handleSlideChange = (swiper: any) => {
+        const newIndex = swiper.activeIndex;
+        setFilter(segments[newIndex]);
     };
 
     return (
-        <>
-            {!showFavorites &&
-                <IonSegment scrollable={true} value={filter} onIonChange={handleFilterChange}>
-                    <IonSegmentButton value='futur'>
-                        <IonLabel>{t('events.filter.futur.label')}</IonLabel>
-                    </IonSegmentButton>
+        <IonContent>
+            <IonSegment scrollable={true} value={filter} onIonChange={handleSegmentChange}>
+                <IonSegmentButton value='futur'>
+                    <IonLabel>{t('events.filter.futur.label')}</IonLabel>
+                </IonSegmentButton>
 
-                    <IonSegmentButton value='ongoing'>
-                        <IonLabel>{t('events.filter.ongoing.label')}</IonLabel>
-                    </IonSegmentButton>
+                <IonSegmentButton value='ongoing'>
+                    <IonLabel>{t('events.filter.ongoing.label')}</IonLabel>
+                </IonSegmentButton>
 
-                    <IonSegmentButton value='past'>
-                        <IonLabel>{t('events.filter.past.label')}</IonLabel>
-                    </IonSegmentButton>
+                <IonSegmentButton value='past'>
+                    <IonLabel>{t('events.filter.past.label')}</IonLabel>
+                </IonSegmentButton>
 
-                    <IonSegmentButton value='all'>
-                        <IonLabel>{t('events.filter.all.label')}</IonLabel>
-                    </IonSegmentButton>
-                </IonSegment>
-            }
+                <IonSegmentButton value='all'>
+                    <IonLabel>{t('events.filter.all.label')}</IonLabel>
+                </IonSegmentButton>
+            </IonSegment>
 
-            {getFilteredEvents().length > 0 ? (
-                <IonGrid>
-                    {getFilteredEvents().map((event: SomeEventsData) => (
-                        <IonCard key={event.id} button={true} href={'/event/' + event.id}>
-                            <img alt="" src={"https://tekiens.net/" + event.poster} />
-                            <IonCardHeader>
-                                <IonCardTitle>{event.title}</IonCardTitle>
-                            </IonCardHeader>
+            <Swiper
+                ref={swiperRef}
+                onSlideChange={handleSlideChange}
+                initialSlide={0}
+                className="full-screen"
+                loop={false}
+            >
+                <SwiperSlide key={0} className="full-screen">
+                    <div className='ion-content-scroll'>
+                        <FuturEventsComponent apiHref={apiHref} />
+                    </div>
+                </SwiperSlide>
 
-                            <IonCardContent>
-                                <IonGrid>
-                                    <IonRow>
-                                        <IonCol size='auto'>
-                                            <IonGrid className='date-grid'>
-                                                <IonRow className="ion-text-uppercase">{new Date(event.date + 'Z').toLocaleString(i18n.language, { month: 'short' })}</IonRow>
-                                                <IonRow style={{ fontSize: '30px' }}>{new Date(event.date + 'Z').toLocaleString(i18n.language, { day: '2-digit' })}</IonRow>
-                                                <IonRow>{new Date(event.date + 'Z').toLocaleString(i18n.language, { weekday: 'long' })}</IonRow>
-                                            </IonGrid>
-                                        </IonCol>
+                <SwiperSlide key={1} className="full-screen">
+                    <div className='ion-content-scroll'>
+                        <OngoingEventsComponent apiHref={apiHref} />
+                    </div>
+                </SwiperSlide>
 
-                                        <IonCol size='auto'>
-                                            <div style={{ backgroundColor: event.associationColor, width: '3px', height: '100%' }} />
-                                        </IonCol>
+                <SwiperSlide key={2} className="full-screen">
+                    <div className='ion-content-scroll'>
+                        <PastEventsComponent apiHref={apiHref} />
+                    </div>
+                </SwiperSlide>
 
-                                        <IonCol>
-                                            <IonGrid className='infos-grid'>
-                                                <IonRow className='info'>
-                                                    <IonLabel style={{ color: event.associationColor }}>{event.associationName}</IonLabel>
-                                                </IonRow>
+                <SwiperSlide key={3} className="full-screen">
+                    <div className='ion-content-scroll'>
+                        <AllEventsComponent apiHref={apiHref} />
+                    </div>
+                </SwiperSlide>
 
-                                                <IonRow className='info'>
-                                                    <IonLabel>
-                                                        📍&nbsp;
-                                                        {event.place}
-                                                    </IonLabel>
-                                                </IonRow>
-
-                                                <IonRow className='info'>
-                                                    <IonLabel>
-                                                        🕓&nbsp;
-                                                        {new Date(event.date + 'Z').toLocaleString(i18n.language, { hour: '2-digit', minute: '2-digit' })}
-                                                    </IonLabel>
-                                                </IonRow>
-                                            </IonGrid>
-                                        </IonCol>
-                                    </IonRow>
-                                </IonGrid>
-
-                            </IonCardContent>
-                        </IonCard>
-                    ))}
-                </IonGrid>
-            ) : (
-                noDataMessage()
-            )}
-        </>
+            </Swiper>
+        </IonContent>
     );
 };
 

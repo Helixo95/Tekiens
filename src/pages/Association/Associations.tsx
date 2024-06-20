@@ -5,19 +5,52 @@ import { AssociationMainData } from "../../Tools/Interfaces/AssosInterface";
 import HeaderTitle from "../../components/HeaderTitle";
 
 import "../../theme/Association/Association.css";
-import { filterData } from "../../Tools/LocalStorage/AssoCalls";
-import AssociationCards from "./AssociationCards";
 import { useTranslation } from "react-i18next";
 
+function filterData(filterChoice: string, data: any, callback: Function) {
+  if (!data) {
+    return;
+  }
 
-const Associations: React.FC = () => { 
-  const [desiredSeg, setDesiredSeg] = useState("active");
-  const { t, i18n } = useTranslation();
+  if (filterChoice == 'all') {
+    callback(data);
+    return;
+  }
+
+  const bChooseActive = filterChoice == 'active';
+  let result = data.filter((currentData: any) => bChooseActive ? currentData.end === null : currentData.end !== null);
+
+  console.log(result)
+  callback(result);
+}
+
+const Associations: React.FC = () => {
+  // Use to translate the page
+  const { t } = useTranslation();
+
+  // Hooks updated with the assos information when the page is mounted
+  const [data, setData] = useState<AssociationMainData[] | null>(null);
+  const [filtereddata, setFilteredData] = useState<AssociationMainData[] | null>(null);
+  const [segValue, setSegValue] = useState("active");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getAllAssosMainInfos();
+      setData(result);
+      filterData('active', result, setFilteredData);
+      console.log(data);
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    filterData(segValue, data, setFilteredData);
+  }, [segValue]);
 
   return (
     <IonPage>
 
-      <HeaderTitle>Liste des associations</HeaderTitle>
+      <HeaderTitle>{t('associations.title')}</HeaderTitle>
 
       <IonSegment value={desiredSeg} onIonChange={(event: CustomEvent) => setDesiredSeg(event.detail.value)}>
         <IonSegmentButton value="active"><IonLabel>{t('associations.tab-active')}</IonLabel></IonSegmentButton>
@@ -26,7 +59,33 @@ const Associations: React.FC = () => {
       </IonSegment>
       
       <IonContent>
+        {
+          filtereddata ?
+            <IonGrid className="asso-grid">
+              <IonRow>
+
+                {filtereddata.map(value =>
+                  <IonCol key={value.id} size="11" size-md="4" size-lg="2">
+                    <IonCard className="asso-card" button={true} href={"/association/" + value.id}>
+                      <img alt="logo" className="asso-image" src={"https://tekiens.net/data/" + value.id + "/logo-0.webp"} />
+                      <IonCardHeader>
+                        <IonCardTitle style={{ color: value.color }} className="card-asso-title">{value.names[0]}</IonCardTitle>
+                        <IonCardSubtitle style={{ color: value.color }} className="card-assos-sub">{value.theme}</IonCardSubtitle>
+                      </IonCardHeader>
+                    </IonCard>
+                  </IonCol>
+                )}
+              </IonRow>
+            </IonGrid>
+            :
+            <IonContent>
+              <IonTabButton disabled>
+                <IonSpinner name="circular"></IonSpinner>
+              </IonTabButton>
+            </IonContent>
+        }
         <AssociationCards segValue={desiredSeg}/>
+
       </IonContent>
     </IonPage>
   );

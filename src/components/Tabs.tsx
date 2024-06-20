@@ -2,7 +2,7 @@ import { IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } 
 import { Redirect, Route } from 'react-router'
 import { homeOutline, starOutline, calendarOutline, readerOutline, addOutline } from 'ionicons/icons';
 import Accueil from "../pages/PageAccueil";
-import Événements from '../pages/Event/PageÉvénements';
+import Événements from '../pages/Event/PageÉvènements';
 import Favoris from '../pages/PageFavoris';
 import Plus from '../pages/PagePlus';
 import Associations from '../pages/Association/Associations';
@@ -34,12 +34,12 @@ const Tabs: React.FC = () => {
 
                 <IonTabButton tab='associations' href='/app/associations'>
                     <IonIcon icon={readerOutline} />
-                    <IonLabel>{t('associations.title')}</IonLabel>
+                    <IonLabel>{t('associations.tab-title')}</IonLabel>
                 </IonTabButton>
 
                 <IonTabButton tab='événements' href='/app/événements'>
                     <IonIcon icon={calendarOutline} />
-                    <IonLabel>{t('events.title')}</IonLabel>
+                    <IonLabel>{t('events.tab-title')}</IonLabel>
                 </IonTabButton>
 
                 <IonTabButton tab='favoris' href='/app/favoris'>
