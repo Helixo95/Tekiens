@@ -19,9 +19,8 @@ const EventsComponents: React.FC<{ apiHref: string }> = ({ apiHref }) => {
     const [filter, setFilter] = useState('futur');
     const [activeIndex, setActiveIndex] = useState(0);
 
-    const swiperRef = useRef<any>(null);
-
     // Used by the swiper to reference the segment value
+    const swiperRef = useRef<any>(null);
     const segments = ['futur', 'ongoing', 'past', 'all'];
 
     const handleSegmentChange = (event: CustomEvent) => {
@@ -66,6 +65,7 @@ const EventsComponents: React.FC<{ apiHref: string }> = ({ apiHref }) => {
                     loop={false}
                     freeMode={true}
                 >
+
                     <SwiperSlide key={0}>
                         {activeIndex === 0 && <FuturEventsComponent apiHref={apiHref} />}
                     </SwiperSlide>

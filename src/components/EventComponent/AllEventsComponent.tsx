@@ -6,8 +6,6 @@ import EventCardComponent from './EventCardComponent';
 
 import useEventData from '../../Tools/EventApiCall';
 
-import '../../theme/Event/EventsComponent.css';
-
 const FuturEventsComponent: React.FC<{ apiHref: string }> = ({ apiHref }) => {
     // Use to translate the page
     const { t } = useTranslation();

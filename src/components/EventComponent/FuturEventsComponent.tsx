@@ -4,7 +4,6 @@ import { SomeEventsData } from '../../Tools/Interfaces/EventInterface';
 import { IonGrid, IonLabel, IonSpinner, IonTabButton } from '@ionic/react';
 import EventCardComponent from './EventCardComponent';
 
-import '../../theme/Event/EventsComponent.css';
 import useEventData from '../../Tools/EventApiCall';
 
 const FuturEventsComponent: React.FC<{ apiHref: string }> = ({ apiHref }) => {
