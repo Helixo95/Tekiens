@@ -9,7 +9,12 @@
     },
 
     "association" : {
-        "title" : "Association"
+        "title" : "Association",
+
+        "favorite" : {
+            "add" : "Association added to favorite",
+            "remove" : "association removed from favorites"
+        }
     },
 
     "events" : {
@@ -52,7 +57,12 @@
     },
 
     "event" : {
-        "title" : "Event"
+        "title" : "Event",
+
+        "favorite" : {
+            "add" : "Event added to favorite",
+            "remove" : "Event removed from favorite"
+        }
     },
 
     "favorite" : {

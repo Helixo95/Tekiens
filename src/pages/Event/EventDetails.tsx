@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import '../../theme/Event/EventDetails .css'
 import { getEventStatus } from '../../Tools/eventStatus'
 import { parseText } from '../../Tools/DOMParser'
-import { add, bookmarkOutline, bookmark, pushOutline, push, book } from 'ionicons/icons'
+import { add, starOutline, star, pushOutline, push } from 'ionicons/icons'
 
 const EventDetails: React.FC = () => {
     // Use to translte the page
@@ -159,7 +159,7 @@ const EventDetails: React.FC = () => {
                     trigger="saveEvent"
                     position="bottom"
                     swipeGesture="vertical"
-                    message={isSaved ? "évènement enregistré" : "évènement supprimé"}
+                    message={isSaved ? t('event.favorite.add') : t('event.favorite.remove')}
                     duration={1000}
                 />
 
@@ -169,10 +169,10 @@ const EventDetails: React.FC = () => {
                     </IonFabButton>
                     <IonFabList side="top">
                         <IonFabButton onClick={saveEvent} id="saveEvent">
-                            <IonIcon icon={isSaved ? bookmark : bookmarkOutline} />
+                            <IonIcon icon={isSaved ? star : starOutline} style={{ color: eventData.associationColor }} />
                         </IonFabButton>
                         <IonFabButton>
-                            <IonIcon icon={pushOutline} />
+                            <IonIcon icon={pushOutline} style={{ color: eventData.associationColor }} />
                         </IonFabButton>
                     </IonFabList>
                 </IonFab>
@@ -180,7 +180,7 @@ const EventDetails: React.FC = () => {
                 <img alt="" src={"https://tekiens.net/" + eventData.poster} width="100%" />
                 <IonGrid className='ion-padding'>
                     <IonRow className='info'>
-                        <IonLabel style={{ color: eventData.associationColor }}>{eventData.associationName}</IonLabel>
+                        <a style={{ color: eventData.associationColor }} href={"/association/" + eventData.asso_id}>{eventData.associationName}</a>
                     </IonRow>
 
                     <IonRow className='info'>
