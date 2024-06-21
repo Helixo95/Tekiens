@@ -118,10 +118,10 @@ const EventDetails: React.FC = () => {
                         <IonIcon icon={add}></IonIcon>
                     </IonFabButton>
                     <IonFabList side="top">
-                        <IonFabButton onClick={saveEvent} id="saveEvent" style={{ '--border-color': eventData.associationColor }}>
+                        <IonFabButton className='fab-button' onClick={saveEvent} id="saveEvent" style={{ '--border-color': eventData.associationColor }}>
                             <IonIcon icon={isSaved ? star : starOutline} style={{ color: eventData.associationColor }} />
                         </IonFabButton>
-                        <IonFabButton style={{ '--border-color': eventData.associationColor }}>
+                        <IonFabButton className='fab-button' style={{ '--border-color': eventData.associationColor }}>
                             <IonIcon icon={pushOutline} style={{ color: eventData.associationColor }} />
                         </IonFabButton>
                     </IonFabList>
