@@ -37,7 +37,7 @@ import Liens from './pages/PageLiens';
 import FAQ from './pages/PageFAQ';
 import { ThemeProvider } from './contexts/ThemeContext';
 import './MultiLang.js'
-import React from 'react';
+import React, { useEffect } from 'react';
 import EventDetails from './pages/Event/EventDetails';
 import AssociationDetails from './pages/Association/AssociationDetail';
 import AssociationEvents from './pages/Association/AssociationEvents';

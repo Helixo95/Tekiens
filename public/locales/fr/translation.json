@@ -8,8 +8,8 @@
         "title" : "Liste des associations",
 
         "no-description": "Aucune description disponible",
-        "tab-active": "Active",
-        "tab-over": "Terminées",
+        "tab-active": "Actives",
+        "tab-over": "Anciennes",
         "tab-all": "Toutes",
 
         "message": {

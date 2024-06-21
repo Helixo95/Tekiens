@@ -1,4 +1,4 @@
-import { IonPage } from "@ionic/react";
+import { IonButton, IonContent, IonPage } from "@ionic/react";
 import HeaderTitle from "../components/HeaderTitle";
 import { useTranslation } from "react-i18next";
 
@@ -9,6 +9,8 @@ const Accueil: React.FC = () => {
   return (
     <IonPage>
       <HeaderTitle>{t('home.title')}</HeaderTitle>
+      <IonContent>
+      </IonContent>
     </IonPage>
   );
 
