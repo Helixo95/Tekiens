@@ -1,24 +1,28 @@
-import { AllEventsData } from "./Interfaces/EventInterface";
+import { AllEventsData, SomeEventsData } from "./Interfaces/EventInterface";
+import i18next from 'i18next';
 
-export const eventStatus: { [key: string]: string } = {
-    programmed: '🟩 À venir',
-    cancelled: '🟥 Annulé',
-    rescheduled: '🟧 Reporté',
-    full: '🟨 Complet',
-    movedOnline: '🟦 Déplacé en ligne'
+const eventStatus: { [key: string]: string } = {
+    programmed: 'event.status.programmed',
+    cancelled: 'event.status.cancelled',
+    rescheduled: 'event.status.rescheduled',
+    full: 'event.status.full',
+    movedOnline: 'event.status.movedOnline',
+    finished: 'event.status.finished',
+    ongoing: 'event.status.ongoing',
 };
 
 export function getEventStatus(event: AllEventsData): string {
+
     const eventDate = new Date(Date.parse(event.date + 'Z'));
     const now = new Date();
     const eventEndDate = new Date(eventDate.getTime() + (event.duration ?? 0) * 60 * 1000);
 
     if (eventEndDate < now) {
-        return '⬛ Terminé';
+        return eventStatus['finished'];
     }
 
     if (eventDate < now) {
-        return '🟪 En cours';
+        return eventStatus['ongoing'];
     }
 
     if (eventStatus[event.status]) {
@@ -56,12 +60,12 @@ export const darkenColor = (hex: string | undefined, amount = 20) => {
 }
 
 /**
- * Function to return a string with the right format to a date, format : YYYY-MM-DD HH:MM:SS
+ * Function to return a string with the right format to a date
  * @param date the string in the right format
  * @returns the date from the string
  */
 export const formatDate = (date: string) => {
-    return new Date(date + 'Z').toLocaleString('FR-fr', { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
+    return new Date(date + 'Z').toLocaleString(i18next.language, { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
 }
 
 /**
@@ -76,4 +80,32 @@ export const duration = (event: AllEventsData) => {
     var hours = Math.floor(event.duration / 60) % 24;
     var minutes = event.duration % 60;
     return `${days}j ${hours}h ${minutes}min`.replace(/0j /, '').replace(/0h /, '').replace(/ 0min/, '');
+}
+
+export const getEventsByWeek = (filteredEvents: Array<SomeEventsData>) => {
+    return filteredEvents.reduce((o: { [key: string]: SomeEventsData[] }, event) => {
+        const monday = getMonday(new Date(event.date + 'Z').toString());
+        const key = `${monday.getFullYear()}-${monday.getMonth() + 1}-${monday.getDate()}`;
+        if (!o[key]) o[key] = [];
+        o[key].push(event);
+        return o;
+    }, {});
+}
+
+export const getWeekName = (date: string) => {
+    let monday = getMonday(date);
+    if (monday.getTime() == getMonday(new Date().toString()).getTime())
+        return 'Cette semaine';
+    if (monday.getTime() == getMonday(new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toString()).getTime())
+        return 'La semaine prochaine';
+    if (monday.getTime() == getMonday(new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000).toString()).getTime())
+        return 'La semaine dernière';
+    return 'Semaine du ' + new Date(monday).toLocaleDateString(i18next.language);
+}
+
+const getMonday = (dateString: string) => {
+    const date = new Date(dateString);
+    let weekday = (date.getDay() || 7) - 1;
+    let monday = new Date((date.getTime() - weekday * 24 * 60 * 60 * 1000));
+    return new Date(monday.getFullYear(), monday.getMonth(), monday.getDate());
 }

@@ -5,7 +5,7 @@ import { useParams } from 'react-router'
 import { ApiResponseEvent, AllEventsData } from '../../Tools/Interfaces/EventInterface'
 import { useTranslation } from 'react-i18next'
 import '../../theme/Event/EventDetails.css'
-import { getEventStatus, darkenColor, formatDate, duration } from '../../Tools/EventTools'
+import { darkenColor, formatDate, duration, getEventStatus } from '../../Tools/EventTools'
 import { parseText } from '../../Tools/DOMParser'
 import { add, starOutline, star, pushOutline, push } from 'ionicons/icons'
 
@@ -165,12 +165,16 @@ const EventDetails: React.FC = () => {
                     <IonCol />
 
                     <IonRow>
-                        <IonLabel className='about-event-title'>A propros de l'événement</IonLabel>
+                        <IonLabel className='about-event-title'>{t('event.about')}</IonLabel>
                     </IonRow>
                     <IonCol />
 
                     <IonRow className='justify-text'>
-                        <IonText><div dangerouslySetInnerHTML={{ __html: description }}></div></IonText>
+                        <IonText>{description ?
+                            <div dangerouslySetInnerHTML={{ __html: description }}></div>
+                            :
+                            t('event.no-description')}
+                        </IonText>
                     </IonRow>
                     <IonCol />
 
@@ -180,7 +184,7 @@ const EventDetails: React.FC = () => {
                     <IonCol />
 
                     <IonRow>
-                        <IonLabel className='about-event-title'>Informations supplémentaires</IonLabel>
+                        <IonLabel className='about-event-title'>{t('event.more-info')}</IonLabel>
                     </IonRow>
                     <IonCol />
 
@@ -206,7 +210,7 @@ const EventDetails: React.FC = () => {
                         <IonRow className='info'>
                             <IonLabel>
                                 🖇&nbsp;
-                                <a href={eventData.link} target="_blank" rel="noreferrer" style={{ color: eventData.associationColor }}>Lien de l'évènement</a>
+                                <a href={eventData.link} target="_blank" rel="noreferrer" style={{ color: eventData.associationColor }}>{t('event.link')}</a>
                             </IonLabel>
                         </IonRow>
                     }
@@ -222,7 +226,7 @@ const EventDetails: React.FC = () => {
 
                     {eventData.status &&
                         <IonRow className='info'>
-                            <IonLabel>{getEventStatus(eventData)}</IonLabel>
+                            <IonLabel>{t(getEventStatus(eventData))}</IonLabel>
                         </IonRow>
                     }
 
@@ -238,7 +242,7 @@ const EventDetails: React.FC = () => {
                     {eventData.createDate &&
                         <IonRow className='info'>
                             <IonLabel>
-                                📝 Crée le&nbsp;
+                                {t('event.create')}&nbsp;
                                 {formatDate(eventData.createDate)}
                             </IonLabel>
                         </IonRow>
@@ -252,11 +256,7 @@ const EventDetails: React.FC = () => {
                             </IonLabel>
                         </IonRow>
                     }
-                    {/*savedEvents.includes(eventData.id) ?
-                        <IonButton style={{ '--background': eventData.associationColor, '--background-activated': darkenColor(eventData.associationColor) }} onClick={saveEvent}>Enregistrer l'évènement</IonButton>
-                        :
-                        <IonButton style={{ '--background': eventData.associationColor, '--background-activated': darkenColor(eventData.associationColor) }} >Pas enregistrer l'évènement</IonButton>
-                    */}
+
                 </IonGrid>
                 <div style={{ marginTop: '15%' }} />
             </IonContent>

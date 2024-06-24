@@ -7,14 +7,15 @@ import { mangle } from "marked-mangle";
  * @param text The text to parse
  * @param callback The function where the text will be
  */
-export async function parseText(text: string, callback: Function){
+export async function parseText(text: string | undefined | null, callback: Function) {
+    if (text) {
+        // Initialise the parser
+        marked.use(mangle(), { breaks: true })
 
-    // Initialise the parser
-    marked.use(mangle(), {breaks: true})
 
-
-    // Parse the description to convert the HTML tags
-    const convertedDescription = await marked(text);
-    const DOMDescription = DOMPurify.sanitize(convertedDescription)
-    callback(DOMDescription);
+        // Parse the description to convert the HTML tags
+        const convertedDescription = await marked(text);
+        const DOMDescription = DOMPurify.sanitize(convertedDescription)
+        callback(DOMDescription);
+    }
 }

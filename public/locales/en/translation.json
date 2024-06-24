@@ -73,7 +73,27 @@
         "favorite" : {
             "add" : "Event added to favorite",
             "remove" : "Event removed from favorite"
-        }
+        },
+
+        "about" : "About the event",
+
+        "no-description" : "The event has no description",
+
+        "more-info" : "More Informations",
+
+        "link" : "Event's link",
+
+        "status" : {
+            "programmed" : "🟩 Programmed",
+            "cancelled" : "🟥 Cancelled",
+            "rescheduled" : "🟧 Rescheduled",
+            "full" : "🟨 Full",
+            "movedOnline" : "🟦 Moved online",
+            "finished" : "⬛ Finished",
+            "ongoing" : "🟪 Ongoing"
+        },
+
+        "create" : "📝 Created on"
     },
 
     "favorite" : {

@@ -5,6 +5,8 @@ import { IonGrid, IonLabel, IonSpinner, IonTabButton } from '@ionic/react';
 import EventCardComponent from './EventCardComponent';
 
 import useEventData from '../../Tools/EventApiCall';
+import { getEventsByWeek, getWeekName } from '../../Tools/EventTools';
+
 
 const FuturEventsComponent: React.FC<{ apiHref: string }> = ({ apiHref }) => {
     // Use to translate the page
@@ -30,12 +32,22 @@ const FuturEventsComponent: React.FC<{ apiHref: string }> = ({ apiHref }) => {
         return data.filter(event => new Date(event.date + 'Z') > currentDate);
     };
 
+    const filteredEvents = getFilteredEvents();
+
+    const eventByWeek = getEventsByWeek(filteredEvents);
+
     return (
         <>
-            {getFilteredEvents().length > 0 ? (
+            {Object.keys(eventByWeek).length > 0 ? (
                 <IonGrid>
-                    {getFilteredEvents().map((event: SomeEventsData) => (
-                        <EventCardComponent key={`futur-${event.id}`} event={event} />
+                    {Object.keys(eventByWeek).map((weekKey, index) => (
+                        <div key={index} className='title'>
+                            <h2>{getWeekName(weekKey)}</h2>
+                            {eventByWeek[weekKey].map((event: SomeEventsData) => (
+                                <EventCardComponent key={`past-${event.id}`} event={event} />
+                            ))}
+                        </div>
+
                     ))}
                 </IonGrid>
             ) : (
