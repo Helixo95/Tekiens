@@ -19,7 +19,7 @@ function Plus() {
                         &nbsp;
                         <div className="text">{t('settings.title')}</div>
                     </IonItem>
-                    <IonItem routerLink='/app/plus'>
+                    <IonItem routerLink='/connexion'>
                         <IonIcon icon={logInOutline} className="icon" />
                         &nbsp;
                         &nbsp;

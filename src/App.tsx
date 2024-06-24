@@ -35,9 +35,10 @@ import Tabs from './components/Tabs';
 import Paramètres from './pages/PageParamètres';
 import Liens from './pages/PageLiens';
 import FAQ from './pages/PageFAQ';
+import Connexion from './pages/PageConnexion'
 import { ThemeProvider } from './contexts/ThemeContext';
 import './MultiLang.js'
-import React, { useEffect } from 'react';
+import React from 'react';
 import EventDetails from './pages/Event/EventDetails';
 import AssociationDetails from './pages/Association/AssociationDetail';
 import AssociationEvents from './pages/Association/AssociationEvents';
@@ -67,6 +68,7 @@ const App: React.FC = () => {
                 <Route path="/paramètres" render={() => <Paramètres />} exact={true} />
                 <Route path="/faq" render={() => <FAQ />} exact={true} />
                 <Route path="/liens" render={() => <Liens />} exact={true} />
+                <Route path="/connexion" render={() => <Connexion />} exact={true} />
               </IonRouterOutlet>
             </IonReactRouter>
           </ThemeProvider>
