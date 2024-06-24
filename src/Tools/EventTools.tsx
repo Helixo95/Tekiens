@@ -95,12 +95,12 @@ export const getEventsByWeek = (filteredEvents: Array<SomeEventsData>) => {
 export const getWeekName = (date: string) => {
     let monday = getMonday(date);
     if (monday.getTime() == getMonday(new Date().toString()).getTime())
-        return 'Cette semaine';
+        return ['this-week', ''];
     if (monday.getTime() == getMonday(new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toString()).getTime())
-        return 'La semaine prochaine';
+        return ['next-week', ''];
     if (monday.getTime() == getMonday(new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000).toString()).getTime())
-        return 'La semaine dernière';
-    return 'Semaine du ' + new Date(monday).toLocaleDateString(i18next.language);
+        return ['last-week'];
+    return ['week-of', new Date(monday).toLocaleDateString(i18next.language)];
 }
 
 const getMonday = (dateString: string) => {

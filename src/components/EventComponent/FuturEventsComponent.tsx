@@ -42,7 +42,7 @@ const FuturEventsComponent: React.FC<{ apiHref: string }> = ({ apiHref }) => {
                 <IonGrid>
                     {Object.keys(eventByWeek).map((weekKey, index) => (
                         <div key={index} className='title'>
-                            <h2>{getWeekName(weekKey)}</h2>
+                            <h2>{t(getWeekName(weekKey))}</h2>
                             {eventByWeek[weekKey].map((event: SomeEventsData) => (
                                 <EventCardComponent key={`past-${event.id}`} event={event} />
                             ))}

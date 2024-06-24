@@ -63,6 +63,13 @@
                     "text" : "Revenez plus tard quand il y aura des évènements"
                 }
             }
+        },
+
+        "week" : {
+            "this-week" : "Cette semaine",
+            "next-week" : "La semaine prochaine",
+            "last-week" : "La semaine dernière",
+            "week-of" : "Semaine du "
         }
     },
 
@@ -90,10 +97,11 @@
             "movedOnline" : "🟦 Déplacé en ligne",
             "finished" : "⬛ Terminé",
             "ongoing" : "🟪 En cours"
-        }
-        ,
+        },
 
-        "create" : "📝 Crée le"
+        "create" : "📝 Crée le",
+        
+        "update" : "🔄 Dernière mise à jour le"
     },
 
     "favorite" : {

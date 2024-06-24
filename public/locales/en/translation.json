@@ -64,6 +64,13 @@
                     "text" : "Come back later when there are events."
                 }
             }
+        },
+        
+        "week" : {
+            "this-week" : "This week",
+            "next-week" : "Next week",
+            "last-week" : "Last week",
+            "week-of" : "Week of "
         }
     },
 
@@ -93,7 +100,9 @@
             "ongoing" : "🟪 Ongoing"
         },
 
-        "create" : "📝 Created on"
+        "create" : "📝 Created on",
+
+        "update" : "🔄 Last update on"
     },
 
     "favorite" : {

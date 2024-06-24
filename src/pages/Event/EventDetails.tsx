@@ -251,7 +251,7 @@ const EventDetails: React.FC = () => {
                     {eventData.lastUpdateDate &&
                         <IonRow className='info'>
                             <IonLabel>
-                                🔄 Dernière mise à jour le&nbsp;
+                                {t('event.update')}&nbsp;
                                 {formatDate(eventData.lastUpdateDate)}
                             </IonLabel>
                         </IonRow>
