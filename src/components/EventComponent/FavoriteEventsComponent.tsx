@@ -40,15 +40,17 @@ const FavoriteEventsComponent: React.FC = () => {
         <>
             {Object.keys(eventByWeek).length > 0 ? (
                 <IonGrid>
-                    {Object.keys(eventByWeek).map((weekKey, index) => (
-                        <div key={index} className='title'>
-                            <h2>{getWeekName(weekKey)}</h2>
-                            {eventByWeek[weekKey].map((event: SomeEventsData) => (
-                                <EventCardComponent key={`past-${event.id}`} event={event} />
-                            ))}
-                        </div>
-
-                    ))}
+                    {Object.keys(eventByWeek).map((weekKey, index) => {
+                        const test = getWeekName(weekKey);
+                        return (
+                            <div key={index} className='title'>
+                                <h2>{t(test[0]) + test[1]}</h2>
+                                {eventByWeek[weekKey].map((event: SomeEventsData) => (
+                                    <EventCardComponent key={`past-${event.id}`} event={event} />
+                                ))}
+                            </div>
+                        );
+                    })}
                 </IonGrid>
             ) : (
                 <div className='ion-padding all-screen-swipe'>
