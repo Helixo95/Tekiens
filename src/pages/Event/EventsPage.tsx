@@ -3,7 +3,7 @@ import HeaderTitle from '../../components/HeaderTitle';
 import { useTranslation } from 'react-i18next';
 import Events from './Events';
 
-const Événements: React.FC = () => {
+const EventsPage: React.FC = () => {
     // Use to translte the page
     const { t } = useTranslation();
 
@@ -15,4 +15,4 @@ const Événements: React.FC = () => {
     );
 }
 
-export default Événements
+export default EventsPage

@@ -4,7 +4,7 @@ import { constructOutline, logInOutline, happyOutline, helpCircleOutline, linkOu
 import { useTranslation } from 'react-i18next';
 import '../../theme/IconText.css'
 
-function Plus() {
+const SettingsPage: React.FC = () => {
     // Use to translte the page
     const { t } = useTranslation();
 
@@ -13,7 +13,7 @@ function Plus() {
             <HeaderTitle>{t('settings.title')}</HeaderTitle>
             <IonContent>
                 <IonList>
-                    <IonItem routerLink='/préférences'>
+                    <IonItem routerLink='/preferences'>
                         <IonIcon icon={constructOutline} className="icon" />
                         &nbsp;
                         &nbsp;
@@ -37,7 +37,7 @@ function Plus() {
                         &nbsp;
                         <div className="text">{t('faq.title')}</div>
                     </IonItem>
-                    <IonItem routerLink='/liens' lines='none'>
+                    <IonItem routerLink='/links' lines='none'>
                         <IonIcon icon={linkOutline} className="icon" />
                         &nbsp;
                         &nbsp;
@@ -49,4 +49,4 @@ function Plus() {
     );
 }
 
-export default Plus;
+export default SettingsPage;

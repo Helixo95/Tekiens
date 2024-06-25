@@ -102,7 +102,7 @@ const EventDetails: React.FC = () => {
 
     return (
         <IonPage>
-            <HeaderTitleBack back="/app/événements">{t('event.title')}</HeaderTitleBack>
+            <HeaderTitleBack back="/app/events">{t('event.title')}</HeaderTitleBack>
 
             <IonContent>
                 <IonToast

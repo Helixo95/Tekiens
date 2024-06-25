@@ -5,7 +5,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import '../../theme/IconText.css'
 
-const Paramètres: React.FC = () => {
+const PreferencesPage: React.FC = () => {
     const { theme, setTheme } = useTheme();
 
     // Use to translate the page and change the language
@@ -95,4 +95,4 @@ const Paramètres: React.FC = () => {
     )
 }
 
-export default Paramètres;
+export default PreferencesPage;

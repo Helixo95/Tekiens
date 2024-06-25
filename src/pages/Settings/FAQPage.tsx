@@ -1,7 +1,7 @@
 import { IonContent, IonPage } from '@ionic/react'
 import HeaderTitleBack from '../../components/HeaderTitleBack'
 
-const FAQ = () => {
+const FAQPage: React.FC = () => {
     return (
         <IonPage>
             <HeaderTitleBack back='/app/settings'>FAQ</HeaderTitleBack>
@@ -49,4 +49,4 @@ const FAQ = () => {
     )
 }
 
-export default FAQ
+export default FAQPage

@@ -9,7 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import '@ionic/react/css/ionic-swiper.css';
 
-const PageFavoris: React.FC = () => {
+const FavoritePage: React.FC = () => {
     // Use to translte the page
     const { t } = useTranslation();
 
@@ -66,4 +66,4 @@ const PageFavoris: React.FC = () => {
     )
 }
 
-export default PageFavoris
+export default FavoritePage

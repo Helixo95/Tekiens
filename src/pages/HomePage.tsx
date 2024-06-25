@@ -2,7 +2,7 @@ import { IonButton, IonContent, IonPage } from "@ionic/react";
 import HeaderTitle from "../components/HeaderTitle";
 import { useTranslation } from "react-i18next";
 
-const Accueil: React.FC = () => {
+const HomePage: React.FC = () => {
   // Use to translte the page
   const { t } = useTranslation();
 
@@ -16,4 +16,4 @@ const Accueil: React.FC = () => {
 
 }
 
-export default Accueil;
+export default HomePage;

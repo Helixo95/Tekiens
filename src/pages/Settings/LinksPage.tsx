@@ -2,7 +2,7 @@ import { IonContent, IonItem, IonList, IonPage } from "@ionic/react"
 import HeaderTitleBack from "../../components/HeaderTitleBack";
 import { useTranslation } from "react-i18next";
 
-const Liens: React.FC = () => {
+const LinksPage: React.FC = () => {
     // Use to translte the page
     const { t } = useTranslation();
 
@@ -60,4 +60,4 @@ const Liens: React.FC = () => {
     )
 }
 
-export default Liens;
+export default LinksPage;

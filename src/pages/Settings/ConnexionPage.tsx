@@ -2,7 +2,7 @@ import { IonButton, IonContent, IonInput, IonLabel, IonPage } from '@ionic/react
 import HeaderTitleBack from '../../components/HeaderTitleBack'
 import { useState } from 'react';
 
-const PageConnexion = () => {
+const PageConnexion: React.FC = () => {
 
     const [errorText, setErrorText] = useState('');
 

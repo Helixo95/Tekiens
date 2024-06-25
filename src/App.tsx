@@ -32,10 +32,10 @@ import './theme/variables.css';
 import { IonReactRouter } from "@ionic/react-router";
 import { Redirect, Route } from "react-router";
 import Tabs from './components/Tabs';
-import Préférences from './pages/Settings/PagePréférences';
-import Liens from './pages/Settings/PageLiens';
-import FAQ from './pages/Settings/PageFAQ';
-import Connexion from './pages/Settings/PageConnexion'
+import Preferences from './pages/Settings/PreferencesPage';
+import Links from './pages/Settings/LinksPage';
+import FAQ from './pages/Settings/FAQPage';
+import Connexion from './pages/Settings/ConnexionPage'
 import { ThemeProvider } from './contexts/ThemeContext';
 import './MultiLang.js'
 import React from 'react';
@@ -55,7 +55,7 @@ const App: React.FC = () => {
             <IonReactRouter>
               <IonRouterOutlet>
                 <Route path="/" exact={true} >
-                  <Redirect to='/app/accueil' />
+                  <Redirect to='/app/home' />
                 </Route>
 
                 <Route path="/app" render={() => <Tabs />} />
@@ -65,9 +65,9 @@ const App: React.FC = () => {
 
                 <Route path="/event/:id" render={() => <EventDetails />} />
 
-                <Route path="/préférences" render={() => <Préférences />} exact={true} />
+                <Route path="/preferences" render={() => <Preferences />} exact={true} />
                 <Route path="/faq" render={() => <FAQ />} exact={true} />
-                <Route path="/liens" render={() => <Liens />} exact={true} />
+                <Route path="/links" render={() => <Links />} exact={true} />
                 <Route path="/connexion" render={() => <Connexion />} exact={true} />
               </IonRouterOutlet>
             </IonReactRouter>
