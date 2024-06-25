@@ -86,3 +86,22 @@ ion-tab-button {
 .md .all-screen-swipe {
 	height: 82vh;
 }
+
+.center-screen {
+	padding: 10%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	border: 2px solid red;
+}
+
+.login-item {
+	max-width: 100%;
+	border: 2px solid black;
+	margin-bottom: 10%;
+}
+
+.error {
+	color: red;
+}
