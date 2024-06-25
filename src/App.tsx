@@ -32,10 +32,10 @@ import './theme/variables.css';
 import { IonReactRouter } from "@ionic/react-router";
 import { Redirect, Route } from "react-router";
 import Tabs from './components/Tabs';
-import Paramètres from './pages/PageParamètres';
-import Liens from './pages/PageLiens';
-import FAQ from './pages/PageFAQ';
-import Connexion from './pages/PageConnexion'
+import Préférences from './pages/Settings/PagePréférences';
+import Liens from './pages/Settings/PageLiens';
+import FAQ from './pages/Settings/PageFAQ';
+import Connexion from './pages/Settings/PageConnexion'
 import { ThemeProvider } from './contexts/ThemeContext';
 import './MultiLang.js'
 import React from 'react';
@@ -65,7 +65,7 @@ const App: React.FC = () => {
 
                 <Route path="/event/:id" render={() => <EventDetails />} />
 
-                <Route path="/paramètres" render={() => <Paramètres />} exact={true} />
+                <Route path="/préférences" render={() => <Préférences />} exact={true} />
                 <Route path="/faq" render={() => <FAQ />} exact={true} />
                 <Route path="/liens" render={() => <Liens />} exact={true} />
                 <Route path="/connexion" render={() => <Connexion />} exact={true} />

@@ -1,10 +1,10 @@
 import { IonContent, IonPage } from '@ionic/react'
-import HeaderTitleBack from '../components/HeaderTitleBack'
+import HeaderTitleBack from '../../components/HeaderTitleBack'
 
 const FAQ = () => {
     return (
         <IonPage>
-            <HeaderTitleBack back='/app/plus'>FAQ</HeaderTitleBack>
+            <HeaderTitleBack back='/app/settings'>FAQ</HeaderTitleBack>
             <IonContent className="ion-padding justify-text">
                 <div>
                     <h1 className='title'>Informations générales</h1>

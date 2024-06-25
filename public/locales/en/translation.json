@@ -127,12 +127,12 @@
         }
     },
 
-    "plus" : {
-        "title" : "Plus"
+    "settings" : {
+        "title" : "Settings"
     },
 
-    "settings" : {
-        "title" : "Settings",
+    "preferences" : {
+        "title" : "Preferences",
         
         "notifications" : {
             "title" : "Notifications",

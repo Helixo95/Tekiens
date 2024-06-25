@@ -1,5 +1,5 @@
 import { IonContent, IonItem, IonList, IonPage } from "@ionic/react"
-import HeaderTitleBack from "../components/HeaderTitleBack";
+import HeaderTitleBack from "../../components/HeaderTitleBack";
 import { useTranslation } from "react-i18next";
 
 const Liens: React.FC = () => {
@@ -8,7 +8,7 @@ const Liens: React.FC = () => {
 
     return (
         <IonPage>
-            <HeaderTitleBack back='/app/plus'>{t('schools-links.title')}</HeaderTitleBack>
+            <HeaderTitleBack back='/app/settings'>{t('schools-links.title')}</HeaderTitleBack>
 
             <IonList>
                 <IonItem href='https://cytech.cyu.fr/' target="_blank" rel="noreferrer">

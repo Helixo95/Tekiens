@@ -1,8 +1,8 @@
 import { IonContent, IonIcon, IonItem, IonList, IonPage } from '@ionic/react';
-import HeaderTitle from '../components/HeaderTitle';
-import { settingsOutline, logInOutline, happyOutline, helpCircleOutline, linkOutline } from 'ionicons/icons';
+import HeaderTitle from '../../components/HeaderTitle';
+import { constructOutline, logInOutline, happyOutline, helpCircleOutline, linkOutline } from 'ionicons/icons';
 import { useTranslation } from 'react-i18next';
-import '../theme/IconText.css'
+import '../../theme/IconText.css'
 
 function Plus() {
     // Use to translte the page
@@ -10,14 +10,14 @@ function Plus() {
 
     return (
         <IonPage>
-            <HeaderTitle>{t('plus.title')}</HeaderTitle>
+            <HeaderTitle>{t('settings.title')}</HeaderTitle>
             <IonContent>
                 <IonList>
-                    <IonItem routerLink='/paramètres'>
-                        <IonIcon icon={settingsOutline} className="icon" />
+                    <IonItem routerLink='/préférences'>
+                        <IonIcon icon={constructOutline} className="icon" />
                         &nbsp;
                         &nbsp;
-                        <div className="text">{t('settings.title')}</div>
+                        <div className="text">{t('preferences.title')}</div>
                     </IonItem>
                     <IonItem routerLink='/connexion'>
                         <IonIcon icon={logInOutline} className="icon" />
@@ -25,7 +25,7 @@ function Plus() {
                         &nbsp;
                         <div className="text">{t('connexion.title')}</div>
                     </IonItem>
-                    <IonItem routerLink='/app/plus'>
+                    <IonItem routerLink='/app/settings'>
                         <IonIcon icon={happyOutline} />
                         &nbsp;
                         &nbsp;

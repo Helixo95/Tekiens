@@ -1,10 +1,10 @@
 import { IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react'
 import { Redirect, Route } from 'react-router'
-import { homeOutline, starOutline, calendarOutline, readerOutline, addOutline } from 'ionicons/icons';
+import { homeOutline, starOutline, calendarOutline, readerOutline, settingsOutline } from 'ionicons/icons';
 import Accueil from "../pages/PageAccueil";
 import Événements from '../pages/Event/PageÉvènements';
 import Favoris from '../pages/PageFavoris';
-import Plus from '../pages/PagePlus';
+import Paramètres from '../pages/Settings/PageParamètres';
 import Associations from '../pages/Association/Associations';
 import { useTranslation } from 'react-i18next';
 
@@ -19,7 +19,7 @@ const Tabs: React.FC = () => {
                 <Route path="/app/associations" render={() => <Associations />} exact={true} />
                 <Route path="/app/événements" render={() => <Événements />} exact={true} />
                 <Route path="/app/favoris" render={() => <Favoris />} exact={true} />
-                <Route path="/app/plus" render={() => <Plus />} exact={true} />
+                <Route path="/app/settings" render={() => <Paramètres />} exact={true} />
 
                 <Route path="/app" exact={true} >
                     <Redirect to='/app/accueil' />
@@ -47,9 +47,9 @@ const Tabs: React.FC = () => {
                     <IonLabel>{t('favorite.title')}</IonLabel>
                 </IonTabButton>
 
-                <IonTabButton tab='plus' href='/app/plus'>
-                    <IonIcon icon={addOutline} />
-                    <IonLabel>{t('plus.title')}</IonLabel>
+                <IonTabButton tab='settings' href='/app/settings'>
+                    <IonIcon icon={settingsOutline} />
+                    <IonLabel>{t('settings.title')}</IonLabel>
                 </IonTabButton>
             </IonTabBar>
         </IonTabs>

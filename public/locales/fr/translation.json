@@ -126,12 +126,12 @@
         }
     },
 
-    "plus" : {
-        "title" : "Plus"
+    "settings" : {
+        "title" : "Paramètres"
     },
 
-    "settings" : {
-        "title" : "Paramètres",
+    "preferences" : {
+        "title" : "Préférences",
         
         "notifications" : {
             "title" : "Notifications",

@@ -31,7 +31,7 @@ const EventCardComponent: React.FC<{ event: SomeEventsData }> = ({ event }) => {
                         </IonCol>
 
                         <IonCol>
-                            <IonGrid style={{ 'text-align': 'left' }}>
+                            <IonGrid style={{ 'textAlign': 'left' }}>
                                 <IonRow className='info'>
                                     <IonLabel style={{ color: event.associationColor }}>{event.associationName}</IonLabel>
                                 </IonRow>
