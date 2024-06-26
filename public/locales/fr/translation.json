@@ -29,7 +29,13 @@
 
     "events" : {
         "tab-title" : "Évènements",
-        "title" : "Liste des événements",
+        
+        "title" : {
+            "list" : "Liste évènements",
+            "calendar" : "Calendrier évènements"
+        },
+
+        "no-events-calendar" : "Aucun évènement à cette date",
 
         "filter" : {
             "futur" : {

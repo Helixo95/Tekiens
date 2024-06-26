@@ -30,7 +30,13 @@
 
     "events" : {
         "tab-title" : "Events",
-        "title" : "Events list",
+        
+        "title" : {
+            "list" : "Events list",
+            "calendar" : "Events calendar"
+        },
+
+        "no-events-calendar" : "No event at this date",
 
         "filter" : {
             "futur" : {

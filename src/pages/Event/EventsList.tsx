@@ -12,7 +12,7 @@ import 'swiper/css';
 import '@ionic/react/css/ionic-swiper.css';
 import '../../theme/Event/Events.css';
 
-const EventsComponents: React.FC<{ apiHref: string }> = ({ apiHref }) => {
+const EventsList: React.FC<{ apiHref: string }> = ({ apiHref }) => {
     // Use to translate the page
     const { t } = useTranslation();
 
@@ -88,4 +88,4 @@ const EventsComponents: React.FC<{ apiHref: string }> = ({ apiHref }) => {
     );
 };
 
-export default EventsComponents;
+export default EventsList;

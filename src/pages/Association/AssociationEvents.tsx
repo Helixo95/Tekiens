@@ -1,6 +1,6 @@
 import { IonContent, IonPage } from "@ionic/react";
 import { useParams } from "react-router";
-import Events from "../Event/Events";
+import Events from "../Event/EventsList";
 import HeaderTitleBack from "../../components/HeaderTitleBack";
 
 
