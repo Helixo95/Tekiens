@@ -25,7 +25,7 @@ const SettingsPage: React.FC = () => {
                         &nbsp;
                         <div className="text">{t('connexion.title')}</div>
                     </IonItem>
-                    <IonItem routerLink='/app/settings'>
+                    <IonItem routerLink='/createEvent'>
                         <IonIcon icon={happyOutline} />
                         &nbsp;
                         &nbsp;

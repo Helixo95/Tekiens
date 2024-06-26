@@ -46,7 +46,7 @@ const AssociationDetails: React.FC = () => {
 
     return (
         <IonPage>
-            <HeaderTitleBack back="/app/associations">{t('association.title')}</HeaderTitleBack>
+            <HeaderTitleBack back="">{t('association.title')}</HeaderTitleBack>
             {data ?
                 <>
                     <IonContent>

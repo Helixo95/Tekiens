@@ -1,8 +1,11 @@
-import { IonButton, IonContent, IonInput, IonLabel, IonPage } from '@ionic/react'
+import { IonButton, IonContent, IonInput, IonItem, IonLabel, IonPage } from '@ionic/react'
 import HeaderTitleBack from '../../components/HeaderTitleBack'
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const PageConnexion: React.FC = () => {
+    // Use to translate the page
+    const { t } = useTranslation();
 
     const [errorText, setErrorText] = useState('');
 
@@ -66,38 +69,38 @@ const PageConnexion: React.FC = () => {
 
     return (
         <IonPage>
-            <HeaderTitleBack back='/app/plus'>Connexion</HeaderTitleBack>
+            <HeaderTitleBack back='/app/settings'>{t('connexion.title')}</HeaderTitleBack>
             <IonContent className='ion-padding'>
-                <form className='center-screen' onSubmit={handleLogin}>
-                    <IonLabel className='title' style={{ 'fontSize': '200%', 'marginBottom': '10%' }}>Connexion</IonLabel>
-                    <IonInput
-                        label="Id de l'association"
-                        labelPlacement="floating"
-                        placeholder="Saisir l'id de l'association"
-                        name="assoId"
-                        type='text'
-                        clearInput={true}
-                        fill="outline"
-                        className='login-item'
-                    />
+                <form onSubmit={handleLogin}>
 
-                    <IonInput
-                        label="Mot de passe"
-                        labelPlacement="floating"
-                        placeholder="Saisir le mot de passe"
-                        name="password"
-                        type='password'
-                        clearInput={true}
-                        fill="outline"
-                        className='login-item'
-                    />
+                    <IonItem className="input-item">
+                        <IonInput
+                            label={t('connexion.asso-id.label')}
+                            labelPlacement="floating"
+                            placeholder={t('connexion.asso-id.placeholder')}
+                            name="assoId"
+                            type='text'
+                            clearInput={true}
+                        />
+                    </IonItem>
 
-                    <IonButton type='submit' className='login-item' style={{ 'width': '100%' }} >Se connecter</IonButton>
-                    <span className='error'>{errorText}</span>
+                    <IonItem className='input-item'>
+                        <IonInput
+                            label={t('connexion.password.label')}
+                            labelPlacement="floating"
+                            placeholder={t('connexion.password.placeholder')}
+                            name="password"
+                            type='password'
+                            clearInput={true}
+                        />
+                    </IonItem>
+
+                    <IonButton type='submit' className='login-item' style={{ 'width': '100%' }}>{t('connexion.button')}</IonButton>
+                    <span className='error center-screen'>{errorText}</span>
                 </form>
             </IonContent>
 
-        </IonPage>
+        </IonPage >
     )
 }
 

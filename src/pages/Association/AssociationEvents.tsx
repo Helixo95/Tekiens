@@ -10,7 +10,7 @@ const AssociationEvents: React.FC = () => {
     return (
         <IonPage>
             <IonContent>
-                <HeaderTitleBack back={"/association/" + id}>Événement</HeaderTitleBack>
+                <HeaderTitleBack back="">Événement</HeaderTitleBack>
                 <Events apiHref={"assos/" + id + "/events"} />
             </IonContent>
         </IonPage>);

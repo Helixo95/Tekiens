@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import HeaderTitleBack from '../../components/HeaderTitleBack'
-import { IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonPage, IonRow, IonSpinner, IonTabButton, IonText, IonToast } from '@ionic/react'
-import { useParams } from 'react-router'
+import { IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonPage, IonRow, IonSpinner, IonTabButton, IonText, IonToast, useIonRouter } from '@ionic/react'
+import { useHistory, useParams } from 'react-router'
 import { ApiResponseEvent, AllEventsData } from '../../Tools/Interfaces/EventInterface'
 import { useTranslation } from 'react-i18next'
 import '../../theme/Event/EventDetails.css'
 import { darkenColor, formatDate, duration, getEventStatus } from '../../Tools/EventTools'
 import { parseText } from '../../Tools/DOMParser'
-import { add, starOutline, star, pushOutline, push } from 'ionicons/icons'
+import { add, starOutline, star, pushOutline, push, pencilOutline } from 'ionicons/icons'
 
 const EventDetails: React.FC = () => {
     // Use to translte the page
     const { t, i18n } = useTranslation();
+
+    const history = useHistory();
 
     // Use to get the event's id
     const { id } = useParams<{ id: string }>();
 
     let savedEvents: number[] = [];
 
-    const [eventData, setEventData] = useState<AllEventsData | null>(null);
+    const [eventData, setEventData] = useState<AllEventsData>();
     const [description, setDescription] = useState<string>("");
     const [loading, setLoading] = useState(true);
     const [isSaved, setIsSaved] = useState(false);
@@ -100,9 +102,13 @@ const EventDetails: React.FC = () => {
         }
     }
 
+    const navigateToCreateEvent = () => {
+        history.push('/createEvent', { eventData });;
+    }
+
     return (
         <IonPage>
-            <HeaderTitleBack back="/app/events">{t('event.title')}</HeaderTitleBack>
+            <HeaderTitleBack back="">{t('event.title')}</HeaderTitleBack>
 
             <IonContent>
                 <IonToast
@@ -123,6 +129,9 @@ const EventDetails: React.FC = () => {
                         </IonFabButton>
                         <IonFabButton className='fab-button' style={{ '--border-color': eventData.associationColor }}>
                             <IonIcon icon={pushOutline} style={{ color: eventData.associationColor }} />
+                        </IonFabButton>
+                        <IonFabButton className='fab-button' style={{ '--border-color': eventData.associationColor }} onClick={navigateToCreateEvent}>
+                            <IonIcon icon={pencilOutline} style={{ color: eventData.associationColor }} />
                         </IonFabButton>
                     </IonFabList>
                 </IonFab>

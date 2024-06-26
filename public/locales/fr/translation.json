@@ -107,7 +107,83 @@
 
         "create" : "📝 Crée le",
         
-        "update" : "🔄 Dernière mise à jour le"
+        "update" : "🔄 Dernière mise à jour le",
+
+        "manage" : {
+            "title" : "Création d'évènement",
+
+            "event-title" : {
+                "label" : "🏷️​ Titre",
+                "placeholder" : "Nom de l'évènement"
+            },
+
+            "event-date" : {
+                "label" : "📅 Date et heure",
+                "placeholder" : "Date et heure de l'évènement"
+            },
+
+            "event-place" : {
+                "label" : "📍 Lieu",
+                "placeholder" : "Lieu de l'évènement"
+            },
+
+            "event-poster" : {
+                "label" : "🖼️​ Affiche (optionnel)",
+                "placeholder" : "Lien de l'affiche de l'évènement"
+            },
+
+            "event-description" : {
+                "label" : "📝​​ Description (optionnel)",
+                "placeholder" : "Description de l'évènement"
+            },
+
+            "event-price" : {
+                "label" : "💲 Prix (optionnel)",
+                "placeholder" : "Gratuit"
+            },
+
+            "event-duration" : {
+                "label" : "⌛ Durée (optionnel)",
+
+                "days" : {
+                    "label" : "Jours",
+                    "placeholder" : "-"
+                },
+                "hours" : {
+                    "label" : "Heures",
+                    "placeholder" : "-"
+                },
+                "minutes" : {
+                    "label" : "Minutes",
+                    "placeholder" : "-"
+                }
+            },
+
+            "event-qr" : {
+                "label" : "🖇 Lien du QR code (optionnel)",
+                "placeholder" : "Lien du QR code de l'évènement"
+            },
+
+            "event-access" : {
+                "label" : "🔒 Qui peut participer ? (optionnel)",
+                "placeholder" : "Ouvert à tous"
+            },
+
+            "event-status" : {
+                "label" : "🗂️​ Status (optionnel)",
+                "placeholder" : "Sélectionner le statut"
+            },
+
+            "event-capacity" : {
+                "label" : "👥 Capacité (optionnel)",
+                "placeholder" : "Capacité de l'évènement"
+            },
+
+            "button" : {
+                "creation" : "Créer l'évènement",
+                "modification" : "Modifier l'évènement"
+            }
+        }
     },
 
     "favorite" : {
@@ -169,7 +245,19 @@
     },
 
     "connexion" : {
-        "title" : "Connexion"
+        "title" : "Connexion",
+
+        "asso-id" : {
+            "label" : "🪪​ Id de l'association",
+            "placeholder" : "Saisir l'id de l'association"
+        },
+
+        "password" : {
+            "label" : "🔒​ Mot de passe",
+            "placeholder" : "Saisir le mot de passe"
+        },
+
+        "button" : "Se connecter"
     },
 
     "my-association" : {

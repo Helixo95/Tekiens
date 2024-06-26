@@ -1,14 +1,12 @@
 import { AllEventsData, SomeEventsData } from "./Interfaces/EventInterface";
 import i18next from 'i18next';
 
-const eventStatus: { [key: string]: string } = {
+export const eventStatus: { [key: string]: string } = {
     programmed: 'event.status.programmed',
     cancelled: 'event.status.cancelled',
     rescheduled: 'event.status.rescheduled',
     full: 'event.status.full',
     movedOnline: 'event.status.movedOnline',
-    finished: 'event.status.finished',
-    ongoing: 'event.status.ongoing',
 };
 
 export function getEventStatus(event: AllEventsData): string {
@@ -18,11 +16,11 @@ export function getEventStatus(event: AllEventsData): string {
     const eventEndDate = new Date(eventDate.getTime() + (event.duration ?? 0) * 60 * 1000);
 
     if (eventEndDate < now) {
-        return eventStatus['finished'];
+        return 'event.status.finished';
     }
 
     if (eventDate < now) {
-        return eventStatus['ongoing'];
+        return 'event.status.ongoing';
     }
 
     if (eventStatus[event.status]) {
@@ -71,7 +69,7 @@ export const formatDate = (date: string) => {
 /**
  * Function to return the duration of an event in days, hours and minutes
  * @param event the event we want to calculat the duration
- * @returns the event's duration in days, hours and minutes
+ * @returns the event duration in days, hours and minutes
  */
 export const duration = (event: AllEventsData) => {
     if (!event.duration)
