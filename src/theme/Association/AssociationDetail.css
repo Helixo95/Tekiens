@@ -1,0 +1,19 @@
+.detail-asso-title{
+    text-decoration: underline;
+}
+
+.detail-asso-description{
+    display: flex;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+
+.detail-socials-button{   
+    --border-style: solid;
+    --border-width: 1px;
+}
+
+.detail-asso-image{
+    padding-bottom: 10%;
+}

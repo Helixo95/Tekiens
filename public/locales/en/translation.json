@@ -1,0 +1,287 @@
+{
+    "home" : {
+        "title" : "Home"
+    },
+
+    "associations" : {
+        "tab-title" : "Associations",
+        "title" : "Associations list",
+
+        "no-description": "No description available",
+        "tab-active": "Active",
+        "tab-over": "Over",
+        "tab-all": "All",
+
+        "message": {
+            "title": "No Associations",
+            "text": "There's no associations to be found in this category or campus"
+        }
+    },
+
+    "association" : {
+        "title" : "Association",
+
+        "favorite" : {
+            "add" : "Association added to favorite",
+            "remove" : "association removed from favorites"
+        }
+
+    },
+
+    "events" : {
+        "tab-title" : "Events",
+        
+        "title" : {
+            "list" : "Events list",
+            "calendar" : "Events calendar"
+        },
+
+        "no-events-calendar" : "No event at this date",
+
+        "filter" : {
+            "futur" : {
+                "label" : "Upcoming",
+                "message" : {
+                    "title" : "No upcoming events",
+                    "text" : "Come back later, or consult the list of past or ongoing events."
+                }
+            },
+
+            "ongoing" : {
+                "label" : "Ongoing",
+                "message" : {
+                    "title" : "No ongoing events",
+                    "text" : "Come back later, or consult the list of past or futur events."
+                }
+            },
+
+            "past" : {
+                "label" : "Past",
+                "message" : {
+                    "title" : "No past events",
+                    "text" : "Come back later, or consult the list of ongoing or futur events."
+                }
+            },
+
+            "all" : {
+                "label" : "All",
+                "message" : {
+                    "title" : "No events",
+                    "text" : "Come back later when there are events."
+                }
+            }
+        },
+        
+        "week" : {
+            "this-week" : "This week",
+            "next-week" : "Next week",
+            "last-week" : "Last week",
+            "week-of" : "Week of "
+        }
+    },
+
+    "event" : {
+        "title" : "Event",
+
+        "favorite" : {
+            "add" : "Event added to favorite",
+            "remove" : "Event removed from favorite"
+        },
+
+        "about" : "About the event",
+
+        "no-description" : "The event has no description",
+
+        "more-info" : "More Informations",
+
+        "link" : "Event link",
+
+        "status" : {
+            "programmed" : "🟩 Programmed",
+            "cancelled" : "🟥 Cancelled",
+            "rescheduled" : "🟧 Rescheduled",
+            "full" : "🟨 Full",
+            "movedOnline" : "🟦 Moved online",
+            "finished" : "⬛ Finished",
+            "ongoing" : "🟪 Ongoing"
+        },
+
+        "create" : "📝 Created on",
+
+        "update" : "🔄 Last update on",
+
+        "manage" : {
+            "creation" : {
+                "title" : "Event creation",
+                "button" : "Create the event"
+            },
+
+            "modification" : {
+                "title" : "Event modification",
+                "button" : "Modify the event"
+            },
+
+
+            "event-title" : {
+                "label" : "🏷️​ Title",
+                "placeholder" : "Event name"
+            },
+
+            "event-date" : {
+                "label" : "📅 Date and time",
+                "placeholder" : "Event date and time"
+            },
+
+            "event-place" : {
+                "label" : "📍 Place",
+                "placeholder" : "Event place"
+            },
+
+            "event-poster" : {
+                "label" : "🖼️​ Poster (optional)",
+                "placeholder" : "Event poster link"
+            },
+
+            "event-description" : {
+                "label" : "📝​​ Description (optional)",
+                "placeholder" : "Event description"
+            },
+
+            "event-price" : {
+                "label" : "💲 Price (optional)",
+                "placeholder" : "Free"
+            },
+
+            "event-duration" : {
+                "label" : "⌛ Duration (optional)",
+
+                "days" : {
+                    "label" : "Days",
+                    "placeholder" : "-"
+                },
+                "hours" : {
+                    "label" : "Hours",
+                    "placeholder" : "-"
+                },
+                "minutes" : {
+                    "label" : "Minutes",
+                    "placeholder" : "-"
+                }
+            },
+
+            "event-qr" : {
+                "label" : "🖇 QR code link (optional)",
+                "placeholder" : "Event QR code link"
+            },
+
+            "event-access" : {
+                "label" : "🔒 Who can participate? (optional)",
+                "placeholder" : "Open to everyone"
+            },
+
+            "event-status" : {
+                "label" : "🗂️​ Status (optional)",
+                "placeholder" : "Select the status"
+            },
+
+            "event-capacity" : {
+                "label" : "👥 Capacity (optional)",
+                "placeholder" : "Event capacity"
+            }
+        }
+    },
+
+    "favorite" : {
+        "title" : "Favorite",
+
+        "filter" : {
+            "events" : {
+                "label" : "Events",
+                "message" : {
+                    "title" : "You don't have favorite event",
+                    "text" : "Go to an event page to add it to your favorite."
+                }
+            },
+
+            "assos" : {
+                "label" : "Associations",
+                "message" : {
+                    "title" : "You don't follow any association",
+                    "text" : "Go to an association page to follow it."
+                }
+            }
+        }
+    },
+
+    "settings" : {
+        "title" : "Settings"
+    },
+
+    "preferences" : {
+        "title" : "Preferences",
+        
+        "notifications" : {
+            "title" : "Notifications",
+            "text" : "Disable notifications"
+        },
+
+        "language" : {
+            "title" : "Language",
+            "label" : "Language choice"
+        },
+
+        "theme" : {
+            "title" : "Appearance",
+            "label" : "Theme choice",
+            "themes" : {
+                "default" : "Default theme"
+            }
+        },
+
+        "campus" : {
+            "title" : "Campus",
+            "label" : "Campus choice",
+            "site" : {
+                "all" : "All",
+                "cergy" : "Cergy",
+                "pau" : "Pau"
+            }
+        }
+    },
+
+    "connexion" : {
+        "title" : "Connexion",
+
+        "asso-id" : {
+            "label" : "🪪​ Association id",
+            "placeholder" : "Enter association id"
+        },
+
+        "password" : {
+            "label" : "🔒​ Password",
+            "placeholder" : "Enter password"
+        },
+
+        "button" : "Login"
+    },
+
+    "my-association" : {
+        "title" : "My association"
+    },
+
+    "faq" : {
+        "title" : "FAQ"
+    },
+
+    "schools-links" : {
+        "title" : "School links",
+        "link" : {
+            "site" : "CY Tech web site",
+            "mycy" : "MyCY",
+            "celcat" : "Celcat : schedule",
+            "cours" : "Cours : learning platform",
+            "glpi" : "GLPI : IT support",
+            "doc" : "CY Tech documentation"
+        }
+    }
+}

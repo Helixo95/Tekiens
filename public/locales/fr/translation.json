@@ -1,0 +1,285 @@
+{
+    "home" : {
+        "title" : "Accueil"
+    },
+
+    "associations" : {
+        "tab-title" : "Associations",
+        "title" : "Liste des associations",
+
+        "no-description": "Aucune description disponible",
+        "tab-active": "Actives",
+        "tab-over": "Anciennes",
+        "tab-all": "Toutes",
+
+        "message": {
+            "title": "Aucune Associations",
+            "text": "Il n'y a aucune associations qui à été trouvé pour cette catégorie où campus"
+        }
+    },
+
+    "association" : {
+        "title" : "Association",
+
+        "favorite" : {
+            "add" : "Association ajouté aux favoris",
+            "remove" : "Association supprimé des favoris"
+        }    
+    },
+
+    "events" : {
+        "tab-title" : "Évènements",
+        
+        "title" : {
+            "list" : "Liste évènements",
+            "calendar" : "Calendrier évènements"
+        },
+
+        "no-events-calendar" : "Aucun évènement à cette date",
+
+        "filter" : {
+            "futur" : {
+                "label" : "À venir",
+                "message" : {
+                    "title" : "Aucun événement à venir",
+                    "text" : "Revenez plus tard, ou consultez la liste des événements passés ou en cours."
+                }
+            },
+
+            "ongoing" : {
+                "label" : "En cours",
+                "message" : {
+                    "title" : "Aucun événement en ce moment",
+                    "text" : "Revenez plus tard, ou consultez la liste des événements passés ou à venir."
+                }
+            },
+
+            "past" : {
+                "label" : "Passés",
+                "message" : {
+                    "title" : " Aucun événement passés",
+                    "text" : "Revenez plus tard, ou consultez la liste des événements passés ou en cours."
+                }
+            },
+
+            "all" : {
+                "label" : "Tous",
+                "message" : {
+                    "title" : "Aucun événement",
+                    "text" : "Revenez plus tard quand il y aura des évènements"
+                }
+            }
+        },
+
+        "week" : {
+            "this-week" : "Cette semaine",
+            "next-week" : "La semaine prochaine",
+            "last-week" : "La semaine dernière",
+            "week-of" : "Semaine du "
+        }
+    },
+
+    "event" : {
+        "title" : "Événement",
+
+        "favorite" : {
+            "add" : "Évènement ajouté aux favoris",
+            "remove" : "Évènement supprimé des favoris"
+        },
+        
+        "about" : "À propros de l'événement",
+
+        "no-description" : "L'évènement n'a pas de description",
+
+        "more-info" : "Informations supplémentaires",
+
+        "link" : "Lien l'évènement",
+
+        "status" : {
+            "programmed" : "🟩 À venir",
+            "cancelled" : "🟥 Annulé",
+            "rescheduled" : "🟧 Reporté",
+            "full" : "🟨 Complet",
+            "movedOnline" : "🟦 Déplacé en ligne",
+            "finished" : "⬛ Terminé",
+            "ongoing" : "🟪 En cours"
+        },
+
+        "create" : "📝 Crée le",
+        
+        "update" : "🔄 Dernière mise à jour le",
+
+        "manage" : {
+            "creation" : {
+                "title" : "Créer un évènement",
+                "button" : "Créer l'évènement"
+            },
+
+            "modification" : {
+                "title" : "Modifier un évènement",
+                "button" : "Modifier l'évènement"
+            },
+
+            "event-title" : {
+                "label" : "🏷️​ Titre",
+                "placeholder" : "Nom de l'évènement"
+            },
+
+            "event-date" : {
+                "label" : "📅 Date et heure",
+                "placeholder" : "Date et heure de l'évènement"
+            },
+
+            "event-place" : {
+                "label" : "📍 Lieu",
+                "placeholder" : "Lieu de l'évènement"
+            },
+
+            "event-poster" : {
+                "label" : "🖼️​ Affiche (optionnel)",
+                "placeholder" : "Lien de l'affiche de l'évènement"
+            },
+
+            "event-description" : {
+                "label" : "📝​​ Description (optionnel)",
+                "placeholder" : "Description de l'évènement"
+            },
+
+            "event-price" : {
+                "label" : "💲 Prix (optionnel)",
+                "placeholder" : "Gratuit"
+            },
+
+            "event-duration" : {
+                "label" : "⌛ Durée (optionnel)",
+
+                "days" : {
+                    "label" : "Jours",
+                    "placeholder" : "-"
+                },
+                "hours" : {
+                    "label" : "Heures",
+                    "placeholder" : "-"
+                },
+                "minutes" : {
+                    "label" : "Minutes",
+                    "placeholder" : "-"
+                }
+            },
+
+            "event-qr" : {
+                "label" : "🖇 Lien du QR code (optionnel)",
+                "placeholder" : "Lien du QR code de l'évènement"
+            },
+
+            "event-access" : {
+                "label" : "🔒 Qui peut participer ? (optionnel)",
+                "placeholder" : "Ouvert à tous"
+            },
+
+            "event-status" : {
+                "label" : "🗂️​ Status (optionnel)",
+                "placeholder" : "Sélectionner le statut"
+            },
+
+            "event-capacity" : {
+                "label" : "👥 Capacité (optionnel)",
+                "placeholder" : "Capacité de l'évènement"
+            }
+        }
+    },
+
+    "favorite" : {
+        "title" : "Favoris",
+
+        "filter" : {
+            "events" : {
+                "label" : "Événements",
+                "message" : {
+                    "title" : "Vous n'avez aucun évènement favori",
+                    "text" : "Aller sur la page d'un évènement pour l'ajouter à vos favoris."
+                }
+            },
+
+            "assos" : {
+                "label" : "Associations",
+                "message" : {
+                    "title" : "Vous ne suivez aucune association",
+                    "text" : "Aller sur la page d'une assiciation pour la suivre."
+                }
+            }
+        }
+    },
+
+    "settings" : {
+        "title" : "Paramètres"
+    },
+
+    "preferences" : {
+        "title" : "Préférences",
+        
+        "notifications" : {
+            "title" : "Notifications",
+            "text" : "Désactiver les notifications"
+        },
+
+        "language" : {
+            "title" : "Langue",
+            "label" : "Choix de la langue"
+        },
+
+        "theme" : {
+            "title" : "Apparence",
+            "label" : "Choix du thème",
+            "themes" : {
+                "default" : "Par défaut"
+            }
+        },
+
+        "campus" : {
+            "title" : "Campus",
+            "label" : "Choix du campus",
+            "site" : {
+                "all" : "Tous",
+                "cergy" : "Cergy",
+                "pau" : "Pau"
+            }
+        }
+    },
+
+    "connexion" : {
+        "title" : "Connexion",
+
+        "asso-id" : {
+            "label" : "🪪​ Id de l'association",
+            "placeholder" : "Saisir l'id de l'association"
+        },
+
+        "password" : {
+            "label" : "🔒​ Mot de passe",
+            "placeholder" : "Saisir le mot de passe"
+        },
+
+        "button" : "Se connecter"
+    },
+
+    "my-association" : {
+        "title" : "Mon association"
+    },
+
+    "faq" : {
+        "title" : "FAQ"
+    },
+
+    "schools-links" : {
+        "title" : "Liens de l'école",
+        "link" : {
+            "site" : "Site de CY Tech",
+            "mycy" : "MyCY",
+            "celcat" : "Celcat : emploi du temps",
+            "cours" : "Cours : plateforme pédagogique",
+            "glpi" : "GLPI : support informatique",
+            "doc" : "Documentation CY Tech"
+        }
+    }
+}
