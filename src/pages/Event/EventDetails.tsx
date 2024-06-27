@@ -8,6 +8,7 @@ import '../../theme/Event/EventDetails.css'
 import { darkenColor, formatDate, duration, getEventStatus } from '../../Tools/EventTools'
 import { parseText } from '../../Tools/DOMParser'
 import { add, starOutline, star, pushOutline, push, pencilOutline } from 'ionicons/icons'
+import { useAuth } from '../../contexts/AuthContext'
 
 const EventDetails: React.FC = () => {
     // Use to translte the page
@@ -17,6 +18,8 @@ const EventDetails: React.FC = () => {
     const { id } = useParams<{ id: string }>();
 
     const history = useHistory();
+
+    const { isAuthenticated } = useAuth();
 
     let savedEvents: number[] = [];
 
@@ -130,9 +133,11 @@ const EventDetails: React.FC = () => {
                         <IonFabButton className='fab-button' style={{ '--border-color': eventData.associationColor }}>
                             <IonIcon icon={pushOutline} style={{ color: eventData.associationColor }} />
                         </IonFabButton>
-                        <IonFabButton className='fab-button' style={{ '--border-color': eventData.associationColor }} onClick={navigateToModifyEvent}>
-                            <IonIcon icon={pencilOutline} style={{ color: eventData.associationColor }} />
-                        </IonFabButton>
+                        {isAuthenticated &&
+                            <IonFabButton className='fab-button' style={{ '--border-color': eventData.associationColor }} onClick={navigateToModifyEvent}>
+                                <IonIcon icon={pencilOutline} style={{ color: eventData.associationColor }} />
+                            </IonFabButton>
+                        }
                     </IonFabList>
                 </IonFab>
 
