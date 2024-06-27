@@ -1,13 +1,22 @@
-import { IonButton, IonContent, IonInput, IonItem, IonLabel, IonPage } from '@ionic/react'
+import { IonButton, IonContent, IonInput, IonInputPasswordToggle, IonItem, IonLabel, IonPage, IonToast } from '@ionic/react'
 import HeaderTitleBack from '../../components/HeaderTitleBack'
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../../contexts/AuthContext';
+import { useHistory } from 'react-router-dom';
 
 const PageConnexion: React.FC = () => {
     // Use to translate the page
     const { t } = useTranslation();
 
+    const history = useHistory();
+
+    const { login } = useAuth();
+
     const [errorText, setErrorText] = useState('');
+    const [assoId, setAssoId] = useState('');
+    const [password, setPassword] = useState('');
+    const [showToast, setShowToast] = useState(false); // State to control toast visibility
 
     const handleLogin = async (event: { preventDefault: () => void; currentTarget: any; }) => {
         event.preventDefault();
@@ -29,6 +38,7 @@ const PageConnexion: React.FC = () => {
         }
         else {
             setErrorText('')
+            /*
             try {
                 console.log(password);
 
@@ -38,6 +48,16 @@ const PageConnexion: React.FC = () => {
             } catch (error) {
                 console.error('Erreur lors de la connexion:', error);
                 setErrorText('Failed to login');
+            }*/
+            if (password === 'baba') {
+                login({ id: assoId });
+                setAssoId('');
+                setPassword('');
+                setShowToast(true); // Show toast upon successful login
+                history.push('/app/settings');
+            }
+            else {
+                setErrorText('Wrong password')
             }
         }
     }
@@ -71,6 +91,13 @@ const PageConnexion: React.FC = () => {
         <IonPage>
             <HeaderTitleBack back='/app/settings'>{t('connexion.title')}</HeaderTitleBack>
             <IonContent className='ion-padding'>
+                <IonToast
+                    isOpen={showToast}
+                    onDidDismiss={() => setShowToast(false)}
+                    message={t('connexion.toast.login')}
+                    duration={2000}
+                    swipeGesture="vertical"
+                />
                 <form onSubmit={handleLogin}>
 
                     <IonItem className="input-item">
@@ -81,6 +108,8 @@ const PageConnexion: React.FC = () => {
                             name="assoId"
                             type='text'
                             clearInput={true}
+                            onIonChange={(e) => setAssoId(e.detail.value!)}
+                            value={assoId}
                         />
                     </IonItem>
 
@@ -92,6 +121,8 @@ const PageConnexion: React.FC = () => {
                             name="password"
                             type='password'
                             clearInput={true}
+                            onIonChange={(e) => setPassword(e.detail.value!)}
+                            value={password}
                         />
                     </IonItem>
 

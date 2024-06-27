@@ -137,7 +137,11 @@
 
             "event-poster" : {
                 "label" : "🖼️​ Affiche (optionnel)",
-                "placeholder" : "Lien de l'affiche de l'évènement"
+                "placeholder" : "Lien de l'affiche de l'évènement",
+                "button" : {
+                    "select" : "Selectionner une image",
+                    "delete" : "Supprimer l'image"
+                }
             },
 
             "event-description" : {
@@ -260,7 +264,12 @@
             "placeholder" : "Saisir le mot de passe"
         },
 
-        "button" : "Se connecter"
+        "button" : "Se connecter",
+
+        "toast" : {
+            "login" : "Connexion réussie !",
+            "logout" : "Déconnexion réussie !"
+        }        
     },
 
     "my-association" : {

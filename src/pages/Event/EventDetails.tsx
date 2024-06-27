@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import HeaderTitleBack from '../../components/HeaderTitleBack'
 import { IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonPage, IonRow, IonSpinner, IonTabButton, IonText, IonToast, useIonRouter } from '@ionic/react'
-import { useParams } from 'react-router'
+import { useHistory, useParams } from 'react-router'
 import { ApiResponseEvent, AllEventsData } from '../../Tools/Interfaces/EventInterface'
 import { useTranslation } from 'react-i18next'
 import '../../theme/Event/EventDetails.css'
@@ -16,7 +16,7 @@ const EventDetails: React.FC = () => {
     // Use to get the event's id
     const { id } = useParams<{ id: string }>();
 
-    const router = useIonRouter();
+    const history = useHistory();
 
     let savedEvents: number[] = [];
 
@@ -45,7 +45,7 @@ const EventDetails: React.FC = () => {
 
                 const associationResult = await associationResponse.json();
 
-                // Combine the event data with association details
+                // Combine the event data with the association details
                 const eventWithAssociation = {
                     ...event,
                     associationName: associationResult.data.names[0],
@@ -102,9 +102,9 @@ const EventDetails: React.FC = () => {
         }
     }
 
-    const navigateToCreateEvent = () => {
-        router.push('/event/modify/' + eventData.id);
-    }
+    const navigateToModifyEvent = () => {
+        history.push(`/event/modify/${eventData.id}`, { event: eventData });
+    };
 
     return (
         <IonPage>
@@ -130,13 +130,13 @@ const EventDetails: React.FC = () => {
                         <IonFabButton className='fab-button' style={{ '--border-color': eventData.associationColor }}>
                             <IonIcon icon={pushOutline} style={{ color: eventData.associationColor }} />
                         </IonFabButton>
-                        <IonFabButton className='fab-button' style={{ '--border-color': eventData.associationColor }} onClick={navigateToCreateEvent}>
+                        <IonFabButton className='fab-button' style={{ '--border-color': eventData.associationColor }} onClick={navigateToModifyEvent}>
                             <IonIcon icon={pencilOutline} style={{ color: eventData.associationColor }} />
                         </IonFabButton>
                     </IonFabList>
                 </IonFab>
 
-                <img alt="" src={"https://tekiens.net/" + eventData.poster} width="100%" />
+                <img alt="" src={"https://tekiens.net" + eventData.poster} width="100%" />
                 <IonGrid className='ion-padding'>
                     <IonRow className='info'>
                         <a style={{ color: eventData.associationColor }} href={"/association/" + eventData.asso_id}>{eventData.associationName}</a>

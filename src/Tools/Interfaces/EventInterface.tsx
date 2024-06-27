@@ -28,7 +28,6 @@ export interface AllEventsData {
     lastUpdateDate: string;
     associationName?: string;
     associationColor?: string;
-
 }
 
 export interface ApiResponseEvents {

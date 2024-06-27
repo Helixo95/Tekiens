@@ -139,7 +139,11 @@
 
             "event-poster" : {
                 "label" : "🖼️​ Poster (optional)",
-                "placeholder" : "Event poster link"
+                "placeholder" : "Event poster link",
+                "button" : {
+                    "select" : "Select an image",
+                    "delete" : "Delete the image"
+                }
             },
 
             "event-description" : {
@@ -262,7 +266,12 @@
             "placeholder" : "Enter password"
         },
 
-        "button" : "Login"
+        "button" : "Login",
+
+        "toast" : {
+            "login" : "Successful login!",
+            "logout" : "Successful logout!"
+        }
     },
 
     "my-association" : {
