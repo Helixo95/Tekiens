@@ -44,10 +44,18 @@ import AssociationDetails from './pages/Association/AssociationDetail';
 import AssociationEvents from './pages/Association/AssociationEvents';
 import CreateEvent from './pages/Event/CreateEvent';
 import ModifyEvent from './pages/Event/ModifyEvent';
+import {addListeners, registerNotifications, getDeliveredNotifications} from "./Tools/Notifications/NotificationPush";
+import * as admin from 'firebase-admin';
+import serviceAccount from './Tools/Notifications/adminKey.json';
 
 setupIonicReact();
 
 const App: React.FC = () => {
+  // Initialise notification push functions
+  addListeners();
+  registerNotifications();
+  // getDeliveredNotifications(); Temporary 
+  
 
   return (
     <React.StrictMode>

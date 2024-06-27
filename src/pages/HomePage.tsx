@@ -1,4 +1,4 @@
-import { IonButton, IonContent, IonPage } from "@ionic/react";
+import { IonButton, IonContent, IonPage, IonTitle } from "@ionic/react";
 import HeaderTitle from "../components/HeaderTitle";
 import { useTranslation } from "react-i18next";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -19,6 +19,7 @@ const HomePage: React.FC = () => {
   return (
     <IonPage>
       <HeaderTitle>{t('home.title')}</HeaderTitle>
+      <IonTitle>Newest Test !!!!</IonTitle>
       <IonContent>
         <Swiper          
             spaceBetween={2000}
