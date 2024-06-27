@@ -44,9 +44,8 @@ import AssociationDetails from './pages/Association/AssociationDetail';
 import AssociationEvents from './pages/Association/AssociationEvents';
 import CreateEvent from './pages/Event/CreateEvent';
 import ModifyEvent from './pages/Event/ModifyEvent';
-import {addListeners, registerNotifications, getDeliveredNotifications} from "./Tools/Notifications/NotificationPush";
-import * as admin from 'firebase-admin';
-import serviceAccount from './Tools/Notifications/adminKey.json';
+import {addListeners, registerNotifications} from "./Tools/Notifications/NotificationPush";
+import {getUserToken, subscribeToAllUserTopic, subscribeToTopic} from "./Tools/Notifications/TopicSub";
 
 setupIonicReact();
 
@@ -55,8 +54,12 @@ const App: React.FC = () => {
   addListeners();
   registerNotifications();
   // getDeliveredNotifications(); Temporary 
-  
+  getUserToken();
 
+  // Try subbing user to the main topic
+  subscribeToTopic('allUsers');
+  alert("Is normally subscribed to 'allUsers' topic");
+  
   return (
     <React.StrictMode>
       <React.Suspense>
@@ -91,3 +94,7 @@ const App: React.FC = () => {
 }
 
 export default App;
+
+function getMessaging() {
+  throw new Error('Function not implemented.');
+}
