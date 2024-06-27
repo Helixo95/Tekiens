@@ -43,6 +43,7 @@ import EventDetails from './pages/Event/EventDetails';
 import AssociationDetails from './pages/Association/AssociationDetail';
 import AssociationEvents from './pages/Association/AssociationEvents';
 import CreateEvent from './pages/Event/CreateEvent';
+import ModifyEvent from './pages/Event/ModifyEvent';
 
 setupIonicReact();
 
@@ -65,6 +66,7 @@ const App: React.FC = () => {
                 <Route path="/association/:id/events" render={() => <AssociationEvents />} exact={true} />
 
                 <Route path="/event/:id" render={() => <EventDetails />} />
+                <Route path="/event/modify/:id" render={() => <ModifyEvent />} />
 
                 <Route path="/preferences" render={() => <Preferences />} exact={true} />
                 <Route path="/createEvent" render={() => <CreateEvent />} exact={true} />

@@ -1,28 +1,20 @@
-import { IonActionSheet, IonButton, IonContent, IonInput, IonItem, IonLabel, IonPage, IonSelect, IonSelectOption } from "@ionic/react"
+import { IonButton, IonContent, IonInput, IonItem, IonLabel, IonPage, IonSelect, IonSelectOption } from "@ionic/react"
 import React from "react"
 import HeaderTitleBack from "../../components/HeaderTitleBack"
 
 import { eventStatus } from "../../Tools/EventTools"
 import { useTranslation } from "react-i18next"
-import { OverlayEventDetail } from "@ionic/react/dist/types/components/react-component-lib/interfaces"
-
+import { useParams } from "react-router"
 const CreateEvent: React.FC = () => {
     // Use to translate the page
     const { t } = useTranslation();
 
-    const logResult = (result: OverlayEventDetail) => {
-        const action = result.data?.action;
-
-        if (action) {
-            console.log(`Action chosen: ${action}`);
-        }
-    };
-
-    const PHOTO_STORAGE = 'photos';
+    // Use to get the event's id
+    const { id } = useParams<{ id: string }>();
 
     return (
         <IonPage>
-            <HeaderTitleBack back="/app/settings">{t('event.manage.creation.title')}</HeaderTitleBack>
+            <HeaderTitleBack back="">{t('event.manage.modification.title')}</HeaderTitleBack>
             <IonContent>
                 <form className="ion-padding">
                     <IonItem className="input-item">
@@ -59,35 +51,13 @@ const CreateEvent: React.FC = () => {
                     </IonItem>
 
                     <IonItem className="input-item">
-                        <IonLabel position="stacked">{t('event.manage.event-poster.label')}</IonLabel>
-
-                        <IonButton id="open-action-sheet">Selectionner une image</IonButton>
-                        <IonActionSheet
-                            trigger="open-action-sheet"
-                            header="Example header"
-                            subHeader="Example subheader"
-                            buttons={[
-                                {
-                                    text: 'Gallery',
-                                    data: {
-                                        action: 'gallery',
-                                    },
-                                },
-                                {
-                                    text: 'Photo',
-                                    data: {
-                                        action: 'photo',
-                                    },
-                                },
-                                {
-                                    text: 'Cancel',
-                                    role: 'cancel',
-                                    data: {
-                                        action: 'cancel',
-                                    },
-                                },
-                            ]}
-                            onDidDismiss={({ detail }) => logResult(detail)}
+                        <IonInput
+                            label={t('event.manage.event-poster.label')}
+                            labelPlacement="floating"
+                            placeholder={t('event.manage.event-poster.placeholder')}
+                            name="poster"
+                            type="text"
+                            clearInput={true}
                         />
                     </IonItem>
 
@@ -187,11 +157,11 @@ const CreateEvent: React.FC = () => {
                         />
                     </IonItem>
 
-                    <IonButton type='submit' className='login-item' style={{ 'width': '100%' }}>{t('event.manage.creation.button')}</IonButton>
+                    <IonButton type='submit' className='login-item' style={{ 'width': '100%' }}>{t('event.manage.modification.button')}</IonButton>
                     <span className='error center-screen'></span>
                 </form>
             </IonContent>
-        </IonPage>
+        </IonPage >
     )
 }
 

@@ -111,7 +111,16 @@
         "update" : "🔄 Last update on",
 
         "manage" : {
-            "title" : "Event creation",
+            "creation" : {
+                "title" : "Event creation",
+                "button" : "Create the event"
+            },
+
+            "modification" : {
+                "title" : "Event modification",
+                "button" : "Modify the event"
+            },
+
 
             "event-title" : {
                 "label" : "🏷️​ Title",
@@ -178,11 +187,6 @@
             "event-capacity" : {
                 "label" : "👥 Capacity (optional)",
                 "placeholder" : "Event capacity"
-            },
-
-            "button" : {
-                "creation" : "Create the event",
-                "modification" : "Modify the event"
             }
         }
     },

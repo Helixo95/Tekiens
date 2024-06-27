@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import HeaderTitleBack from '../../components/HeaderTitleBack'
 import { IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonPage, IonRow, IonSpinner, IonTabButton, IonText, IonToast, useIonRouter } from '@ionic/react'
-import { useHistory, useParams } from 'react-router'
+import { useParams } from 'react-router'
 import { ApiResponseEvent, AllEventsData } from '../../Tools/Interfaces/EventInterface'
 import { useTranslation } from 'react-i18next'
 import '../../theme/Event/EventDetails.css'
@@ -13,10 +13,10 @@ const EventDetails: React.FC = () => {
     // Use to translte the page
     const { t, i18n } = useTranslation();
 
-    const history = useHistory();
-
     // Use to get the event's id
     const { id } = useParams<{ id: string }>();
+
+    const router = useIonRouter();
 
     let savedEvents: number[] = [];
 
@@ -103,7 +103,7 @@ const EventDetails: React.FC = () => {
     }
 
     const navigateToCreateEvent = () => {
-        history.push('/createEvent', { eventData });;
+        router.push('/event/modify/' + eventData.id);
     }
 
     return (
