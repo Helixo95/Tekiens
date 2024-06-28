@@ -69,6 +69,14 @@
                     "title" : "No events",
                     "text" : "Come back later when there are events."
                 }
+            },
+
+            "favorite" : {
+                "label" : "Events",
+                "message" : {
+                    "title" : "You don't have favorite event",
+                    "text" : "Go to an event page to add it to your favorite."
+                }
             }
         },
         
@@ -199,14 +207,6 @@
         "title" : "Favorite",
 
         "filter" : {
-            "events" : {
-                "label" : "Events",
-                "message" : {
-                    "title" : "You don't have favorite event",
-                    "text" : "Go to an event page to add it to your favorite."
-                }
-            },
-
             "assos" : {
                 "label" : "Associations",
                 "message" : {

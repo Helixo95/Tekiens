@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import HeaderTitleBack from '../../components/HeaderTitleBack'
 import { IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonPage, IonRow, IonSpinner, IonTabButton, IonText, IonToast, useIonRouter } from '@ionic/react'
 import { useHistory, useParams } from 'react-router'
-import { ApiResponseEvent, AllEventsData, AssosData, EventData } from '../../Tools/Interfaces/EventInterface'
+import { AssosData, EventData } from '../../Tools/Interfaces/EventInterface'
 import { useTranslation } from 'react-i18next'
 import '../../theme/Event/EventDetails.css'
 import { darkenColor, formatDate, duration, getEventStatus } from '../../Tools/EventTools'
@@ -10,12 +10,13 @@ import { parseText } from '../../Tools/DOMParser'
 import { add, starOutline, star, pushOutline, push, pencilOutline } from 'ionicons/icons'
 import { useAuth } from '../../contexts/AuthContext'
 import Api from '../../Tools/Api'
+import { isEventSaved, saveEvent } from '../../Tools/LocalStorage/SavedEvent'
 
 const EventDetails: React.FC = () => {
     // Use to translte the page
     const { t, i18n } = useTranslation();
 
-    // Use to get the event's id
+    // Use to get the event's id from the href
     const { id } = useParams<{ id: string }>();
 
     const history = useHistory();
@@ -23,13 +24,13 @@ const EventDetails: React.FC = () => {
     const { isAuthenticated } = useAuth();
 
     let savedEvents: number[] = [];
+    const [isSaved, setIsSaved] = useState<boolean>(false);
 
     const [eventData, setEventData] = useState<EventData>();
     const [assoData, setAssoData] = useState<AssosData>();
 
     const [description, setDescription] = useState<string>("");
     const [loading, setLoading] = useState(true);
-    const [isSaved, setIsSaved] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -38,11 +39,7 @@ const EventDetails: React.FC = () => {
                 setEventData(eventData);
 
                 await parseText(eventData.description, setDescription);
-
-                const savedEvents = JSON.parse(localStorage.getItem("savedEvents") || "[]");
-                if (savedEvents.includes(eventData.id)) {
-                    setIsSaved(true);
-                }
+                setIsSaved(isEventSaved(eventData.id));
 
                 const assoData = await Api.assos.getOne(eventData.asso_id);
                 setAssoData(assoData)
@@ -70,23 +67,9 @@ const EventDetails: React.FC = () => {
     if (!eventData) {
         return (
             <IonContent>
-                <IonLabel>No event data found</IonLabel>
+                <IonLabel>No data was found</IonLabel>
             </IonContent>
         );
-    }
-
-    const saveEvent = () => {
-        const savedEvents = JSON.parse(localStorage.getItem("savedEvents") || "[]");
-
-        if (savedEvents.includes(eventData.id)) {
-            savedEvents.pop(eventData.id);
-            localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
-            setIsSaved(false);
-        } else {
-            savedEvents.push(eventData.id);
-            localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
-            setIsSaved(true);
-        }
     }
 
     const navigateToModifyEvent = () => {
@@ -99,7 +82,7 @@ const EventDetails: React.FC = () => {
 
             <IonContent>
                 <IonToast
-                    trigger="saveEvent"
+                    trigger="favEvent"
                     position="bottom"
                     swipeGesture="vertical"
                     message={isSaved ? t('event.favorite.add') : t('event.favorite.remove')}
@@ -111,7 +94,7 @@ const EventDetails: React.FC = () => {
                         <IonIcon icon={add}></IonIcon>
                     </IonFabButton>
                     <IonFabList side="top">
-                        <IonFabButton className='fab-button' onClick={saveEvent} id="saveEvent" style={{ '--border-color': assoData?.color }}>
+                        <IonFabButton className='fab-button' onClick={() => saveEvent(eventData.id, setIsSaved)} id="favEvent" style={{ '--border-color': assoData?.color }}>
                             <IonIcon icon={isSaved ? star : starOutline} style={{ color: assoData?.color }} />
                         </IonFabButton>
                         <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }}>
@@ -169,7 +152,14 @@ const EventDetails: React.FC = () => {
 
                     <IonRow className='justify-text'>
                         <IonText>{description ?
-                            <div dangerouslySetInnerHTML={{ __html: description }}></div>
+                            <div style={{}} dangerouslySetInnerHTML={{
+                                __html:
+                                    `<style>
+                                        div a {
+                                            color: ${assoData?.color}
+                                        }
+                                    </style> ${description}`
+                            }} />
                             :
                             t('event.no-description')}
                         </IonText>

@@ -25,9 +25,9 @@ const EventsPage: React.FC = () => {
                 </IonFabButton>
             </IonFab>
             {isList ?
-                <EventsList apiHref="events" />
+                <EventsList />
                 :
-                <EventsCalendar apiHref="events" />
+                <EventsCalendar />
             }
         </IonPage>
     );

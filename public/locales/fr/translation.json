@@ -68,6 +68,14 @@
                     "title" : "Aucun événement",
                     "text" : "Revenez plus tard quand il y aura des évènements"
                 }
+            },
+            
+            "favorite" : {
+                "label" : "Événements",
+                "message" : {
+                    "title" : "Vous n'avez aucun évènement favori",
+                    "text" : "Aller sur la page d'un évènement pour l'ajouter à vos favoris."
+                }
             }
         },
 
@@ -197,14 +205,6 @@
         "title" : "Favoris",
 
         "filter" : {
-            "events" : {
-                "label" : "Événements",
-                "message" : {
-                    "title" : "Vous n'avez aucun évènement favori",
-                    "text" : "Aller sur la page d'un évènement pour l'ajouter à vos favoris."
-                }
-            },
-
             "assos" : {
                 "label" : "Associations",
                 "message" : {

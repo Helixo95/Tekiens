@@ -1,24 +1,41 @@
-import { IonButton, IonButtons, IonContent, IonDatetime, IonLabel, IonSpinner, IonTabButton } from '@ionic/react';
+import { IonContent, IonDatetime, IonLabel, IonSpinner, IonTabButton } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import '../../theme/Event/Events.css';
-import useEventData from '../../Tools/EventApiCall';
 import EventCardComponent from '../../components/EventComponent/EventCardComponent';
+import { AssosData, EventData } from '../../Tools/Interfaces/EventInterface';
+import Api from '../../Tools/Api';
 
-const EventsList: React.FC<{ apiHref: string }> = ({ apiHref }) => {
-    // Use to translate the page
+const EventsList: React.FC = () => {
+    // Use for the translation
     const { t, i18n } = useTranslation();
 
     const [selectedEvents, setSelectedEvents] = useState<any[]>([]); // Array to store selected events
 
-    const { data, loading } = useEventData(apiHref);
+    const [eventsData, setEventData] = useState<EventData[]>([]);
+    const [assosData, setAssosData] = useState<AssosData[]>([]);
 
-    const dates = data?.map(event => ({
-        date: event.date.split(' ')[0],
-        textColor: '#ffff',
-        backgroundColor: event.associationColor || 'var(--ion-color-primary)',
-    })) || [];
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const eventsData = await Api.event.get();
+                setEventData(eventsData.reverse());
+
+                const assosData = await Api.assos.get();
+                setAssosData(assosData);
+
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     if (loading) {
         return (
@@ -31,6 +48,16 @@ const EventsList: React.FC<{ apiHref: string }> = ({ apiHref }) => {
         );
     }
 
+    const getAssoById = (id: string) => {
+        return assosData.find(asso => asso.id === id);
+    }
+
+    const dates = eventsData?.map(event => ({
+        date: event.date.split(' ')[0],
+        textColor: '#ffff',
+        backgroundColor: getAssoById(event.asso_id)?.color || 'var(--ion-color-primary)',
+    })) || [];
+
     /**
      * Function to handle the change of a date in the calendar
      * @param event the onIonChange event
@@ -38,7 +65,7 @@ const EventsList: React.FC<{ apiHref: string }> = ({ apiHref }) => {
     const handleDateChange = (event: CustomEvent) => {
         const selectedValue = event.detail.value;
 
-        const eventsForSelectedDate = data.filter(event => {
+        const eventsForSelectedDate = eventsData.filter(event => {
             // Split the event.date to get the date part only
             const eventDate = event.date.split(' ')[0];
             return eventDate === selectedValue.split('T')[0];
@@ -58,7 +85,7 @@ const EventsList: React.FC<{ apiHref: string }> = ({ apiHref }) => {
 
             {selectedEvents.length > 0 ?
                 selectedEvents.map(event => (
-                    <EventCardComponent key={event.id} event={event} />
+                    <EventCardComponent key={event.id} event={event} asso={getAssoById(event.asso_id)} />
                 ))
                 : (
                     <IonLabel className='center-screen title'>{t('events.no-events-calendar')}</IonLabel>

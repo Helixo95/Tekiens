@@ -3,17 +3,13 @@ import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import FuturEventsComponent from '../../components/EventComponent/FuturEventsComponent';
-import OngoingEventsComponent from '../../components/EventComponent/OngoingEventsComponent';
-import PastEventsComponent from '../../components/EventComponent/PastEventsComponent';
-import AllEventsComponent from '../../components/EventComponent/AllEventsComponent';
-
 import 'swiper/css';
 import '@ionic/react/css/ionic-swiper.css';
 import '../../theme/Event/Events.css';
+import EventsComponent from '../../components/EventComponent/EventsComponent';
 
-const EventsList: React.FC<{ apiHref: string }> = ({ apiHref }) => {
-    // Use to translate the page
+const EventsList: React.FC<{ assoID?: string }> = ({ assoID = '' }) => {
+    // Use for the translation
     const { t } = useTranslation();
 
     const [filter, setFilter] = useState('futur');
@@ -66,21 +62,11 @@ const EventsList: React.FC<{ apiHref: string }> = ({ apiHref }) => {
                     freeMode={true}
                 >
 
-                    <SwiperSlide key={0}>
-                        {activeIndex === 0 && <FuturEventsComponent apiHref={apiHref} />}
-                    </SwiperSlide>
-
-                    <SwiperSlide key={1}>
-                        {activeIndex === 1 && <OngoingEventsComponent apiHref={apiHref} />}
-                    </SwiperSlide>
-
-                    <SwiperSlide key={2}>
-                        {activeIndex === 2 && <PastEventsComponent apiHref={apiHref} />}
-                    </SwiperSlide>
-
-                    <SwiperSlide key={3}>
-                        {activeIndex === 3 && <AllEventsComponent apiHref={apiHref} />}
-                    </SwiperSlide>
+                    {segments.map((segment, index) => (
+                        <SwiperSlide key={index}>
+                            {activeIndex === index && <EventsComponent filter={segment} assoID={assoID} />}
+                        </SwiperSlide>
+                    ))}
 
                 </Swiper>
             </IonContent>

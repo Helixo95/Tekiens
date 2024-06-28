@@ -5,18 +5,15 @@ import HeaderTitleBack from "../../components/HeaderTitleBack"
 import { eventStatus } from "../../Tools/EventTools"
 import { useTranslation } from "react-i18next"
 import { useLocation, useParams } from "react-router"
-import useImageHandler from "../../Tools/useImage"
-import { AllEventsData } from "../../Tools/Interfaces/EventInterface"
+import useImageHandler from "../../Tools/UseImage"
+import { EventData } from "../../Tools/Interfaces/EventInterface"
 
 const ModifyEvent: React.FC = () => {
-    // Use to translate the page
+    // Use for the translation
     const { t } = useTranslation();
 
-    // Use to get the event's id
-    const { id } = useParams<{ id: string }>();
-
-    const location = useLocation<{ event: AllEventsData }>();
-    const eventData: AllEventsData = location.state?.event;
+    const location = useLocation<{ event: EventData }>();
+    const eventData: EventData = location.state?.event;
 
     const { imageUrl, setImageUrl, actionResult, deleteImage } = useImageHandler();
 

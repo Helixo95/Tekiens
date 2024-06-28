@@ -8,7 +8,7 @@ import '../../theme/IconText.css'
 const PreferencesPage: React.FC = () => {
     const { theme, setTheme } = useTheme();
 
-    // Use to translate the page and change the language
+    // Use for the translation and change the language
     const { t, i18n } = useTranslation();
 
     const changeLanguage = (lng: string) => {

@@ -6,10 +6,10 @@ import { eventStatus } from "../../Tools/EventTools"
 import { useTranslation } from "react-i18next"
 import { OverlayEventDetail } from "@ionic/react/dist/types/components/react-component-lib/interfaces"
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import useImageHandler from "../../Tools/useImage"
+import useImageHandler from "../../Tools/UseImage"
 
 const CreateEvent: React.FC = () => {
-    // Use to translate the page
+    // Use for the translation
     const { t } = useTranslation();
 
     const { imageUrl, actionResult, deleteImage } = useImageHandler();

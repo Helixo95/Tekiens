@@ -6,7 +6,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useHistory } from 'react-router-dom';
 
 const PageConnexion: React.FC = () => {
-    // Use to translate the page
+    // Use for the translation
     const { t } = useTranslation();
 
     const history = useHistory();

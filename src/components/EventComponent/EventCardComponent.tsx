@@ -1,11 +1,11 @@
 import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonGrid, IonLabel, IonRow } from '@ionic/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next';
-import { SomeEventsData } from '../../Tools/Interfaces/EventInterface';
+import { AssosData, EventData } from '../../Tools/Interfaces/EventInterface';
 
 
-const EventCardComponent: React.FC<{ event: SomeEventsData }> = ({ event }) => {
-    // Use to translate the page
+const EventCardComponent: React.FC<{ event: EventData, asso: AssosData | undefined }> = ({ event, asso }) => {
+    // Use for the translation
     const { i18n } = useTranslation();
 
     return (
@@ -27,13 +27,13 @@ const EventCardComponent: React.FC<{ event: SomeEventsData }> = ({ event }) => {
                         </IonCol>
 
                         <IonCol size='auto'>
-                            <div style={{ backgroundColor: event.associationColor, width: '3px', height: '100%' }} />
+                            <div style={{ backgroundColor: asso?.color, width: '3px', height: '100%' }} />
                         </IonCol>
 
                         <IonCol>
                             <IonGrid style={{ 'textAlign': 'left' }}>
                                 <IonRow className='info'>
-                                    <IonLabel style={{ color: event.associationColor }}>{event.associationName}</IonLabel>
+                                    <IonLabel style={{ color: asso?.color }}>{asso?.names[0]}</IonLabel>
                                 </IonRow>
 
                                 <IonRow className='info'>

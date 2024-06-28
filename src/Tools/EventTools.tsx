@@ -1,4 +1,4 @@
-import { AllEventsData, SomeEventsData } from "./Interfaces/EventInterface";
+import { EventData } from "./Interfaces/EventInterface";
 import i18next from 'i18next';
 
 export const eventStatus: { [key: string]: string } = {
@@ -9,7 +9,12 @@ export const eventStatus: { [key: string]: string } = {
     movedOnline: 'event.status.movedOnline',
 };
 
-export function getEventStatus(event: AllEventsData): string {
+/**
+ * Function to get an event status from its date
+ * @param event the event we want to get the status
+ * @returns the event status
+ */
+export function getEventStatus(event: EventData): string {
 
     const eventDate = new Date(Date.parse(event.date + 'Z'));
     const now = new Date();
@@ -71,7 +76,7 @@ export const formatDate = (date: string) => {
  * @param event the event we want to calculat the duration
  * @returns the event duration in days, hours and minutes
  */
-export const duration = (event: AllEventsData) => {
+export const duration = (event: EventData) => {
     if (!event.duration)
         return undefined;
     var days = Math.floor(event.duration / 60 / 24);
@@ -80,8 +85,13 @@ export const duration = (event: AllEventsData) => {
     return `${days}j ${hours}h ${minutes}min`.replace(/0j /, '').replace(/0h /, '').replace(/ 0min/, '');
 }
 
-export const getEventsByWeek = (filteredEvents: Array<SomeEventsData>) => {
-    return filteredEvents.reduce((o: { [key: string]: SomeEventsData[] }, event) => {
+/**
+ * Function to return 
+ * @param eventsData the data with events
+ * @returns 
+ */
+export const getEventsByWeek = (eventsData: Array<EventData>) => {
+    return eventsData.reduce((o: { [key: string]: EventData[] }, event) => {
         const monday = getMonday(new Date(event.date + 'Z').toString());
         const key = `${monday.getFullYear()}-${monday.getMonth() + 1}-${monday.getDate()}`;
         if (!o[key]) o[key] = [];
@@ -90,6 +100,11 @@ export const getEventsByWeek = (filteredEvents: Array<SomeEventsData>) => {
     }, {});
 }
 
+/**
+ * Method to geek the week name according to a date
+ * @param date the date we want to know the week name
+ * @returns an arrayr with the sentence if we need it the date
+ */
 export const getWeekName = (date: string) => {
     let monday = getMonday(date);
     if (monday.getTime() == getMonday(new Date().toString()).getTime())
@@ -97,13 +112,43 @@ export const getWeekName = (date: string) => {
     if (monday.getTime() == getMonday(new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toString()).getTime())
         return ['events.week.next-week', ''];
     if (monday.getTime() == getMonday(new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000).toString()).getTime())
-        return ['events.week.last-week'];
+        return ['events.week.last-week', ''];
     return ['events.week.week-of', new Date(monday).toLocaleDateString('FR-fr')];
 }
 
+/**
+ * Function to calculatee the date of the monday of the given date
+ * @param dateString the date in string
+ * @returns the date of the mondays of the given date
+ */
 const getMonday = (dateString: string) => {
     const date = new Date(dateString);
     let weekday = (date.getDay() || 7) - 1;
     let monday = new Date((date.getTime() - weekday * 24 * 60 * 60 * 1000));
     return new Date(monday.getFullYear(), monday.getMonth(), monday.getDate());
 }
+
+/**
+ * Method to return the filtered data for the futur events
+ * @returns return the filtered data for the futur events
+ */
+export const getFilteredEvents = (eventsData: EventData[], filter: string) => {
+    const currentDate = new Date();
+    switch (filter) {
+        case 'futur':
+            return eventsData.filter(event => new Date(event.date + 'Z') > currentDate);
+        case 'ongoing':
+            return eventsData.filter(event => {
+                const eventDate = new Date(event.date + 'Z');
+                return eventDate.toDateString() === currentDate.toDateString();
+            });
+        case 'past':
+            return eventsData.filter(event => new Date(event.date + 'Z') < currentDate);
+        case 'favorite':
+            const savedEvents = JSON.parse(localStorage.getItem('savedEvents') || '[]');
+            return eventsData.filter(event => savedEvents.includes(event.id));
+        default:
+            return eventsData;
+    }
+
+};

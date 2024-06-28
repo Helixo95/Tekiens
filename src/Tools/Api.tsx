@@ -4,18 +4,26 @@ const baseUrl = "https://tekiens.net";
 
 const Api = {
     assos: {
+        // Return an array with all the associations
         get(): Promise<AssosData[]> {
             return sendApiRequest<AssosData[]>("GET", "assos", {}, "Getting assos")
         },
+        // Return one association by its id
         getOne(id: string): Promise<AssosData> {
             return sendApiRequest<AssosData>("GET", "assos/" + encodeURIComponent(id), {}, "Getting asso " + id)
         },
+        // Return all the association events
+        getEvents(id: string): Promise<EventData[]> {
+            return sendApiRequest<EventData[]>("GET", "assos/" + encodeURIComponent(id) + "/events", {}, "Getting asso " + id + " events");
+        }
     },
 
     event: {
+        // Return an array with all the events
         get(): Promise<EventData[]> {
             return sendApiRequest<EventData[]>("GET", "events", {}, "Getting event");
         },
+        // Return one event by its id
         getOne(id: string): Promise<EventData> {
             return sendApiRequest<EventData>("GET", "events/" + encodeURIComponent(id), {}, "Getting event " + id)
         },
