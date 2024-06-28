@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import HeaderTitleBack from '../../components/HeaderTitleBack'
 import { IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonPage, IonRow, IonSpinner, IonTabButton, IonText, IonToast, useIonRouter } from '@ionic/react'
 import { useHistory, useParams } from 'react-router'
-import { ApiResponseEvent, AllEventsData } from '../../Tools/Interfaces/EventInterface'
+import { ApiResponseEvent, AllEventsData, AssosData, EventData } from '../../Tools/Interfaces/EventInterface'
 import { useTranslation } from 'react-i18next'
 import '../../theme/Event/EventDetails.css'
 import { darkenColor, formatDate, duration, getEventStatus } from '../../Tools/EventTools'
 import { parseText } from '../../Tools/DOMParser'
 import { add, starOutline, star, pushOutline, push, pencilOutline } from 'ionicons/icons'
 import { useAuth } from '../../contexts/AuthContext'
+import Api from '../../Tools/Api'
 
 const EventDetails: React.FC = () => {
     // Use to translte the page
@@ -23,7 +24,9 @@ const EventDetails: React.FC = () => {
 
     let savedEvents: number[] = [];
 
-    const [eventData, setEventData] = useState<AllEventsData>();
+    const [eventData, setEventData] = useState<EventData>();
+    const [assoData, setAssoData] = useState<AssosData>();
+
     const [description, setDescription] = useState<string>("");
     const [loading, setLoading] = useState(true);
     const [isSaved, setIsSaved] = useState(false);
@@ -31,41 +34,22 @@ const EventDetails: React.FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Fetch the event data
-                const eventResponse = await fetch(`https://tekiens.net/api/events/${id}`);
-                if (!eventResponse.ok) {
-                    throw new Error('Network response was not ok');
-                }
+                const eventData = await Api.event.getOne(id);
+                setEventData(eventData);
 
-                const eventResult: ApiResponseEvent = await eventResponse.json();
-                const event = eventResult.data;
-
-                // Fetch the association data
-                const associationResponse = await fetch(`https://tekiens.net/api/assos/${event.asso_id}`);
-                if (!associationResponse.ok) {
-                    throw new Error(`Failed to fetch association ${event.asso_id}`);
-                }
-
-                const associationResult = await associationResponse.json();
-
-                // Combine the event data with the association details
-                const eventWithAssociation = {
-                    ...event,
-                    associationName: associationResult.data.names[0],
-                    associationColor: associationResult.data.color,
-                };
-
-                setEventData(eventWithAssociation);
-                await parseText(eventWithAssociation.description, setDescription);
+                await parseText(eventData.description, setDescription);
 
                 const savedEvents = JSON.parse(localStorage.getItem("savedEvents") || "[]");
-                if (savedEvents.includes(event.id)) {
+                if (savedEvents.includes(eventData.id)) {
                     setIsSaved(true);
                 }
 
+                const assoData = await Api.assos.getOne(eventData.asso_id);
+                setAssoData(assoData)
+
+                setLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
-            } finally {
                 setLoading(false);
             }
         };
@@ -123,19 +107,19 @@ const EventDetails: React.FC = () => {
                 />
 
                 <IonFab slot="fixed" horizontal="end" vertical="bottom">
-                    <IonFabButton style={{ '--background': eventData.associationColor, '--background-activated': darkenColor(eventData.associationColor) }}>
+                    <IonFabButton style={{ '--background': assoData?.color, '--background-activated': darkenColor(assoData?.color) }}>
                         <IonIcon icon={add}></IonIcon>
                     </IonFabButton>
                     <IonFabList side="top">
-                        <IonFabButton className='fab-button' onClick={saveEvent} id="saveEvent" style={{ '--border-color': eventData.associationColor }}>
-                            <IonIcon icon={isSaved ? star : starOutline} style={{ color: eventData.associationColor }} />
+                        <IonFabButton className='fab-button' onClick={saveEvent} id="saveEvent" style={{ '--border-color': assoData?.color }}>
+                            <IonIcon icon={isSaved ? star : starOutline} style={{ color: assoData?.color }} />
                         </IonFabButton>
-                        <IonFabButton className='fab-button' style={{ '--border-color': eventData.associationColor }}>
-                            <IonIcon icon={pushOutline} style={{ color: eventData.associationColor }} />
+                        <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }}>
+                            <IonIcon icon={pushOutline} style={{ color: assoData?.color }} />
                         </IonFabButton>
                         {isAuthenticated &&
-                            <IonFabButton className='fab-button' style={{ '--border-color': eventData.associationColor }} onClick={navigateToModifyEvent}>
-                                <IonIcon icon={pencilOutline} style={{ color: eventData.associationColor }} />
+                            <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }} onClick={navigateToModifyEvent}>
+                                <IonIcon icon={pencilOutline} style={{ color: assoData?.color }} />
                             </IonFabButton>
                         }
                     </IonFabList>
@@ -144,7 +128,7 @@ const EventDetails: React.FC = () => {
                 <img alt="" src={"https://tekiens.net" + eventData.poster} width="100%" />
                 <IonGrid className='ion-padding'>
                     <IonRow className='info'>
-                        <a style={{ color: eventData.associationColor }} href={"/association/" + eventData.asso_id}>{eventData.associationName}</a>
+                        <a style={{ color: assoData?.color }} href={"/association/" + eventData.asso_id}>{assoData?.names[0]}</a>
                     </IonRow>
 
                     <IonRow className='info'>
@@ -174,7 +158,7 @@ const EventDetails: React.FC = () => {
 
                     <IonCol />
                     <IonRow>
-                        <div style={{ backgroundColor: eventData.associationColor, width: '100%', height: '3px' }} />
+                        <div style={{ backgroundColor: assoData?.color, width: '100%', height: '3px' }} />
                     </IonRow>
                     <IonCol />
 
@@ -193,7 +177,7 @@ const EventDetails: React.FC = () => {
                     <IonCol />
 
                     <IonRow>
-                        <div style={{ backgroundColor: eventData.associationColor, width: '100%', height: '3px' }} />
+                        <div style={{ backgroundColor: assoData?.color, width: '100%', height: '3px' }} />
                     </IonRow>
                     <IonCol />
 
@@ -224,7 +208,7 @@ const EventDetails: React.FC = () => {
                         <IonRow className='info'>
                             <IonLabel>
                                 🖇&nbsp;
-                                <a href={eventData.link} target="_blank" rel="noreferrer" style={{ color: eventData.associationColor }}>{t('event.link')}</a>
+                                <a href={eventData.link} target="_blank" rel="noreferrer" style={{ color: assoData?.color }}>{t('event.link')}</a>
                             </IonLabel>
                         </IonRow>
                     }
