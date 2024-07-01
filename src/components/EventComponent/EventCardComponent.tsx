@@ -1,7 +1,7 @@
 import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonGrid, IonLabel, IonRow } from '@ionic/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next';
-import { AssosData, EventData } from '../../Tools/Interfaces/EventInterface';
+import { AssosData, EventData } from '../../Tools/Interfaces/EventAndAssoInterface';
 
 
 const EventCardComponent: React.FC<{ event: EventData, asso: AssosData | undefined }> = ({ event, asso }) => {

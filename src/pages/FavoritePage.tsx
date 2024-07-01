@@ -13,7 +13,7 @@ const FavoritePage: React.FC = () => {
     // Use to translte the page
     const { t } = useTranslation();
 
-    const [desiredSeg, setDesiredSeg] = useState("assos");
+    const [desiredSeg, setDesiredSeg] = useState("followedAssos");
     const emptyTitle = t('favorite.filter.assos.message.title');
     const emptyMessage = t('favorite.filter.assos.message.text');
     const [activeIndex, setActiveIndex] = useState(0);
@@ -39,7 +39,7 @@ const FavoritePage: React.FC = () => {
     return (
         <IonPage>
             <IonSegment value={desiredSeg} onIonChange={handleSegmentChange}>
-                <IonSegmentButton value="assos"><IonLabel>{t('favorite.filter.assos.label')}</IonLabel></IonSegmentButton>
+                <IonSegmentButton value="assos"><IonLabel>{t('associations.filter.sub.label')}</IonLabel></IonSegmentButton>
                 <IonSegmentButton value="events"><IonLabel>{t('events.filter.favorite.label')}</IonLabel></IonSegmentButton>
             </IonSegment>
             <HeaderTitle>{t('favorite.title')}</HeaderTitle>
@@ -53,7 +53,7 @@ const FavoritePage: React.FC = () => {
                 >
 
                     <SwiperSlide key={0}>
-                        {activeIndex === 0 && <AssociationCards segValue={"sub"} emptyTitle={emptyTitle} emptyMessage={emptyMessage} />}
+                        {activeIndex === 0 && <AssociationCards segValue={"sub"} />}
                     </SwiperSlide>
 
                     <SwiperSlide key={1}>

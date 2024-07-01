@@ -8,13 +8,39 @@
         "title" : "Liste des associations",
 
         "no-description": "Aucune description disponible",
-        "tab-active": "Actives",
-        "tab-over": "Anciennes",
-        "tab-all": "Toutes",
 
-        "message": {
-            "title": "Aucune Associations",
-            "text": "Il n'y a aucune associations qui à été trouvé pour cette catégorie où campus"
+        "filter" : {
+            "active" : {
+                "label" : "Actives",
+                "message" : {
+                    "title" : "Aucune association active",
+                    "text" : "Revenez plus tard, ou consultez la liste des anciennes associations ou celle de toutes les associations."
+                }
+            },
+
+            "former" : {
+                "label" : "Anciennes",
+                "message" : {
+                "title" : "Aucune ancienne association",
+                    "text" : "Revenez plus tard, ou consultez la liste des associations actives ou celle de toutes les associations."
+                }
+            },
+
+            "all" : {
+                "label" : "Toutes",
+                "message" : {
+                    "title" : "Aucune association",
+                    "text" : "Revenez plus tard quand il y aura une association, ou créez la vôtre."
+                }
+            },
+
+            "sub" : {
+                "label" : "Associations",
+                "message" : {
+                    "title" : "Vous ne suivez aucune association",
+                    "text" : "Allez sur la page d'une assiciation pour la suivre."
+                }
+            }
         }
     },
 
@@ -31,7 +57,7 @@
         "tab-title" : "Évènements",
         
         "title" : {
-            "list" : "Liste évènements",
+            "list" : "Liste des évènements",
             "calendar" : "Calendrier évènements"
         },
 
@@ -74,7 +100,7 @@
                 "label" : "Événements",
                 "message" : {
                     "title" : "Vous n'avez aucun évènement favori",
-                    "text" : "Aller sur la page d'un évènement pour l'ajouter à vos favoris."
+                    "text" : "Allez sur la page d'un évènement pour l'ajouter à vos favoris."
                 }
             }
         },
@@ -202,17 +228,7 @@
     },
 
     "favorite" : {
-        "title" : "Favoris",
-
-        "filter" : {
-            "assos" : {
-                "label" : "Associations",
-                "message" : {
-                    "title" : "Vous ne suivez aucune association",
-                    "text" : "Aller sur la page d'une assiciation pour la suivre."
-                }
-            }
-        }
+        "title" : "Favoris"
     },
 
     "settings" : {

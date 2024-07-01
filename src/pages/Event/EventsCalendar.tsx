@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import '../../theme/Event/Events.css';
 import EventCardComponent from '../../components/EventComponent/EventCardComponent';
-import { AssosData, EventData } from '../../Tools/Interfaces/EventInterface';
+import { AssosData, EventData } from '../../Tools/Interfaces/EventAndAssoInterface';
 import Api from '../../Tools/Api';
 
 const EventsList: React.FC = () => {

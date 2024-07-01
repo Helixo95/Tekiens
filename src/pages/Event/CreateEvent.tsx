@@ -2,7 +2,7 @@ import { IonActionSheet, IonButton, IonContent, IonInput, IonItem, IonLabel, Ion
 import React, { useState } from "react"
 import HeaderTitleBack from "../../components/HeaderTitleBack"
 
-import { eventStatus } from "../../Tools/EventTools"
+import { eventStatus } from "../../Tools/EventsTools"
 import { useTranslation } from "react-i18next"
 import { OverlayEventDetail } from "@ionic/react/dist/types/components/react-component-lib/interfaces"
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';

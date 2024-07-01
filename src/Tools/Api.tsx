@@ -1,4 +1,4 @@
-import { AssosData, EventData } from "./Interfaces/EventInterface";
+import { AssosData, EventData } from "./Interfaces/EventAndAssoInterface";
 
 const baseUrl = "https://tekiens.net";
 

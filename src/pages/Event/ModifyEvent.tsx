@@ -2,11 +2,11 @@ import { IonActionSheet, IonButton, IonContent, IonInput, IonItem, IonLabel, Ion
 import React, { useEffect } from "react"
 import HeaderTitleBack from "../../components/HeaderTitleBack"
 
-import { eventStatus } from "../../Tools/EventTools"
+import { eventStatus } from "../../Tools/EventsTools"
 import { useTranslation } from "react-i18next"
 import { useLocation, useParams } from "react-router"
 import useImageHandler from "../../Tools/UseImage"
-import { EventData } from "../../Tools/Interfaces/EventInterface"
+import { EventData } from "../../Tools/Interfaces/EventAndAssoInterface"
 
 const ModifyEvent: React.FC = () => {
     // Use for the translation

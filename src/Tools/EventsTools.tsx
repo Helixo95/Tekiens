@@ -1,5 +1,6 @@
-import { EventData } from "./Interfaces/EventInterface";
+import { AssosData, EventData } from "./Interfaces/EventAndAssoInterface";
 import i18next from 'i18next';
+import { filterByCampus } from "./LocalStorage/LocalStorageEvents";
 
 export const eventStatus: { [key: string]: string } = {
     programmed: 'event.status.programmed',
@@ -130,25 +131,34 @@ const getMonday = (dateString: string) => {
 
 /**
  * Method to return the filtered data for the futur events
+ * @param eventsData the data we want to filter
+ * @param filter the filter
  * @returns return the filtered data for the futur events
  */
-export const getFilteredEvents = (eventsData: EventData[], filter: string) => {
+export const getFilteredEvents = (eventsData: EventData[], assosData: AssosData[], filter: string) => {
     const currentDate = new Date();
+
+    const campusFilteredData = filterByCampus(eventsData, assosData);
+
     switch (filter) {
         case 'futur':
-            return eventsData.filter(event => new Date(event.date + 'Z') > currentDate);
+            return campusFilteredData.filter(event => new Date(event.date + 'Z') > currentDate);
+
         case 'ongoing':
-            return eventsData.filter(event => {
+            return campusFilteredData.filter(event => {
                 const eventDate = new Date(event.date + 'Z');
                 return eventDate.toDateString() === currentDate.toDateString();
             });
+
         case 'past':
-            return eventsData.filter(event => new Date(event.date + 'Z') < currentDate);
+            return campusFilteredData.filter(event => new Date(event.date + 'Z') < currentDate);
+
         case 'favorite':
             const savedEvents = JSON.parse(localStorage.getItem('savedEvents') || '[]');
-            return eventsData.filter(event => savedEvents.includes(event.id));
+            return campusFilteredData.filter(event => savedEvents.includes(event.id));
+
         default:
-            return eventsData;
+            return campusFilteredData;
     }
 
 };

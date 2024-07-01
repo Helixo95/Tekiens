@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react'
 import HeaderTitleBack from '../../components/HeaderTitleBack'
 import { IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonPage, IonRow, IonSpinner, IonTabButton, IonText, IonToast, useIonRouter } from '@ionic/react'
 import { useHistory, useParams } from 'react-router'
-import { AssosData, EventData } from '../../Tools/Interfaces/EventInterface'
+import { AssosData, EventData } from '../../Tools/Interfaces/EventAndAssoInterface'
 import { useTranslation } from 'react-i18next'
 import '../../theme/Event/EventDetails.css'
-import { darkenColor, formatDate, duration, getEventStatus } from '../../Tools/EventTools'
+import { darkenColor, formatDate, duration, getEventStatus } from '../../Tools/EventsTools'
 import { parseText } from '../../Tools/DOMParser'
 import { add, starOutline, star, pushOutline, push, pencilOutline } from 'ionicons/icons'
 import { useAuth } from '../../contexts/AuthContext'
 import Api from '../../Tools/Api'
-import { isEventSaved, saveEvent } from '../../Tools/LocalStorage/SavedEvent'
+import { isEventSaved, saveEvent } from '../../Tools/LocalStorage/LocalStorageEvents'
 
 const EventDetails: React.FC = () => {
     // Use to translte the page
@@ -82,7 +82,7 @@ const EventDetails: React.FC = () => {
 
             <IonContent>
                 <IonToast
-                    trigger="favEvent"
+                    trigger="saveEvent"
                     position="bottom"
                     swipeGesture="vertical"
                     message={isSaved ? t('event.favorite.add') : t('event.favorite.remove')}
@@ -94,7 +94,7 @@ const EventDetails: React.FC = () => {
                         <IonIcon icon={add}></IonIcon>
                     </IonFabButton>
                     <IonFabList side="top">
-                        <IonFabButton className='fab-button' onClick={() => saveEvent(eventData.id, setIsSaved)} id="favEvent" style={{ '--border-color': assoData?.color }}>
+                        <IonFabButton className='fab-button' onClick={() => saveEvent(eventData.id, setIsSaved)} id="saveEvent" style={{ '--border-color': assoData?.color }}>
                             <IonIcon icon={isSaved ? star : starOutline} style={{ color: assoData?.color }} />
                         </IonFabButton>
                         <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }}>

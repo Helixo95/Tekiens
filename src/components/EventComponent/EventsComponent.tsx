@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
-import { AssosData, EventData } from '../../Tools/Interfaces/EventInterface';
+import { AssosData, EventData } from '../../Tools/Interfaces/EventAndAssoInterface';
 import { IonGrid, IonLabel, IonSpinner, IonTabButton } from '@ionic/react';
 import EventCardComponent from './EventCardComponent';
 
-import { getEventsByWeek, getFilteredEvents, getWeekName } from '../../Tools/EventTools';
+import { getEventsByWeek, getFilteredEvents, getWeekName } from '../../Tools/EventsTools';
 import Api from '../../Tools/Api';
 
 
@@ -55,7 +55,7 @@ const EventsComponent: React.FC<{ filter: string, assoID?: string }> = ({ filter
         return assosData.find(asso => asso.id === id);
     }
 
-    const filteredEvents = getFilteredEvents(eventsData, filter);
+    const filteredEvents = getFilteredEvents(eventsData, assosData, filter);
 
     const eventByWeek = getEventsByWeek(filteredEvents);
 
