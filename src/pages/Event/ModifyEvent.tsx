@@ -4,7 +4,7 @@ import HeaderTitleBack from "../../components/HeaderTitleBack"
 
 import { eventStatus } from "../../Tools/EventsTools"
 import { useTranslation } from "react-i18next"
-import { useLocation, useParams } from "react-router"
+import { useLocation } from "react-router"
 import useImageHandler from "../../Tools/UseImage"
 import { EventData } from "../../Tools/Interfaces/EventAndAssoInterface"
 
@@ -23,6 +23,11 @@ const ModifyEvent: React.FC = () => {
         }
     }, [eventData, setImageUrl]);
 
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+    };
+
     if (!eventData) {
         return null;
     }
@@ -31,7 +36,7 @@ const ModifyEvent: React.FC = () => {
         <IonPage>
             <HeaderTitleBack back=''>{t('event.manage.modification.title')}</HeaderTitleBack>
             <IonContent>
-                <form className="ion-padding">
+                <form className="ion-padding" onSubmit={handleSubmit}>
                     <IonItem className="input-item">
                         <IonInput
                             label={t('event.manage.event-title.label')}

@@ -1,7 +1,7 @@
 import { IonButton, IonCard, IonCardContent, IonCardTitle, IonContent, IonFab, IonFabButton, IonFabList, IonFooter, IonIcon, IonItem, IonLabel, IonPage, IonSpinner, IonTabButton, IonText, IonToast, IonToolbar } from "@ionic/react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { logoDiscord, logoInstagram, paperPlane, logoLinkedin, globeOutline, leafOutline, atOutline, logoFacebook, locationOutline, extensionPuzzleOutline, calendarOutline, addOutline, addCircle, removeCircleOutline, call, pulseOutline, colorFill, add, starSharp, starOutline } from 'ionicons/icons';
+import { useHistory, useParams } from "react-router";
+import { logoDiscord, logoInstagram, paperPlane, logoLinkedin, globeOutline, leafOutline, atOutline, logoFacebook, locationOutline, extensionPuzzleOutline, calendarOutline, addOutline, addCircle, removeCircleOutline, call, pulseOutline, colorFill, add, starSharp, starOutline, pencilOutline } from 'ionicons/icons';
 import { SocialsData } from '../../Tools/Interfaces/EventAndAssoInterface';
 import { parseText } from "../../Tools/DOMParser";
 import { isAssoFollowed, followAssociation } from "../../Tools/LocalStorage/LocalStorageAssos";
@@ -12,10 +12,15 @@ import { useTranslation } from "react-i18next";
 import { darkenColor } from "../../Tools/EventsTools";
 import { AssosData } from "../../Tools/Interfaces/EventAndAssoInterface";
 import Api from "../../Tools/Api";
+import { useAuth } from "../../contexts/AuthContext";
 
 const AssociationDetails: React.FC = () => {
     // Use for the translation
     const { t } = useTranslation();
+
+    const history = useHistory();
+
+    const { isAuthenticated, session } = useAuth();
 
     const [description, setDescription] = useState<string>("");
     const [isFollowed, setIsFollowed] = useState(false);
@@ -68,6 +73,10 @@ const AssociationDetails: React.FC = () => {
         );
     }
 
+    const navigateToModifyEvent = () => {
+        history.push(`/association/modify/${assoData.id}`, { asso: assoData });
+    };
+
     return (
         <IonPage>
             <HeaderTitleBack back="">{t('association.title')}</HeaderTitleBack>
@@ -105,6 +114,12 @@ const AssociationDetails: React.FC = () => {
                     <IonFabButton className="detail-socials-button" onClick={() => followAssociation(assoData.id, setIsFollowed)} id="followAsso" style={{ '--border-color': assoData.color }}>
                         <IonIcon icon={isFollowed ? starSharp : starOutline} style={{ color: assoData.color }} />
                     </IonFabButton>
+
+                    {isAuthenticated && session?.id === assoData?.id &&
+                        <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }} onClick={navigateToModifyEvent}>
+                            <IonIcon icon={pencilOutline} style={{ color: assoData?.color }} />
+                        </IonFabButton>
+                    }
 
                 </IonFabList>
             </IonFab>

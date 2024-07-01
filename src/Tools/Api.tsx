@@ -33,6 +33,9 @@ const Api = {
         getOne(id: string): Promise<EventData> {
             return sendApiRequest<EventData>("GET", "events/" + encodeURIComponent(id), {}, "Getting event " + id)
         },
+        update(id: number, event: EventData, session = localStorage.getItem("session")) {
+            return sendApiRequest("PUT", "events/" + encodeURIComponent(id), { ...event, session }, "Updating event " + id);
+        }
     },
     sessions: {
         //authentificate the user and return a session id if success

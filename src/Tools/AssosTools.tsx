@@ -19,7 +19,6 @@ export function filterData(assosData: AssosData[], filterChoice: string) {
 
         case 'sub':
             const followedAssos = JSON.parse(localStorage.getItem('followedAssos') || '[]');
-            console.log(followedAssos);
             return campusFilteredData.filter(currentData => followedAssos.includes(currentData.id));
 
         default:
