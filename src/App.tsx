@@ -45,7 +45,6 @@ import AssociationEvents from './pages/Association/AssociationEvents';
 import CreateEvent from './pages/Event/CreateEvent';
 import ModifyEvent from './pages/Event/ModifyEvent';
 import {addListeners, registerNotifications} from "./Tools/Notifications/NotificationPush";
-import {getUserToken, subscribeToAllUserTopic, subscribeToTopic} from "./Tools/Notifications/TopicSub";
 
 setupIonicReact();
 
@@ -53,13 +52,6 @@ const App: React.FC = () => {
   // Initialise notification push functions
   addListeners();
   registerNotifications();
-  // getDeliveredNotifications(); Temporary 
-  getUserToken();
-
-  // Try subbing user to the main topic
-  subscribeToTopic('allUsers');
-  alert("Is normally subscribed to 'allUsers' topic");
-  
   return (
     <React.StrictMode>
       <React.Suspense>

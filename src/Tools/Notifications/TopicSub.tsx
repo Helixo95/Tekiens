@@ -5,7 +5,6 @@ export function subscribeToTopic(topicName: string) {
     FCM.subscribeTo({topic: topicName})
     .then(r => {
         alert(`Successfully subscribed to ${topicName}`+r);
-        alert('Subbed to topic');
     })
     .catch(error => alert(error));
 }

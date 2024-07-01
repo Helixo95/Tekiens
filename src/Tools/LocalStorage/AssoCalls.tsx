@@ -1,5 +1,6 @@
 import { call } from "ionicons/icons";
 import { AssociationMainData } from "../Interfaces/AssosInterface";
+import { subscribeToTopic, unsubscribeFromTopic } from "../Notifications/TopicSub";
 
 /** Filter an array of asso
  * @param filterChoice 'all', 'sub', 'active', 'over', 'rnd => random'
@@ -71,6 +72,7 @@ function removeAssosFromLocalStorage(id: any) {
     console.log(filtered);
     localStorage.setItem("assos", JSON.stringify(filtered));
     console.log("Updated local storage of assos, removed: " + id);
+    unsubscribeFromTopic(id);
 
 }
 
@@ -105,6 +107,8 @@ function addAssoToLocalStrorage(id: any) {
     // Update localStorage with the new array
     localStorage.setItem("assos", JSON.stringify(currentSaved));
     console.log(localStorage.getItem("assos"));
+    subscribeToTopic(id);
+
 }
 
 export function managedSubscription(add: boolean, id: any, callback: Function) {
