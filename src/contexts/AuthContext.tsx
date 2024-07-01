@@ -1,13 +1,14 @@
 import React, { createContext, useState, ReactNode, useContext, useEffect } from "react";
+import Api from "../Tools/Api";
 
 interface AuthContextType {
-    assos: Assos | null;
+    session: Session | null;
     isAuthenticated: boolean;
-    login: (assosData: Assos) => void;
+    login: (infos: Session, password: string) => void;
     logout: () => void;
 }
 
-interface Assos {
+interface Session {
     id: string;
 }
 
@@ -26,33 +27,39 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-    const [assos, setAssos] = useState<Assos | null>(null);
+    const [session, setSession] = useState<Session | null>(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
         const savedSession = localStorage.getItem('sessionID');
         if (savedSession) {
-            setAssos({ id: savedSession });
+            setSession({ id: savedSession });
             setIsAuthenticated(true);
         }
     }, [])
 
-    const login = (assosData: Assos) => {
-        // Authenticate assos and set assos information and authentication status
-        setAssos(assosData);
-        setIsAuthenticated(true);
-        localStorage.setItem('sessionID', assosData.id);
+    const login = async (infos: Session, password: string) => {
+        try {
+            // Authenticate session and set session information and authentication status
+            await Api.sessions.create(infos.id, password);
+
+            setSession(infos);
+            setIsAuthenticated(true);
+            localStorage.setItem('sessionID', infos.id);
+        } catch (error) {
+            throw error;
+        }
     };
 
     const logout = () => {
-        // Remove assos information and set authentication status to false
-        setAssos(null);
+        // Remove session information and set authentication status to false
+        setSession(null);
         setIsAuthenticated(false);
         localStorage.setItem('sessionID', '');
     };
 
     return (
-        <AuthContext.Provider value={{ assos, isAuthenticated, login, logout }}>
+        <AuthContext.Provider value={{ session, isAuthenticated, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

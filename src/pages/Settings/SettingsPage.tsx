@@ -10,7 +10,7 @@ const SettingsPage: React.FC = () => {
     // Use to translte the page
     const { t } = useTranslation();
 
-    const { isAuthenticated, logout } = useAuth();
+    const { isAuthenticated, logout, session } = useAuth();
     const [showLogoutToast, setShowLogoutToast] = useState(false);
 
     const handleLogout = () => {
@@ -37,6 +37,7 @@ const SettingsPage: React.FC = () => {
                         &nbsp;
                         <IonLabel className="text">{t('preferences.title')}</IonLabel>
                     </IonItem>
+
                     {!isAuthenticated &&
                         <IonItem routerLink='/connexion'>
                             <IonIcon icon={logInOutline} className="icon" />
@@ -45,18 +46,23 @@ const SettingsPage: React.FC = () => {
                             <IonLabel className="text">{t('connexion.title')}</IonLabel>
                         </IonItem>
                     }
-                    <IonItem routerLink='/createEvent'>
-                        <IonIcon icon={happyOutline} />
-                        &nbsp;
-                        &nbsp;
-                        <IonLabel className="text">{t('my-association.title')}</IonLabel>
-                    </IonItem>
+
+                    {isAuthenticated && session &&
+                        <IonItem routerLink={'/association/' + session.id}>
+                            <IonIcon icon={happyOutline} />
+                            &nbsp;
+                            &nbsp;
+                            <IonLabel className="text">{t('my-association.title')}</IonLabel>
+                        </IonItem>
+                    }
+
                     <IonItem routerLink='/faq'>
                         <IonIcon icon={helpCircleOutline} className="icon" />
                         &nbsp;
                         &nbsp;
                         <IonLabel className="text">{t('faq.title')}</IonLabel>
                     </IonItem>
+
                     <IonItem routerLink='/links' lines='none'>
                         <IonIcon icon={linkOutline} className="icon" />
                         &nbsp;
@@ -64,6 +70,7 @@ const SettingsPage: React.FC = () => {
                         <IonLabel className="text">{t('schools-links.title')}</IonLabel>
                     </IonItem>
                 </IonList>
+
                 {isAuthenticated &&
                     <IonItem onClick={handleLogout} lines='none'>
                         <IonIcon icon={logOutOutline} className="icon" color='danger' />

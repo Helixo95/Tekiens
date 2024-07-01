@@ -21,7 +21,7 @@ const EventDetails: React.FC = () => {
 
     const history = useHistory();
 
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, session } = useAuth();
 
     let savedEvents: number[] = [];
     const [isSaved, setIsSaved] = useState<boolean>(false);
@@ -97,10 +97,12 @@ const EventDetails: React.FC = () => {
                         <IonFabButton className='fab-button' onClick={() => saveEvent(eventData.id, setIsSaved)} id="saveEvent" style={{ '--border-color': assoData?.color }}>
                             <IonIcon icon={isSaved ? star : starOutline} style={{ color: assoData?.color }} />
                         </IonFabButton>
+
                         <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }}>
                             <IonIcon icon={pushOutline} style={{ color: assoData?.color }} />
                         </IonFabButton>
-                        {isAuthenticated &&
+
+                        {isAuthenticated && session?.id === assoData?.id &&
                             <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }} onClick={navigateToModifyEvent}>
                                 <IonIcon icon={pencilOutline} style={{ color: assoData?.color }} />
                             </IonFabButton>

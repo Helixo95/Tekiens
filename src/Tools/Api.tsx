@@ -1,6 +1,12 @@
+import bcrypt from "bcryptjs";
 import { AssosData, EventData } from "./Interfaces/EventAndAssoInterface";
 
 const baseUrl = "https://tekiens.net";
+
+interface SessionCreationResponse {
+    challenge: string;
+    salt: string;
+}
 
 const Api = {
     assos: {
@@ -27,6 +33,21 @@ const Api = {
         getOne(id: string): Promise<EventData> {
             return sendApiRequest<EventData>("GET", "events/" + encodeURIComponent(id), {}, "Getting event " + id)
         },
+    },
+    sessions: {
+        //authentificate the user and return a session id if success
+        async create(assoId: string, password: string) {
+            //the user call the api to get a challenge
+            let { challenge, salt } = await sendApiRequest<SessionCreationResponse>("POST", "sessions", { asso: assoId }, "Challenge session");
+
+            let hash_password = await bcrypt.hash(password, salt);
+
+            let hash_challenge = await hash(challenge + hash_password);
+
+            //the user send the hash of the challenge and the password
+            return await sendApiRequest("POST", "sessions", { asso: assoId, hash: hash_challenge }, "Creating session");
+
+        }
     }
 }
 
@@ -64,6 +85,18 @@ async function sendApiRequest<T>(method: string, endpoint: string, parameters: R
     }
 
     return responseData.data;
+}
+
+/**
+ * Function to to hash a string with sha256 and return the hash in hex
+ * @param string the string we want to hash
+ * @returns the hash in hex
+ */
+async function hash(string: string) {
+    const sourceBytes = new TextEncoder().encode(string);
+    const disgest = await crypto.subtle.digest("SHA-256", sourceBytes);
+    const hash = Array.from(new Uint8Array(disgest)).map(b => b.toString(16).padStart(2, "0")).join("");
+    return hash;
 }
 
 export default Api;
