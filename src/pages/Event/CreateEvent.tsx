@@ -1,24 +1,18 @@
 import { IonActionSheet, IonButton, IonContent, IonInput, IonItem, IonLabel, IonPage, IonSelect, IonSelectOption } from "@ionic/react"
-import React from "react"
+import React, { useState } from "react"
 import HeaderTitleBack from "../../components/HeaderTitleBack"
 
-import { eventStatus } from "../../Tools/EventTools"
+import { eventStatus } from "../../Tools/EventsTools"
 import { useTranslation } from "react-i18next"
 import { OverlayEventDetail } from "@ionic/react/dist/types/components/react-component-lib/interfaces"
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import useImageHandler from "../../Tools/UseImage"
 
 const CreateEvent: React.FC = () => {
-    // Use to translate the page
+    // Use for the translation
     const { t } = useTranslation();
 
-    const logResult = (result: OverlayEventDetail) => {
-        const action = result.data?.action;
-
-        if (action) {
-            console.log(`Action chosen: ${action}`);
-        }
-    };
-
-    const PHOTO_STORAGE = 'photos';
+    const { imageUrl, actionResult, deleteImage } = useImageHandler();
 
     return (
         <IonPage>
@@ -60,35 +54,45 @@ const CreateEvent: React.FC = () => {
 
                     <IonItem className="input-item">
                         <IonLabel position="stacked">{t('event.manage.event-poster.label')}</IonLabel>
+                        {!imageUrl &&
+                            <>
+                                <IonButton id="open-action-sheet">{t('event.manage.event-poster.button.select')}</IonButton>
+                                <IonActionSheet
+                                    trigger="open-action-sheet"
+                                    header="Example header"
+                                    subHeader="Example subheader"
+                                    buttons={[
+                                        {
+                                            text: 'Gallery',
+                                            data: {
+                                                action: 'gallery',
+                                            },
+                                        },
+                                        {
+                                            text: 'Photo',
+                                            data: {
+                                                action: 'photo',
+                                            },
+                                        },
+                                        {
+                                            text: 'Cancel',
+                                            role: 'cancel',
+                                            data: {
+                                                action: 'cancel',
+                                            },
+                                        },
+                                    ]}
+                                    onDidDismiss={({ detail }) => actionResult(detail)}
+                                />
+                            </>
+                        }
 
-                        <IonButton id="open-action-sheet">Selectionner une image</IonButton>
-                        <IonActionSheet
-                            trigger="open-action-sheet"
-                            header="Example header"
-                            subHeader="Example subheader"
-                            buttons={[
-                                {
-                                    text: 'Gallery',
-                                    data: {
-                                        action: 'gallery',
-                                    },
-                                },
-                                {
-                                    text: 'Photo',
-                                    data: {
-                                        action: 'photo',
-                                    },
-                                },
-                                {
-                                    text: 'Cancel',
-                                    role: 'cancel',
-                                    data: {
-                                        action: 'cancel',
-                                    },
-                                },
-                            ]}
-                            onDidDismiss={({ detail }) => logResult(detail)}
-                        />
+                        {imageUrl &&
+                            <>
+                                <img className="center-screen" src={imageUrl} alt="Selected from Gallery" />
+                                <IonButton onClick={deleteImage}>{t('event.manage.event-poster.button.delete')}</IonButton>
+                            </>
+                        }
                     </IonItem>
 
                     <IonItem className="input-item">
@@ -122,7 +126,6 @@ const CreateEvent: React.FC = () => {
                             name="days"
                             type="number"
                             clearInput={true}
-                            value={0}
                             min={0}
                         />
                         <IonInput
@@ -131,8 +134,8 @@ const CreateEvent: React.FC = () => {
                             name="hours"
                             type="number"
                             clearInput={true}
-                            value={1}
                             min={0}
+                            max={23}
                         />
                         <IonInput
                             label={t('event.manage.event-duration.minutes.label')}
@@ -140,8 +143,8 @@ const CreateEvent: React.FC = () => {
                             name="minutes"
                             type="number"
                             clearInput={true}
-                            value={0}
                             min={0}
+                            max={59}
                         />
                     </IonItem>
 
@@ -182,8 +185,9 @@ const CreateEvent: React.FC = () => {
                             labelPlacement="floating"
                             placeholder={t('event.manage.event-capacity.placeholder')}
                             name="capacity"
-                            type="text"
+                            type="number"
                             clearInput={true}
+                            min={0}
                         />
                     </IonItem>
 

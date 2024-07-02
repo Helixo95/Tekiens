@@ -1,21 +1,19 @@
 import { IonContent, IonLabel, IonPage, IonSegment, IonSegmentButton } from "@ionic/react";
 import HeaderTitle from "../components/HeaderTitle";
 import { useTranslation } from "react-i18next";
-import FavoriteEventsComponent from '../components/EventComponent/FavoriteEventsComponent';
 import AssociationCards from "./Association/AssociationCards";
 import { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
 import '@ionic/react/css/ionic-swiper.css';
+import EventsComponent from "../components/EventComponent/EventsComponent";
 
 const FavoritePage: React.FC = () => {
     // Use to translte the page
     const { t } = useTranslation();
 
     const [desiredSeg, setDesiredSeg] = useState("assos");
-    const emptyTitle = t('favorite.filter.assos.message.title');
-    const emptyMessage = t('favorite.filter.assos.message.text');
     const [activeIndex, setActiveIndex] = useState(0);
 
     // Used by the swiper to reference the segment value
@@ -39,8 +37,8 @@ const FavoritePage: React.FC = () => {
     return (
         <IonPage>
             <IonSegment value={desiredSeg} onIonChange={handleSegmentChange}>
-                <IonSegmentButton value="assos"><IonLabel>{t('favorite.filter.assos.label')}</IonLabel></IonSegmentButton>
-                <IonSegmentButton value="events"><IonLabel>{t('favorite.filter.events.label')}</IonLabel></IonSegmentButton>
+                <IonSegmentButton value="assos"><IonLabel>{t('associations.filter.sub.label')}</IonLabel></IonSegmentButton>
+                <IonSegmentButton value="events"><IonLabel>{t('events.filter.favorite.label')}</IonLabel></IonSegmentButton>
             </IonSegment>
             <HeaderTitle>{t('favorite.title')}</HeaderTitle>
             <IonContent>
@@ -53,11 +51,11 @@ const FavoritePage: React.FC = () => {
                 >
 
                     <SwiperSlide key={0}>
-                        {activeIndex === 0 && <AssociationCards segValue={"sub"} emptyTitle={emptyTitle} emptyMessage={emptyMessage} />}
+                        {activeIndex === 0 && <AssociationCards segValue={"sub"} />}
                     </SwiperSlide>
 
                     <SwiperSlide key={1}>
-                        {activeIndex === 1 && <FavoriteEventsComponent />}
+                        {activeIndex === 1 && <EventsComponent filter='favorite' />}
                     </SwiperSlide>
 
                 </Swiper>

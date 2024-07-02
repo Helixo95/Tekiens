@@ -1,13 +1,28 @@
-import { IonButton, IonContent, IonInput, IonItem, IonLabel, IonPage } from '@ionic/react'
+import { IonButton, IonContent, IonInput, IonInputPasswordToggle, IonItem, IonLabel, IonPage, IonToast } from '@ionic/react'
 import HeaderTitleBack from '../../components/HeaderTitleBack'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../../contexts/AuthContext';
+import { useHistory } from 'react-router-dom';
 
 const PageConnexion: React.FC = () => {
-    // Use to translate the page
+    // Use for the translation
     const { t } = useTranslation();
 
+    const history = useHistory();
+
+    const { login } = useAuth();
+
     const [errorText, setErrorText] = useState('');
+    const [assoId, setAssoId] = useState('');
+    const [password, setPassword] = useState('');
+    const [showToast, setShowToast] = useState(false); // State to control toast visibility
+
+    useEffect(() => {
+        setAssoId('');
+        setPassword('');
+        setErrorText('');
+    }, [history.location.pathname]);
 
     const handleLogin = async (event: { preventDefault: () => void; currentTarget: any; }) => {
         event.preventDefault();
@@ -28,42 +43,23 @@ const PageConnexion: React.FC = () => {
             setErrorText('Missing password')
         }
         else {
-            setErrorText('')
+
             try {
-                console.log(password);
+                await login({ id: assoId }, password);
 
-                const session = await ApiSession(assoId, password);
-
-                console.log('Session ID:', session.id);
-            } catch (error) {
-                console.error('Erreur lors de la connexion:', error);
-                setErrorText('Failed to login');
+                setErrorText('');
+                setAssoId('');
+                setPassword('');
+                setShowToast(true); // Show toast upon successful login
+                history.push('/app/settings');
+            } catch (error: any) {
+                if (error instanceof Error) {
+                    setErrorText(error.message);
+                }
+                else {
+                    setErrorText("Error while login, try again");
+                }
             }
-        }
-    }
-
-    const ApiSession = async (assoId: string, hashPassword: string): Promise<any> => {
-        try {
-            const response = await fetch(`https://tekiens.net/api/sessions`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    asso: assoId,
-                    hash: hashPassword,
-                }),
-            });
-
-            if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.message || 'Failed to create session');
-            }
-
-            return await response.json();
-        } catch (error) {
-            console.error('Error creating session:', error);
-            throw new Error('Failed to create session');
         }
     }
 
@@ -71,6 +67,13 @@ const PageConnexion: React.FC = () => {
         <IonPage>
             <HeaderTitleBack back='/app/settings'>{t('connexion.title')}</HeaderTitleBack>
             <IonContent className='ion-padding'>
+                <IonToast
+                    isOpen={showToast}
+                    onDidDismiss={() => setShowToast(false)}
+                    message={t('connexion.toast.login')}
+                    duration={2000}
+                    swipeGesture="vertical"
+                />
                 <form onSubmit={handleLogin}>
 
                     <IonItem className="input-item">
@@ -81,6 +84,8 @@ const PageConnexion: React.FC = () => {
                             name="assoId"
                             type='text'
                             clearInput={true}
+                            onIonChange={(e) => setAssoId(e.detail.value!)}
+                            value={assoId}
                         />
                     </IonItem>
 
@@ -92,6 +97,8 @@ const PageConnexion: React.FC = () => {
                             name="password"
                             type='password'
                             clearInput={true}
+                            onIonChange={(e) => setPassword(e.detail.value!)}
+                            value={password}
                         />
                     </IonItem>
 

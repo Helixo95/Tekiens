@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 const Associations: React.FC = () => {
   const { t } = useTranslation();
   const [filter, setFilter] = useState('active');
-  const categories = ["active", "over", "all"];
+  const categories = ["active", "former", "all"];
   const swiperRef = useRef<SwiperRef>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -22,27 +22,29 @@ const Associations: React.FC = () => {
   const handleSegmentChange = (event: CustomEvent) => {
     const newFilter = event.detail.value;
     setFilter(newFilter);
-    const newIndex = categories.findIndex(segment => segment === newFilter);
+    const newIndex = categories.findIndex(categories => categories === newFilter);
     swiperRef.current?.swiper.slideTo(newIndex);
+    setActiveIndex(newIndex);
   };
 
   const handleSlideChange = (swiper: SwiperClass) => {
-    setActiveIndex(swiper.activeIndex);
-    setFilter(categories[swiper.activeIndex]);
+    const newIndex = swiper.activeIndex;
+    setFilter(categories[newIndex]);
+    setActiveIndex(newIndex);
   }
-  
+
   return (
     <IonPage>
       <HeaderTitle>{t('associations.title')}</HeaderTitle>
       <IonSegment value={filter} onIonChange={handleSegmentChange}>
         <IonSegmentButton value={'active'}>
-          <IonLabel>{t('associations.tab-active')}</IonLabel>
+          <IonLabel>{t('associations.filter.active.label')}</IonLabel>
         </IonSegmentButton>
-        <IonSegmentButton value={'over'}>
-          <IonLabel>{t('associations.tab-over')}</IonLabel>
+        <IonSegmentButton value={'former'}>
+          <IonLabel>{t('associations.filter.former.label')}</IonLabel>
         </IonSegmentButton>
         <IonSegmentButton value={'all'}>
-          <IonLabel>{t('associations.tab-all')}</IonLabel>
+          <IonLabel>{t('associations.filter.all.label')}</IonLabel>
         </IonSegmentButton>
       </IonSegment>
 
@@ -50,14 +52,16 @@ const Associations: React.FC = () => {
         <Swiper
           onSlideChange={handleSlideChange}
           ref={swiperRef}
+          initialSlide={0}
+          loop={false}
+          freeMode={true}
         >
           {categories.map((val, index) => (
-            
             <SwiperSlide key={index}>
-              {index === activeIndex && <AssociationCards segValue={val} emptyTitle={emptyTitle} emptyMessage={emptyMessage}/>}
-              
+              {index === activeIndex && <AssociationCards segValue={val} />}
             </SwiperSlide>
           ))}
+
         </Swiper>
       </IonContent>
     </IonPage>

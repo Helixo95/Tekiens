@@ -1,22 +1,42 @@
-import { IonButton, IonContent, IonInput, IonItem, IonLabel, IonPage, IonSelect, IonSelectOption } from "@ionic/react"
-import React from "react"
+import { IonActionSheet, IonButton, IonContent, IonInput, IonItem, IonLabel, IonPage, IonSelect, IonSelectOption } from "@ionic/react"
+import React, { useEffect } from "react"
 import HeaderTitleBack from "../../components/HeaderTitleBack"
 
-import { eventStatus } from "../../Tools/EventTools"
+import { eventStatus } from "../../Tools/EventsTools"
 import { useTranslation } from "react-i18next"
-import { useParams } from "react-router"
-const CreateEvent: React.FC = () => {
-    // Use to translate the page
+import { useLocation } from "react-router"
+import useImageHandler from "../../Tools/UseImage"
+import { EventData } from "../../Tools/Interfaces/EventAndAssoInterface"
+
+const ModifyEvent: React.FC = () => {
+    // Use for the translation
     const { t } = useTranslation();
 
-    // Use to get the event's id
-    const { id } = useParams<{ id: string }>();
+    const location = useLocation<{ event: EventData }>();
+    const eventData: EventData = location.state?.event;
+
+    const { imageUrl, setImageUrl, actionResult, deleteImage } = useImageHandler();
+
+    useEffect(() => {
+        if (eventData?.poster) {
+            setImageUrl("https://tekiens.net" + eventData.poster);
+        }
+    }, [eventData, setImageUrl]);
+
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+    };
+
+    if (!eventData) {
+        return null;
+    }
 
     return (
         <IonPage>
-            <HeaderTitleBack back="">{t('event.manage.modification.title')}</HeaderTitleBack>
+            <HeaderTitleBack back=''>{t('event.manage.modification.title')}</HeaderTitleBack>
             <IonContent>
-                <form className="ion-padding">
+                <form className="ion-padding" onSubmit={handleSubmit}>
                     <IonItem className="input-item">
                         <IonInput
                             label={t('event.manage.event-title.label')}
@@ -25,6 +45,7 @@ const CreateEvent: React.FC = () => {
                             name="eventTitle"
                             type="text"
                             clearInput={true}
+                            value={eventData.title}
                         />
                     </IonItem>
 
@@ -36,6 +57,7 @@ const CreateEvent: React.FC = () => {
                             name="dateTime"
                             type="datetime-local"
                             clearInput={true}
+                            value={eventData.date}
                         />
                     </IonItem>
 
@@ -47,18 +69,49 @@ const CreateEvent: React.FC = () => {
                             name="place"
                             type="text"
                             clearInput={true}
+                            value={eventData.place}
                         />
                     </IonItem>
 
                     <IonItem className="input-item">
-                        <IonInput
-                            label={t('event.manage.event-poster.label')}
-                            labelPlacement="floating"
-                            placeholder={t('event.manage.event-poster.placeholder')}
-                            name="poster"
-                            type="text"
-                            clearInput={true}
-                        />
+                        <IonLabel position="stacked">{t('event.manage.event-poster.label')}</IonLabel>
+                        {!imageUrl ?
+                            <>
+                                <IonButton id="open-action-sheet">{t('event.manage.event-poster.button.select')}</IonButton>
+                                <IonActionSheet
+                                    trigger="open-action-sheet"
+                                    header="Example header"
+                                    subHeader="Example subheader"
+                                    buttons={[
+                                        {
+                                            text: 'Gallery',
+                                            data: {
+                                                action: 'gallery',
+                                            },
+                                        },
+                                        {
+                                            text: 'Photo',
+                                            data: {
+                                                action: 'photo',
+                                            },
+                                        },
+                                        {
+                                            text: 'Cancel',
+                                            role: 'cancel',
+                                            data: {
+                                                action: 'cancel',
+                                            },
+                                        },
+                                    ]}
+                                    onDidDismiss={({ detail }) => actionResult(detail)}
+                                />
+                            </>
+                            :
+                            <>
+                                <img className="center-screen" src={imageUrl} alt="Selected from Gallery" />
+                                <IonButton onClick={deleteImage}>{t('event.manage.event-poster.button.delete')}</IonButton>
+                            </>
+                        }
                     </IonItem>
 
                     <IonItem className="input-item">
@@ -69,6 +122,7 @@ const CreateEvent: React.FC = () => {
                             name="description"
                             type="text"
                             clearInput={true}
+                            value={eventData.description}
                         />
                     </IonItem>
 
@@ -81,6 +135,7 @@ const CreateEvent: React.FC = () => {
                             type="number"
                             clearInput={true}
                             min={0}
+                            value={eventData.price}
                         />
                     </IonItem>
 
@@ -92,7 +147,6 @@ const CreateEvent: React.FC = () => {
                             name="days"
                             type="number"
                             clearInput={true}
-                            value={0}
                             min={0}
                         />
                         <IonInput
@@ -101,8 +155,8 @@ const CreateEvent: React.FC = () => {
                             name="hours"
                             type="number"
                             clearInput={true}
-                            value={1}
                             min={0}
+                            max={23}
                         />
                         <IonInput
                             label={t('event.manage.event-duration.minutes.label')}
@@ -110,8 +164,8 @@ const CreateEvent: React.FC = () => {
                             name="minutes"
                             type="number"
                             clearInput={true}
-                            value={0}
                             min={0}
+                            max={59}
                         />
                     </IonItem>
 
@@ -123,6 +177,7 @@ const CreateEvent: React.FC = () => {
                             name="qrCode"
                             type="url"
                             clearInput={true}
+                            value={eventData.link}
                         />
                     </IonItem>
 
@@ -134,6 +189,7 @@ const CreateEvent: React.FC = () => {
                             name="access"
                             type="text"
                             clearInput={true}
+                            value={eventData.access}
                         />
                     </IonItem>
 
@@ -152,8 +208,10 @@ const CreateEvent: React.FC = () => {
                             labelPlacement="floating"
                             placeholder={t('event.manage.event-capacity.placeholder')}
                             name="capacity"
-                            type="text"
+                            type="number"
                             clearInput={true}
+                            min={0}
+                            value={eventData.capacity}
                         />
                     </IonItem>
 
@@ -165,4 +223,4 @@ const CreateEvent: React.FC = () => {
     )
 }
 
-export default CreateEvent
+export default ModifyEvent

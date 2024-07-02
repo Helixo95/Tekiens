@@ -37,6 +37,7 @@ import Links from './pages/Settings/LinksPage';
 import FAQ from './pages/Settings/FAQPage';
 import Connexion from './pages/Settings/ConnexionPage'
 import { ThemeProvider } from './contexts/ThemeContext';
+import { AuthProvider } from './contexts/AuthContext';
 import './MultiLang.js'
 import React from 'react';
 import EventDetails from './pages/Event/EventDetails';
@@ -44,12 +45,13 @@ import AssociationDetails from './pages/Association/AssociationDetail';
 import AssociationEvents from './pages/Association/AssociationEvents';
 import CreateEvent from './pages/Event/CreateEvent';
 import ModifyEvent from './pages/Event/ModifyEvent';
-import {addListeners, registerNotifications} from "./Tools/Notifications/NotificationPush";
+import ModifyAsso from './pages/Association/ModifyAsso';
+import { addListeners, registerNotifications } from './Tools/Notifications/NotificationPush';
+
 
 setupIonicReact();
 
 const App: React.FC = () => {
-  // Initialise notification push functions
   addListeners();
   registerNotifications();
   return (
@@ -57,27 +59,30 @@ const App: React.FC = () => {
       <React.Suspense>
         <IonApp>
           <ThemeProvider>
-            <IonReactRouter>
-              <IonRouterOutlet>
-                <Route path="/" exact={true} >
-                  <Redirect to='/app/home' />
-                </Route>
+            <AuthProvider>
+              <IonReactRouter>
+                <IonRouterOutlet>
+                  <Route path="/" exact={true} >
+                    <Redirect to='/app/home' />
+                  </Route>
 
-                <Route path="/app" render={() => <Tabs />} />
+                  <Route path="/app" render={() => <Tabs />} />
 
-                <Route path="/association/:id" render={() => <AssociationDetails />} exact={true} />
-                <Route path="/association/:id/events" render={() => <AssociationEvents />} exact={true} />
+                  <Route path="/association/:id" render={() => <AssociationDetails />} exact={true} />
+                  <Route path="/association/:id/events" render={() => <AssociationEvents />} exact={true} />
+                  <Route path="/association/modify/:id" render={() => <ModifyAsso />} />
 
-                <Route path="/event/:id" render={() => <EventDetails />} />
-                <Route path="/event/modify/:id" render={() => <ModifyEvent />} />
+                  <Route path="/event/:id" render={() => <EventDetails />} />
+                  <Route path="/event/modify/:id" render={() => <ModifyEvent />} />
 
-                <Route path="/preferences" render={() => <Preferences />} exact={true} />
-                <Route path="/createEvent" render={() => <CreateEvent />} exact={true} />
-                <Route path="/faq" render={() => <FAQ />} exact={true} />
-                <Route path="/links" render={() => <Links />} exact={true} />
-                <Route path="/connexion" render={() => <Connexion />} exact={true} />
-              </IonRouterOutlet>
-            </IonReactRouter>
+                  <Route path="/preferences" render={() => <Preferences />} exact={true} />
+                  <Route path="/createEvent" render={() => <CreateEvent />} exact={true} />
+                  <Route path="/faq" render={() => <FAQ />} exact={true} />
+                  <Route path="/links" render={() => <Links />} exact={true} />
+                  <Route path="/connexion" render={() => <Connexion />} exact={true} />
+                </IonRouterOutlet>
+              </IonReactRouter>
+            </AuthProvider>
           </ThemeProvider>
         </IonApp>
       </React.Suspense>
@@ -86,7 +91,3 @@ const App: React.FC = () => {
 }
 
 export default App;
-
-function getMessaging() {
-  throw new Error('Function not implemented.');
-}

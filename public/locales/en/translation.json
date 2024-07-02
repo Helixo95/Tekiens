@@ -8,13 +8,47 @@
         "title" : "Associations list",
 
         "no-description": "No description available",
-        "tab-active": "Active",
-        "tab-over": "Over",
-        "tab-all": "All",
 
-        "message": {
-            "title": "No Associations",
-            "text": "There's no associations to be found in this category or campus"
+        "filter" : {
+            "active" : {
+                "label" : "Active",
+                "message" : {
+                    "title" : "No active associations",
+                    "text" : "Come back later, or consult the list of the former or all associationss."
+                }
+            },
+
+            "former" : {
+                "label" : "Former",
+                "message" : {
+                    "title" : "No former associations",
+                    "text" : "Come back later, or consult the list of the active or all associations."
+                }
+            },
+
+            "all" : {
+                "label" : "All",
+                "message" : {
+                    "title" : "No associations",
+                    "text" : "Come back later when there is an association, or create one youreself."
+                }
+            },
+
+            "favorite" : {
+                "label" : "Associations",
+                "message" : {
+                    "title" : "You're not following any associations.",
+                    "text" : "Go to an association page to follow it."
+                }
+            },
+
+            "rnd" : {
+                "label" : "All",
+                "message" : {
+                    "title" : "No associations",
+                    "text" : "Come back later when there is an association, or create one youreself."
+                }
+            }
         }
     },
 
@@ -68,6 +102,14 @@
                 "message" : {
                     "title" : "No events",
                     "text" : "Come back later when there are events."
+                }
+            },
+
+            "favorite" : {
+                "label" : "Events",
+                "message" : {
+                    "title" : "You don't have favorite event",
+                    "text" : "Go to an event page to add it to your favorite."
                 }
             }
         },
@@ -139,7 +181,11 @@
 
             "event-poster" : {
                 "label" : "🖼️​ Poster (optional)",
-                "placeholder" : "Event poster link"
+                "placeholder" : "Event poster link",
+                "button" : {
+                    "select" : "Select an image",
+                    "delete" : "Delete the image"
+                }
             },
 
             "event-description" : {
@@ -195,14 +241,6 @@
         "title" : "Favorite",
 
         "filter" : {
-            "events" : {
-                "label" : "Events",
-                "message" : {
-                    "title" : "You don't have favorite event",
-                    "text" : "Go to an event page to add it to your favorite."
-                }
-            },
-
             "assos" : {
                 "label" : "Associations",
                 "message" : {
@@ -262,7 +300,12 @@
             "placeholder" : "Enter password"
         },
 
-        "button" : "Login"
+        "button" : "Login",
+
+        "toast" : {
+            "login" : "Successful login!",
+            "logout" : "Successful logout!"
+        }
     },
 
     "my-association" : {
