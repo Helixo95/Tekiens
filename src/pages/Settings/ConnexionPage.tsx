@@ -2,8 +2,8 @@ import { IonButton, IonContent, IonInput, IonInputPasswordToggle, IonItem, IonLa
 import HeaderTitleBack from '../../components/HeaderTitleBack'
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../contexts/AuthContext';
 import { useHistory } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 const PageConnexion: React.FC = () => {
     // Use for the translation
@@ -45,7 +45,7 @@ const PageConnexion: React.FC = () => {
         else {
 
             try {
-                await login({ id: assoId }, password);
+                await login(assoId, password);
 
                 setErrorText('');
                 setAssoId('');

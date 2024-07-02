@@ -7,7 +7,7 @@ export interface EventData {
     date: string;
     place: string;
     duration: number;
-    price: number;
+    price: string;
     link: string;
     access: string;
     status: string;

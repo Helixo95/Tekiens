@@ -2,11 +2,10 @@ import { IonActionSheet, IonButton, IonContent, IonInput, IonItem, IonLabel, Ion
 import React, { useEffect } from "react"
 import HeaderTitleBack from "../../components/HeaderTitleBack"
 
-import { eventStatus } from "../../Tools/EventsTools"
 import { useTranslation } from "react-i18next"
 import { useLocation } from "react-router"
 import useImageHandler from "../../Tools/UseImage"
-import { AssosData, EventData } from "../../Tools/Interfaces/EventAndAssoInterface"
+import { AssosData } from "../../Tools/Interfaces/EventAndAssoInterface"
 
 const ModifyAsso: React.FC = () => {
     // Use for the translation

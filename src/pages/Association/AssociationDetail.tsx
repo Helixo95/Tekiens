@@ -14,13 +14,13 @@ import { AssosData } from "../../Tools/Interfaces/EventAndAssoInterface";
 import Api from "../../Tools/Api";
 import { useAuth } from "../../contexts/AuthContext";
 
-const AssociationDetails: React.FC = () => {
+const AssociationDetails: React.FC<{ back: string }> = ({ back = '' }) => {
     // Use for the translation
     const { t } = useTranslation();
 
     const history = useHistory();
 
-    const { isAuthenticated, session } = useAuth();
+    const { session } = useAuth();
 
     const [description, setDescription] = useState<string>("");
     const [isFollowed, setIsFollowed] = useState(false);
@@ -73,13 +73,23 @@ const AssociationDetails: React.FC = () => {
         );
     }
 
-    const navigateToModifyEvent = () => {
+    const navigateToModifyAsso = () => {
         history.push(`/association/modify/${assoData.id}`, { asso: assoData });
     };
 
+    const editable = () => {
+        if (!session) {
+            return false;
+        }
+
+        return assoData.id === session.asso_id;
+    };
+
+    console.log(back);
+
     return (
         <IonPage>
-            <HeaderTitleBack back="">{t('association.title')}</HeaderTitleBack>
+            <HeaderTitleBack back={back}>{t('association.title')}</HeaderTitleBack>
             <IonContent>
                 <IonToast
                     trigger="followAsso"
@@ -115,8 +125,8 @@ const AssociationDetails: React.FC = () => {
                         <IonIcon icon={isFollowed ? starSharp : starOutline} style={{ color: assoData.color }} />
                     </IonFabButton>
 
-                    {isAuthenticated && session?.id === assoData?.id &&
-                        <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }} onClick={navigateToModifyEvent}>
+                    {editable() &&
+                        <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }} onClick={navigateToModifyAsso}>
                             <IonIcon icon={pencilOutline} style={{ color: assoData?.color }} />
                         </IonFabButton>
                     }

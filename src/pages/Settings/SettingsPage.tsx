@@ -3,14 +3,14 @@ import HeaderTitle from '../../components/HeaderTitle';
 import { constructOutline, logInOutline, happyOutline, helpCircleOutline, linkOutline, logOutOutline } from 'ionicons/icons';
 import { useTranslation } from 'react-i18next';
 import '../../theme/IconText.css'
-import { useAuth } from '../../contexts/AuthContext';
 import { useState } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
 
 const SettingsPage: React.FC = () => {
     // Use to translte the page
     const { t } = useTranslation();
 
-    const { isAuthenticated, logout, session } = useAuth();
+    const { logout, session } = useAuth();
     const [showLogoutToast, setShowLogoutToast] = useState(false);
 
     const handleLogout = () => {
@@ -38,7 +38,7 @@ const SettingsPage: React.FC = () => {
                         <IonLabel className="text">{t('preferences.title')}</IonLabel>
                     </IonItem>
 
-                    {!isAuthenticated &&
+                    {!session &&
                         <IonItem routerLink='/connexion'>
                             <IonIcon icon={logInOutline} className="icon" />
                             &nbsp;
@@ -47,8 +47,8 @@ const SettingsPage: React.FC = () => {
                         </IonItem>
                     }
 
-                    {isAuthenticated && session &&
-                        <IonItem routerLink={'/association/' + session.id}>
+                    {session &&
+                        <IonItem routerLink={'/association/' + session.asso_id}>
                             <IonIcon icon={happyOutline} />
                             &nbsp;
                             &nbsp;
@@ -71,7 +71,7 @@ const SettingsPage: React.FC = () => {
                     </IonItem>
                 </IonList>
 
-                {isAuthenticated &&
+                {session &&
                     <IonItem onClick={handleLogout} lines='none'>
                         <IonIcon icon={logOutOutline} className="icon" color='danger' />
                         &nbsp;

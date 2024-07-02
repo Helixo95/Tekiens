@@ -15,9 +15,6 @@ const Associations: React.FC = () => {
   const swiperRef = useRef<SwiperRef>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const emptyTitle = t('associations.message.title');
-  const emptyMessage = t('associations.message.text');
-
   // Handle change in desired segment
   const handleSegmentChange = (event: CustomEvent) => {
     const newFilter = event.detail.value;

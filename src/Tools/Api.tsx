@@ -30,11 +30,17 @@ const Api = {
             return sendApiRequest<EventData[]>("GET", "events", {}, "Getting event");
         },
         // Return one event by its id
-        getOne(id: string): Promise<EventData> {
+        getOne(id: number): Promise<EventData> {
             return sendApiRequest<EventData>("GET", "events/" + encodeURIComponent(id), {}, "Getting event " + id)
         },
-        update(id: number, event: EventData, session = localStorage.getItem("session")) {
+        update(id: number, event: any, session = localStorage.getItem('session')) {
             return sendApiRequest("PUT", "events/" + encodeURIComponent(id), { ...event, session }, "Updating event " + id);
+        },
+        create(event: any, session = localStorage.getItem('session')) {
+            return sendApiRequest("POST", "events", { ...event, session }, "Adding event");
+        },
+        delete(id: number, session = localStorage.getItem('session')) {
+            return sendApiRequest("DELETE", "events/" + encodeURIComponent(id), { session }, "Deleting event " + id);
         }
     },
     sessions: {
@@ -50,11 +56,15 @@ const Api = {
             //the user send the hash of the challenge and the password
             return await sendApiRequest("POST", "sessions", { asso: assoId, hash: hash_challenge }, "Creating session");
 
+
+        },
+        delete(id: string) {
+            return sendApiRequest("DELETE", "sessions/" + encodeURIComponent(id), {}, "Deleting session");
         }
     }
 }
 
-async function sendApiRequest<T>(method: string, endpoint: string, parameters: Record<string, any> = {}, message?: string): Promise<T> {
+async function sendApiRequest<T>(method: string, endpoint: string, parameters: Record<string, any>, message?: string): Promise<T> {
     if (message !== undefined) {
         console.info("[API] " + message);
     }
@@ -72,9 +82,11 @@ async function sendApiRequest<T>(method: string, endpoint: string, parameters: R
         ).join("&");
 
     const options: RequestInit = { method };
+
     if (method === "GET") {
         endpoint += "?" + urlParameters;
-    } else {
+    }
+    else {
         options.body = urlParameters;
         options.headers = { "Content-Type": "application/x-www-form-urlencoded" };
     }

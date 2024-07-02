@@ -73,17 +73,37 @@ export const formatDate = (date: string) => {
 }
 
 /**
- * Function to return the duration of an event in days, hours and minutes
+ * Function to return the duration of an event in a string with its duration in days, hours and minutes
  * @param event the event we want to calculat the duration
  * @returns the event duration in days, hours and minutes
  */
 export const duration = (event: EventData) => {
-    if (!event.duration)
+    if (!event.duration) {
         return undefined;
+    }
+
     var days = Math.floor(event.duration / 60 / 24);
     var hours = Math.floor(event.duration / 60) % 24;
     var minutes = event.duration % 60;
+
     return `${days}j ${hours}h ${minutes}min`.replace(/0j /, '').replace(/0h /, '').replace(/ 0min/, '');
+}
+
+/**
+ * Function to return the duration of an event in an array with the its duration in days, hours and minutes
+ * @param duration the event duration
+ * @returns the array with the events duration in days, hours and minutes
+ */
+export const durationArray = (duration: number) => {
+    if (!duration) {
+        return [0, 0, 0];
+    }
+
+    var days = Math.floor(duration / 60 / 24);
+    var hours = Math.floor(duration / 60) % 24;
+    var minutes = duration % 60;
+
+    return [days, hours, minutes];
 }
 
 /**

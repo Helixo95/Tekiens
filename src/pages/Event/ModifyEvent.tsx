@@ -1,16 +1,19 @@
 import { IonActionSheet, IonButton, IonContent, IonInput, IonItem, IonLabel, IonPage, IonSelect, IonSelectOption } from "@ionic/react"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import HeaderTitleBack from "../../components/HeaderTitleBack"
 
-import { eventStatus } from "../../Tools/EventsTools"
+import { durationArray, eventStatus } from "../../Tools/EventsTools"
 import { useTranslation } from "react-i18next"
 import { useLocation } from "react-router"
 import useImageHandler from "../../Tools/UseImage"
 import { EventData } from "../../Tools/Interfaces/EventAndAssoInterface"
+import Api from "../../Tools/Api"
 
 const ModifyEvent: React.FC = () => {
     // Use for the translation
     const { t } = useTranslation();
+
+    const [errorText, setErrorText] = useState('');
 
     const location = useLocation<{ event: EventData }>();
     const eventData: EventData = location.state?.event;
@@ -24,13 +27,78 @@ const ModifyEvent: React.FC = () => {
     }, [eventData, setImageUrl]);
 
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: { preventDefault: () => void; currentTarget: any; }) => {
         e.preventDefault();
+
+        const form = e.currentTarget;
+        const formData = new FormData(form);
+        const values = Object.fromEntries(formData.entries());
+
+        // Create an object to store the changed fields
+        const updatedFields: Partial<EventData> = {};
+
+
+
+        if (!values.title || !values.place) {
+            setErrorText('BRUH');
+            return;
+        }
+
+        updatedFields.id = eventData.id;
+        updatedFields.asso_id = eventData.asso_id;
+        updatedFields.title = values.title as string;
+        updatedFields.poster = values.poster as string;
+        updatedFields.description = values.description as string;
+        updatedFields.date = formatDate(values.dateTime as string);
+        updatedFields.place = values.place as string;
+        updatedFields.duration = eventData.duration;
+        updatedFields.price = values.price as string;
+        updatedFields.link = values.link as string;
+        updatedFields.access = values.access as string;
+        updatedFields.status = values.status as string;
+        updatedFields.capacity = values.capacity as string;
+        updatedFields.createDate = eventData.createDate;
+        updatedFields.lastUpdateDate = eventData.lastUpdateDate;
+
+        console.log("Update event ", updatedFields);
+        console.log("Event Data ", eventData);
+
+        if (JSON.stringify(updatedFields) === JSON.stringify(eventData)) {
+            setErrorText('Pas de modif à faire')
+            return;
+        }
+
+        try {
+            Api.event.update(eventData.id, updatedFields);
+
+            setErrorText('');
+            history.back();
+        } catch (error: any) {
+            if (error instanceof Error) {
+                setErrorText(error.message);
+            }
+            else {
+                setErrorText("Error while modifying the event, try again");
+            }
+        }
     };
 
     if (!eventData) {
         return null;
     }
+
+    const duration = durationArray(eventData.duration);
+
+    const formatDate = (date: string) => {
+        const parts = date.split('T');
+
+        const datePart = parts[0];
+        const timePart = parts[1];
+
+        return `${datePart} ${timePart}:00`;
+    }
+
+    const infos = {};
 
     return (
         <IonPage>
@@ -42,7 +110,7 @@ const ModifyEvent: React.FC = () => {
                             label={t('event.manage.event-title.label')}
                             labelPlacement="floating"
                             placeholder={t('event.manage.event-title.placeholder')}
-                            name="eventTitle"
+                            name="title"
                             type="text"
                             clearInput={true}
                             value={eventData.title}
@@ -148,6 +216,7 @@ const ModifyEvent: React.FC = () => {
                             type="number"
                             clearInput={true}
                             min={0}
+                            value={duration[0] ? duration[0] : ''}
                         />
                         <IonInput
                             label={t('event.manage.event-duration.hours.label')}
@@ -157,6 +226,7 @@ const ModifyEvent: React.FC = () => {
                             clearInput={true}
                             min={0}
                             max={23}
+                            value={duration[1] ? duration[1] : ''}
                         />
                         <IonInput
                             label={t('event.manage.event-duration.minutes.label')}
@@ -166,6 +236,7 @@ const ModifyEvent: React.FC = () => {
                             clearInput={true}
                             min={0}
                             max={59}
+                            value={duration[2] ? duration[2] : ''}
                         />
                     </IonItem>
 
@@ -216,7 +287,7 @@ const ModifyEvent: React.FC = () => {
                     </IonItem>
 
                     <IonButton type='submit' className='login-item' style={{ 'width': '100%' }}>{t('event.manage.modification.button')}</IonButton>
-                    <span className='error center-screen'></span>
+                    <span className='error center-screen'>{errorText}</span>
                 </form>
             </IonContent>
         </IonPage >

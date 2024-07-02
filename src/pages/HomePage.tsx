@@ -1,10 +1,10 @@
-import { IonContent, IonPage } from "@ionic/react";
+import { IonButton, IonContent, IonPage } from "@ionic/react";
 import HeaderTitle from "../components/HeaderTitle";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import AssociationCards from "./Association/AssociationCards";
-
+import Api from "../Tools/Api";
 
 const HomePage: React.FC = () => {
   // Use to translte the page
@@ -28,9 +28,11 @@ const HomePage: React.FC = () => {
           <SwiperSlide>
             <AssociationCards key={String(bAssoReload)} segValue={"rnd"} />
           </SwiperSlide>
+
           <SwiperSlide>
             <AssociationCards key={String(bAssoReload)} segValue={"rnd"} />
           </SwiperSlide>
+          <IonButton onClick={() => Api.sessions.delete('')}>Supp</IonButton>
         </Swiper>
       </IonContent>
     </IonPage>
