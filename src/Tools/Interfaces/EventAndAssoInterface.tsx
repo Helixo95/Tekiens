@@ -6,7 +6,7 @@ export interface EventData {
     description: string;
     date: string;
     place: string;
-    duration: number;
+    duration: number | null;
     price: string;
     link: string;
     access: string;

@@ -18,6 +18,7 @@ const EventDetails: React.FC = () => {
 
     // Use to get the event's id from the href
     const { id } = useParams<{ id: string }>();
+    console.log(id);
 
     const history = useHistory();
 

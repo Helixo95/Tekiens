@@ -17,6 +17,7 @@ const ModifyEvent: React.FC = () => {
     const eventData: EventData = location.state?.event;
 
     const { imageUrl, setImageUrl, actionResult, deleteImage } = useImageHandler();
+
     const [errorText, setErrorText] = useState('');
 
     useEffect(() => {
@@ -50,7 +51,7 @@ const ModifyEvent: React.FC = () => {
             description: values.description ? values.description : null,
             date: formatDate(values.dateTime),
             place: values.place ? values.place : null,
-            duration: eventData.duration,
+            duration: arrayToDuration([Number(values.days), Number(values.hours), Number(values.minutes)]),
             price: values.price ? values.price : null,
             link: values.qrCode ? values.qrCode : null,
             access: values.access ? values.access : null,
@@ -59,6 +60,8 @@ const ModifyEvent: React.FC = () => {
         };
 
         let fields: any = {};
+
+        console.log(updatedEvent);
 
         for (let key in eventData) {
             const eventDataField = eventData[key as keyof EventData];
@@ -83,7 +86,16 @@ const ModifyEvent: React.FC = () => {
         }
     };
 
-    const duration = durationToArray(eventData.duration);
+    const duration = durationToArray(Number(eventData.duration));
+
+    const arrayToDuration = ([days, hours, minutes]: [number, number, number]) => {
+        const duration = days * 24 * 60 + hours * 60 + minutes;
+        if (duration > 0) {
+            return duration;
+        }
+
+        return null;
+    }
 
     const formatDate = (date: string) => {
         const parts = date.split('T');

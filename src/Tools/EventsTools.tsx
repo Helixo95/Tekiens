@@ -82,9 +82,11 @@ export const duration = (event: EventData) => {
         return undefined;
     }
 
-    var days = Math.floor(event.duration / 60 / 24);
-    var hours = Math.floor(event.duration / 60) % 24;
-    var minutes = event.duration % 60;
+    const duration = event.duration;
+
+    let days = Math.floor(duration / 60 / 24);
+    let hours = Math.floor(duration / 60) % 24;
+    let minutes = duration % 60;
 
     return `${days}j ${hours}h ${minutes}min`.replace(/0j /, '').replace(/0h /, '').replace(/ 0min/, '');
 }
@@ -99,9 +101,9 @@ export const durationToArray = (duration: number) => {
         return [0, 0, 0];
     }
 
-    var days = Math.floor(duration / 60 / 24);
-    var hours = Math.floor(duration / 60) % 24;
-    var minutes = duration % 60;
+    let days = Math.floor(duration / 60 / 24);
+    let hours = Math.floor(duration / 60) % 24;
+    let minutes = duration % 60;
 
     return [days, hours, minutes];
 }
