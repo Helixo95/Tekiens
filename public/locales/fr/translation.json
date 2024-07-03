@@ -224,7 +224,7 @@
             },
 
             "event-status" : {
-                "label" : "🗂️​ Status (optionnel)",
+                "label" : "🗂️​ Status",
                 "placeholder" : "Sélectionner le statut"
             },
 

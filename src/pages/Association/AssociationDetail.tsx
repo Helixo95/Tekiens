@@ -14,7 +14,7 @@ import { AssosData } from "../../Tools/Interfaces/EventAndAssoInterface";
 import Api from "../../Tools/Api";
 import { useAuth } from "../../contexts/AuthContext";
 
-const AssociationDetails: React.FC<{ back: string }> = ({ back = '' }) => {
+const AssociationDetails: React.FC = () => {
     // Use for the translation
     const { t } = useTranslation();
 
@@ -85,11 +85,9 @@ const AssociationDetails: React.FC<{ back: string }> = ({ back = '' }) => {
         return assoData.id === session.asso_id;
     };
 
-    console.log(back);
-
     return (
         <IonPage>
-            <HeaderTitleBack back={back}>{t('association.title')}</HeaderTitleBack>
+            <HeaderTitleBack back={''}>{t('association.title')}</HeaderTitleBack>
             <IonContent>
                 <IonToast
                     trigger="followAsso"

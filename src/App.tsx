@@ -48,7 +48,6 @@ import ModifyEvent from './pages/Event/ModifyEvent';
 import ModifyAsso from './pages/Association/ModifyAsso';
 import { addListeners, registerNotifications } from './Tools/Notifications/NotificationPush';
 
-
 setupIonicReact();
 
 const App: React.FC = () => {

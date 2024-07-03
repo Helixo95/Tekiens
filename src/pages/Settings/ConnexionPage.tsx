@@ -24,7 +24,7 @@ const PageConnexion: React.FC = () => {
         setErrorText('');
     }, [history.location.pathname]);
 
-    const handleLogin = async (event: { preventDefault: () => void; currentTarget: any; }) => {
+    const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const form = event.currentTarget;

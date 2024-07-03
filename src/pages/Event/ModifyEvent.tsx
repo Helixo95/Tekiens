@@ -1,77 +1,77 @@
-import { IonActionSheet, IonButton, IonContent, IonInput, IonItem, IonLabel, IonPage, IonSelect, IonSelectOption } from "@ionic/react"
+import { IonActionSheet, IonButton, IonContent, IonInput, IonItem, IonLabel, IonPage, IonSelect, IonSelectOption, IonSpinner, IonTabButton } from "@ionic/react"
 import React, { useEffect, useState } from "react"
 import HeaderTitleBack from "../../components/HeaderTitleBack"
 
-import { durationArray, eventStatus } from "../../Tools/EventsTools"
+import { durationToArray, eventStatus } from "../../Tools/EventsTools"
 import { useTranslation } from "react-i18next"
-import { useLocation } from "react-router"
 import useImageHandler from "../../Tools/UseImage"
-import { EventData } from "../../Tools/Interfaces/EventAndAssoInterface"
 import Api from "../../Tools/Api"
+import { useLocation } from "react-router"
+import { EventData } from "../../Tools/Interfaces/EventAndAssoInterface"
 
 const ModifyEvent: React.FC = () => {
     // Use for the translation
     const { t } = useTranslation();
 
-    const [errorText, setErrorText] = useState('');
-
     const location = useLocation<{ event: EventData }>();
     const eventData: EventData = location.state?.event;
 
     const { imageUrl, setImageUrl, actionResult, deleteImage } = useImageHandler();
+    const [errorText, setErrorText] = useState('');
 
     useEffect(() => {
         if (eventData?.poster) {
             setImageUrl("https://tekiens.net" + eventData.poster);
         }
-    }, [eventData, setImageUrl]);
 
+    }, [imageUrl]);
 
-    const handleSubmit = async (e: { preventDefault: () => void; currentTarget: any; }) => {
+    if (!eventData) {
+        return null;
+    }
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const form = e.currentTarget;
-        const formData = new FormData(form);
-        const values = Object.fromEntries(formData.entries());
-
-        // Create an object to store the changed fields
-        const updatedFields: Partial<EventData> = {};
+        const formData = new FormData(e.currentTarget);
+        const values: any = Object.fromEntries(formData.entries());
 
 
-
-        if (!values.title || !values.place) {
-            setErrorText('BRUH');
+        if (!values.title || !values.place || !values.dateTime) {
+            setErrorText('You need to fill the require fileds');
             return;
         }
 
-        updatedFields.id = eventData.id;
-        updatedFields.asso_id = eventData.asso_id;
-        updatedFields.title = values.title as string;
-        updatedFields.poster = values.poster as string;
-        updatedFields.description = values.description as string;
-        updatedFields.date = formatDate(values.dateTime as string);
-        updatedFields.place = values.place as string;
-        updatedFields.duration = eventData.duration;
-        updatedFields.price = values.price as string;
-        updatedFields.link = values.link as string;
-        updatedFields.access = values.access as string;
-        updatedFields.status = values.status as string;
-        updatedFields.capacity = values.capacity as string;
-        updatedFields.createDate = eventData.createDate;
-        updatedFields.lastUpdateDate = eventData.lastUpdateDate;
+        const updatedEvent: Partial<EventData> = {
+            id: eventData.id,
+            asso_id: eventData.asso_id,
+            title: values.title,
+            poster: parsePoster(imageUrl as string),
+            description: values.description ? values.description : null,
+            date: formatDate(values.dateTime),
+            place: values.place ? values.place : null,
+            duration: eventData.duration,
+            price: values.price ? values.price : null,
+            link: values.qrCode ? values.qrCode : null,
+            access: values.access ? values.access : null,
+            status: values.status,
+            capacity: values.capacity ? values.capacity : null,
+        };
 
-        console.log("Update event ", updatedFields);
-        console.log("Event Data ", eventData);
+        let fields: any = {};
 
-        if (JSON.stringify(updatedFields) === JSON.stringify(eventData)) {
-            setErrorText('Pas de modif à faire')
-            return;
+        for (let key in eventData) {
+            const eventDataField = eventData[key as keyof EventData];
+            const updatedEventField = updatedEvent[key as keyof EventData]
+
+            if (eventDataField != updatedEventField) {
+                fields[key] = updatedEventField;
+            }
         }
 
         try {
-            Api.event.update(eventData.id, updatedFields);
+            await Api.event.update(eventData.id, fields);
 
-            setErrorText('');
             history.back();
         } catch (error: any) {
             if (error instanceof Error) {
@@ -83,11 +83,7 @@ const ModifyEvent: React.FC = () => {
         }
     };
 
-    if (!eventData) {
-        return null;
-    }
-
-    const duration = durationArray(eventData.duration);
+    const duration = durationToArray(eventData.duration);
 
     const formatDate = (date: string) => {
         const parts = date.split('T');
@@ -98,7 +94,13 @@ const ModifyEvent: React.FC = () => {
         return `${datePart} ${timePart}:00`;
     }
 
-    const infos = {};
+    const parsePoster = (url: string) => {
+        if (url) {
+            const urlObject = new URL(url);
+            return urlObject.pathname;
+        }
+        return '';
+    }
 
     return (
         <IonPage>

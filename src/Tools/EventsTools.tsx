@@ -94,7 +94,7 @@ export const duration = (event: EventData) => {
  * @param duration the event duration
  * @returns the array with the events duration in days, hours and minutes
  */
-export const durationArray = (duration: number) => {
+export const durationToArray = (duration: number) => {
     if (!duration) {
         return [0, 0, 0];
     }

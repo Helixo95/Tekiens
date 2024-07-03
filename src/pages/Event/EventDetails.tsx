@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import HeaderTitleBack from '../../components/HeaderTitleBack'
-import { IonAlert, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonPage, IonRow, IonSpinner, IonTabButton, IonText, IonToast, useIonRouter } from '@ionic/react'
+import { IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonPage, IonRow, IonSpinner, IonTabButton, IonText, IonToast, useIonRouter } from '@ionic/react'
 import { useHistory, useParams } from 'react-router'
 import { AssosData, EventData } from '../../Tools/Interfaces/EventAndAssoInterface'
 import { useTranslation } from 'react-i18next'
 import '../../theme/Event/EventDetails.css'
-import { darkenColor, formatDate, duration, getEventStatus, durationArray } from '../../Tools/EventsTools'
+import { darkenColor, formatDate, duration, getEventStatus } from '../../Tools/EventsTools'
 import { parseText } from '../../Tools/DOMParser'
-import { add, starOutline, star, pushOutline, push, pencilOutline, trashOutline } from 'ionicons/icons'
+import { add, starOutline, star, pushOutline, push, pencilOutline } from 'ionicons/icons'
+import { useAuth } from '../../contexts/AuthContext'
 import Api from '../../Tools/Api'
 import { isEventSaved, saveEvent } from '../../Tools/LocalStorage/LocalStorageEvents'
-import { useAuth } from '../../contexts/AuthContext'
 
 const EventDetails: React.FC = () => {
     // Use to translte the page
@@ -23,7 +23,6 @@ const EventDetails: React.FC = () => {
 
     const { session } = useAuth();
 
-    let savedEvents: number[] = [];
     const [isSaved, setIsSaved] = useState<boolean>(false);
 
     const [eventData, setEventData] = useState<EventData>();
@@ -34,22 +33,27 @@ const EventDetails: React.FC = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const eventData = await Api.event.getOne(Number(id));
-                setEventData(eventData);
+            if (!isNaN(Number(id))) {
 
-                await parseText(eventData.description, setDescription);
-                setIsSaved(isEventSaved(eventData.id));
+                try {
+                    const eventData = await Api.event.getOne(Number(id));
 
-                const assoData = await Api.assos.getOne(eventData.asso_id);
-                setAssoData(assoData)
+                    setEventData(eventData);
 
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setLoading(false);
+                    await parseText(eventData.description, setDescription);
+                    setIsSaved(isEventSaved(eventData.id));
+
+                    const assoData = await Api.assos.getOne(eventData.asso_id);
+                    setAssoData(assoData)
+
+                    setLoading(false);
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                    setLoading(false);
+                }
             }
         };
+
 
         fetchData();
     }, [id]);
@@ -76,38 +80,11 @@ const EventDetails: React.FC = () => {
         history.push(`/event/modify/${eventData.id}`, { event: eventData });
     };
 
-    const editable = () => {
-        if (!session) {
-            return false;
-        }
-
-        return eventData.asso_id === session.asso_id;
-    };
-
     return (
         <IonPage>
             <HeaderTitleBack back="">{t('event.title')}</HeaderTitleBack>
 
             <IonContent>
-                <IonAlert
-                    header="Voulez-vous supprimer l'évènement !"
-                    trigger="delete-event"
-                    buttons={[
-                        {
-                            text: 'Annuler',
-                            role: 'cancel',
-                        },
-                        {
-                            text: 'Oui',
-                            role: 'confirm',
-                            handler: () => {
-                                Api.event.delete(eventData.id);
-                                history.goBack();
-                            },
-                        },
-                    ]}
-                />
-
                 <IonToast
                     trigger="saveEvent"
                     position="bottom"
@@ -129,16 +106,10 @@ const EventDetails: React.FC = () => {
                             <IonIcon icon={pushOutline} style={{ color: assoData?.color }} />
                         </IonFabButton>
 
-                        {editable() &&
-                            <>
-                                <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }} onClick={navigateToModifyEvent}>
-                                    <IonIcon icon={pencilOutline} style={{ color: assoData?.color }} />
-                                </IonFabButton>
-
-                                <IonFabButton className='fab-button' id='delete-event' style={{ '--border-color': assoData?.color }}>
-                                    <IonIcon icon={trashOutline} style={{ color: assoData?.color }} />
-                                </IonFabButton>
-                            </>
+                        {session?.asso_id === assoData?.id &&
+                            <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }} onClick={navigateToModifyEvent}>
+                                <IonIcon icon={pencilOutline} style={{ color: assoData?.color }} />
+                            </IonFabButton>
                         }
                     </IonFabList>
                 </IonFab>
