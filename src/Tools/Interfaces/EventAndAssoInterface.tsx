@@ -2,16 +2,16 @@ export interface EventData {
     id: number;
     asso_id: string;
     title: string;
-    poster: string;
-    description: string;
+    poster: string | null;
+    description: string | null;
     date: string;
     place: string;
     duration: number | null;
-    price: string;
-    link: string;
-    access: string;
+    price: string | null;
+    link: string | null;
+    access: string | null;
     status: string;
-    capacity: string;
+    capacity: string | null;
     createDate: string;
     lastUpdateDate: string;
 }

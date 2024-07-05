@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import AssociationCards from "./Association/AssociationCards";
 import Api from "../Tools/Api";
+import ImageInput from "../components/ImageInput";
 
 const HomePage: React.FC = () => {
   // Use to translte the page
@@ -32,7 +33,6 @@ const HomePage: React.FC = () => {
           <SwiperSlide>
             <AssociationCards key={String(bAssoReload)} segValue={"rnd"} />
           </SwiperSlide>
-          <IonButton onClick={() => Api.sessions.delete('')}>Supp</IonButton>
         </Swiper>
       </IonContent>
     </IonPage>

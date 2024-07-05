@@ -20,18 +20,18 @@ const Api = {
         },
         // Return all the association events
         getEvents(id: string): Promise<EventData[]> {
-            return sendApiRequest<EventData[]>("GET", "assos/" + encodeURIComponent(id) + "/events", {}, "Getting asso " + id + " events");
+            return sendApiRequest<EventData[]>("GET", "assos/" + encodeURIComponent(id) + "/events", {}, "Getting asso " + id + " events").then(events => events.map(parseEvent));
         }
     },
 
     event: {
         // Return an array with all the events
         get(): Promise<EventData[]> {
-            return sendApiRequest<EventData[]>("GET", "events", {}, "Getting event");
+            return sendApiRequest<EventData[]>("GET", "events", {}, "Getting event").then(events => events.map(parseEvent));
         },
         // Return one event by its id
         getOne(id: number): Promise<EventData> {
-            return sendApiRequest<EventData>("GET", "events/" + encodeURIComponent(id), {}, "Getting event " + id)
+            return sendApiRequest<EventData>("GET", "events/" + encodeURIComponent(id), {}, "Getting event " + id).then(parseEvent);
         },
         update(id: number, event: any, session = localStorage.getItem('session')) {
             return sendApiRequest("PUT", "events/" + encodeURIComponent(id), { ...event, session }, "Updating event " + id);
@@ -62,6 +62,12 @@ const Api = {
             return sendApiRequest("DELETE", "sessions/" + encodeURIComponent(id), {}, "Deleting session");
         }
     }
+}
+
+function parseEvent(event: EventData) {
+    if (event.poster)
+        event.poster = baseUrl + event.poster;
+    return event;
 }
 
 async function sendApiRequest<T>(method: string, endpoint: string, parameters: Record<string, any>, message?: string): Promise<T> {

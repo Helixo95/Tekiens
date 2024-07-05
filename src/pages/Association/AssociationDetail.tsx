@@ -1,7 +1,7 @@
 import { IonButton, IonCard, IonCardContent, IonCardTitle, IonContent, IonFab, IonFabButton, IonFabList, IonFooter, IonIcon, IonItem, IonLabel, IonPage, IonSpinner, IonTabButton, IonText, IonToast, IonToolbar } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import { logoDiscord, logoInstagram, paperPlane, logoLinkedin, globeOutline, leafOutline, atOutline, logoFacebook, locationOutline, extensionPuzzleOutline, calendarOutline, addOutline, addCircle, removeCircleOutline, call, pulseOutline, colorFill, add, starSharp, starOutline, pencilOutline } from 'ionicons/icons';
+import { logoDiscord, logoInstagram, paperPlane, logoLinkedin, globeOutline, leafOutline, atOutline, logoFacebook, locationOutline, extensionPuzzleOutline, calendarOutline, addOutline, addCircle, removeCircleOutline, call, pulseOutline, colorFill, add, starSharp, starOutline, pencilOutline, addCircleOutline } from 'ionicons/icons';
 import { SocialsData } from '../../Tools/Interfaces/EventAndAssoInterface';
 import { parseText } from "../../Tools/DOMParser";
 import { isAssoFollowed, followAssociation } from "../../Tools/LocalStorage/LocalStorageAssos";
@@ -124,9 +124,15 @@ const AssociationDetails: React.FC = () => {
                     </IonFabButton>
 
                     {editable() &&
-                        <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }} onClick={navigateToModifyAsso}>
-                            <IonIcon icon={pencilOutline} style={{ color: assoData?.color }} />
-                        </IonFabButton>
+                        <>
+                            <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }} onClick={navigateToModifyAsso}>
+                                <IonIcon icon={pencilOutline} style={{ color: assoData?.color }} />
+                            </IonFabButton>
+
+                            <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }} href="/createEvent">
+                                <IonIcon icon={addCircleOutline} style={{ color: assoData?.color }} />
+                            </IonFabButton>
+                        </>
                     }
 
                 </IonFabList>

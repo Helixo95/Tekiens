@@ -1,117 +1,30 @@
-import { IonActionSheet, IonButton, IonContent, IonInput, IonItem, IonLabel, IonPage, IonSelect, IonSelectOption, IonSpinner, IonTabButton } from "@ionic/react"
-import React, { useEffect, useState } from "react"
+import { IonActionSheet, IonButton, IonContent, IonInput, IonItem, IonLabel, IonPage, IonSelect, IonSelectOption } from "@ionic/react"
+import React, { useState } from "react"
 import HeaderTitleBack from "../../components/HeaderTitleBack"
 
-import { durationToArray, eventStatus } from "../../Tools/EventsTools"
+import { eventStatus } from "../../Tools/EventsTools"
 import { useTranslation } from "react-i18next"
+import { OverlayEventDetail } from "@ionic/react/dist/types/components/react-component-lib/interfaces"
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import useImageHandler from "../../Tools/UseImage"
-import Api from "../../Tools/Api"
-import { EventData } from "../../Tools/Interfaces/EventAndAssoInterface"
-import { useAuth } from "../../contexts/AuthContext"
 
 const CreateEvent: React.FC = () => {
     // Use for the translation
     const { t } = useTranslation();
 
-    const { imageUrl, setImageUrl, actionResult, deleteImage } = useImageHandler();
-
-    const { session } = useAuth();
-
-    const [errorText, setErrorText] = useState('');
-
-    if (!session) {
-        history.back();
-    }
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        const formData = new FormData(e.currentTarget);
-        const values: any = Object.fromEntries(formData.entries());
-
-
-        if (!values.title || !values.place || !values.dateTime) {
-            setErrorText('You need to fill the require fileds');
-            return;
-        }
-
-        const updatedEvent: Partial<EventData> = {
-            title: values.title,
-            poster: parsePoster(imageUrl as string),
-            description: values.description ? values.description : null,
-            date: formatDate(values.dateTime),
-            place: values.place ? values.place : null,
-            duration: arrayToDuration([Number(values.days), Number(values.hours), Number(values.minutes)]),
-            price: values.price ? values.price : null,
-            link: values.qrCode ? values.qrCode : null,
-            access: values.access ? values.access : null,
-            status: values.status,
-            capacity: values.capacity ? values.capacity : null,
-        };
-
-        let fields: any = {};
-
-        for (let key in updatedEvent) {
-            const updatedEventField = updatedEvent[key as keyof EventData]
-
-            if (updatedEventField != null) {
-                fields[key] = updatedEventField;
-            }
-        }
-
-        console.log(fields);
-        try {
-
-            setErrorText('');
-            //history.back();
-        } catch (error: any) {
-            if (error instanceof Error) {
-                setErrorText(error.message);
-            }
-            else {
-                setErrorText("Error while modifying the event, try again");
-            }
-        }
-    };
-
-
-    const arrayToDuration = ([days, hours, minutes]: [number, number, number]) => {
-        const duration = days * 24 * 60 + hours * 60 + minutes;
-        if (duration > 0) {
-            return duration;
-        }
-
-        return null;
-    }
-
-    const formatDate = (date: string) => {
-        const parts = date.split('T');
-
-        const datePart = parts[0];
-        const timePart = parts[1];
-
-        return `${datePart} ${timePart}:00`;
-    }
-
-    const parsePoster = (url: string) => {
-        if (url) {
-            const urlObject = new URL(url);
-            return urlObject.pathname;
-        }
-        return null;
-    }
+    const { imageUrl, actionResult, deleteImage } = useImageHandler();
 
     return (
         <IonPage>
-            <HeaderTitleBack back=''>{t('event.manage.creation.title')}</HeaderTitleBack>
+            <HeaderTitleBack back="/app/settings">{t('event.manage.creation.title')}</HeaderTitleBack>
             <IonContent>
-                <form className="ion-padding" onSubmit={handleSubmit}>
+                <form className="ion-padding">
                     <IonItem className="input-item">
                         <IonInput
                             label={t('event.manage.event-title.label')}
                             labelPlacement="floating"
                             placeholder={t('event.manage.event-title.placeholder')}
-                            name="title"
+                            name="eventTitle"
                             type="text"
                             clearInput={true}
                         />
@@ -141,7 +54,7 @@ const CreateEvent: React.FC = () => {
 
                     <IonItem className="input-item">
                         <IonLabel position="stacked">{t('event.manage.event-poster.label')}</IonLabel>
-                        {!imageUrl ?
+                        {!imageUrl &&
                             <>
                                 <IonButton id="open-action-sheet">{t('event.manage.event-poster.button.select')}</IonButton>
                                 <IonActionSheet
@@ -172,7 +85,9 @@ const CreateEvent: React.FC = () => {
                                     onDidDismiss={({ detail }) => actionResult(detail)}
                                 />
                             </>
-                            :
+                        }
+
+                        {imageUrl &&
                             <>
                                 <img className="center-screen" src={imageUrl} alt="Selected from Gallery" />
                                 <IonButton onClick={deleteImage}>{t('event.manage.event-poster.button.delete')}</IonButton>
@@ -277,10 +192,10 @@ const CreateEvent: React.FC = () => {
                     </IonItem>
 
                     <IonButton type='submit' className='login-item' style={{ 'width': '100%' }}>{t('event.manage.creation.button')}</IonButton>
-                    <span className='error center-screen'>{errorText}</span>
+                    <span className='error center-screen'></span>
                 </form>
             </IonContent>
-        </IonPage >
+        </IonPage>
     )
 }
 

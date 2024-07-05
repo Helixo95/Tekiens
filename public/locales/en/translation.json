@@ -160,7 +160,13 @@
 
             "modification" : {
                 "title" : "Event modification",
-                "button" : "Modify the event"
+                "button" : "Modify the event",
+                "alert" : {
+                    "header" : "Modification",
+                    "message" : "Are you sure you want to modify the event?",
+                    "cancel" : "Cancel",
+                    "confirm": "Yes"
+                }
             },
 
 
@@ -202,16 +208,13 @@
                 "label" : "⌛ Duration (optional)",
 
                 "days" : {
-                    "label" : "Days",
-                    "placeholder" : "-"
+                    "label" : "Day"
                 },
                 "hours" : {
-                    "label" : "Hours",
-                    "placeholder" : "-"
+                    "label" : "Hour"
                 },
                 "minutes" : {
-                    "label" : "Minutes",
-                    "placeholder" : "-"
+                    "label" : "Minute"
                 }
             },
 

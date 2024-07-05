@@ -159,7 +159,13 @@
 
             "modification" : {
                 "title" : "Modifier un évènement",
-                "button" : "Modifier l'évènement"
+                "button" : "Modifier l'évènement",
+                "alert" : {
+                    "header" : "Modification",
+                    "message" : "Êtes-vous sûr de vouloir modifier l'évènement ?",
+                    "cancel" : "Annuler",
+                    "confirm": "Oui"
+                }
             },
 
             "event-title" : {
@@ -200,16 +206,13 @@
                 "label" : "⌛ Durée (optionnel)",
 
                 "days" : {
-                    "label" : "Jours",
-                    "placeholder" : "-"
+                    "label" : "Jour"
                 },
                 "hours" : {
-                    "label" : "Heures",
-                    "placeholder" : "-"
+                    "label" : "Heure"
                 },
                 "minutes" : {
-                    "label" : "Minutes",
-                    "placeholder" : "-"
+                    "label" : "Minute"
                 }
             },
 

@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import HeaderTitleBack from '../../components/HeaderTitleBack'
-import { IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonPage, IonRow, IonSpinner, IonTabButton, IonText, IonToast, useIonRouter } from '@ionic/react'
+import { IonAlert, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonPage, IonRow, IonSpinner, IonTabButton, IonText, IonToast, useIonRouter } from '@ionic/react'
 import { useHistory, useParams } from 'react-router'
-import { AssosData, EventData } from '../../Tools/Interfaces/EventAndAssoInterface'
+import { AssosData } from '../../Tools/Interfaces/EventAndAssoInterface'
 import { useTranslation } from 'react-i18next'
 import '../../theme/Event/EventDetails.css'
 import { darkenColor, formatDate, duration, getEventStatus } from '../../Tools/EventsTools'
 import { parseText } from '../../Tools/DOMParser'
-import { add, starOutline, star, pushOutline, push, pencilOutline } from 'ionicons/icons'
+import { add, starOutline, star, pushOutline, push, pencilOutline, trashOutline, podiumOutline } from 'ionicons/icons'
 import { useAuth } from '../../contexts/AuthContext'
 import Api from '../../Tools/Api'
 import { isEventSaved, saveEvent } from '../../Tools/LocalStorage/LocalStorageEvents'
+import { useEventDataContext } from '../../contexts/EventDataContext'
 
 const EventDetails: React.FC = () => {
     // Use to translte the page
@@ -18,7 +19,6 @@ const EventDetails: React.FC = () => {
 
     // Use to get the event's id from the href
     const { id } = useParams<{ id: string }>();
-    console.log(id);
 
     const history = useHistory();
 
@@ -26,7 +26,7 @@ const EventDetails: React.FC = () => {
 
     const [isSaved, setIsSaved] = useState<boolean>(false);
 
-    const [eventData, setEventData] = useState<EventData>();
+    const { eventData, setEventData } = useEventDataContext();
     const [assoData, setAssoData] = useState<AssosData>();
 
     const [description, setDescription] = useState<string>("");
@@ -45,7 +45,7 @@ const EventDetails: React.FC = () => {
                     setIsSaved(isEventSaved(eventData.id));
 
                     const assoData = await Api.assos.getOne(eventData.asso_id);
-                    setAssoData(assoData)
+                    setAssoData(assoData);
 
                     setLoading(false);
                 } catch (error) {
@@ -78,7 +78,7 @@ const EventDetails: React.FC = () => {
     }
 
     const navigateToModifyEvent = () => {
-        history.push(`/event/modify/${eventData.id}`, { event: eventData });
+        history.push(`/event/modify/${eventData.id}`);
     };
 
     return (
@@ -92,6 +92,26 @@ const EventDetails: React.FC = () => {
                     swipeGesture="vertical"
                     message={isSaved ? t('event.favorite.add') : t('event.favorite.remove')}
                     duration={1000}
+                />
+
+                <IonAlert
+                    header="Suppression"
+                    message="Voulez-vous vraiment supprimer l'évènement ?"
+                    trigger="delete-event"
+                    buttons={[
+                        {
+                            text: 'Annuler',
+                            role: 'cancel',
+                        },
+                        {
+                            text: 'Oui',
+                            role: 'confirm',
+                            handler: async () => {
+                                await Api.event.delete(eventData.id);
+                                history.goBack();
+                            },
+                        },
+                    ]}
                 />
 
                 <IonFab slot="fixed" horizontal="end" vertical="bottom">
@@ -108,14 +128,19 @@ const EventDetails: React.FC = () => {
                         </IonFabButton>
 
                         {session?.asso_id === assoData?.id &&
-                            <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }} onClick={navigateToModifyEvent}>
-                                <IonIcon icon={pencilOutline} style={{ color: assoData?.color }} />
-                            </IonFabButton>
+                            <>
+                                <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }} onClick={navigateToModifyEvent}>
+                                    <IonIcon icon={pencilOutline} style={{ color: assoData?.color }} />
+                                </IonFabButton>
+                                <IonFabButton className='fab-button' id="delete-event" style={{ '--border-color': assoData?.color }} >
+                                    <IonIcon icon={trashOutline} style={{ color: assoData?.color }} />
+                                </IonFabButton>
+                            </>
                         }
                     </IonFabList>
                 </IonFab>
 
-                <img alt="" src={"https://tekiens.net" + eventData.poster} width="100%" />
+                <img alt="" src={eventData.poster || ""} width="100%" />
                 <IonGrid className='ion-padding'>
                     <IonRow className='info'>
                         <a style={{ color: assoData?.color }} href={"/association/" + eventData.asso_id}>{assoData?.names[0]}</a>
