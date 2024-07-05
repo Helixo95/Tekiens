@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { IonContent, IonInput, IonButton, IonItem, IonLabel, IonSelect, IonSelectOption, IonTabButton, IonSpinner, IonAlert, IonPage } from '@ionic/react';
-import { useParams } from 'react-router-dom';
+import { IonContent, IonInput, IonButton, IonItem, IonLabel, IonSelect, IonSelectOption, IonPage } from '@ionic/react';
 import { EventData } from '../../Tools/Interfaces/EventAndAssoInterface';
-import { useEventDataContext } from '../../contexts/EventDataContext';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { eventStatus } from '../../Tools/EventsTools';
@@ -23,7 +21,6 @@ const ModifyEvent: React.FC = () => {
     const [selectedImage, setSelectedImage] = useState<string>("");
     const [duration, setDuration] = useState<number>();
     const [errorText, setErrorText] = useState('');
-    const [formValues, setFormValues] = useState<any>(null);
 
     // If we're not logged in
     if (!session) {
@@ -68,6 +65,7 @@ const ModifyEvent: React.FC = () => {
         // Get the right format for the date
         values.date = formatDate(values.date);
 
+        // We initialize our new event
         const newEvent: Partial<EventData> = {
             title: values.title,
             poster: selectedImage ? selectedImage : null,
@@ -87,14 +85,15 @@ const ModifyEvent: React.FC = () => {
 
         // For each key
         for (let key in newEvent) {
+            // We look only not null values
             if (newEvent[key as keyof EventData] != null) {
+                // We get the value
                 const newEventField = newEvent[key as keyof EventData];
 
+                // And we put them in our fields
                 fields[key] = newEventField;
             }
         }
-
-        console.log(fields);
 
         // We can create our event
         try {
@@ -106,7 +105,7 @@ const ModifyEvent: React.FC = () => {
             if (error instanceof Error) {
                 setErrorText(error.message);
             } else {
-                setErrorText("Error while modifying the event, try again");
+                setErrorText("Error while creating the event, try again");
             }
         }
     };

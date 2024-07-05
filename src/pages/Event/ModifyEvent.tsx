@@ -133,7 +133,7 @@ const ModifyEvent: React.FC = () => {
 
         // For each key
         for (let key in eventData) {
-            // We check only defined values
+            // We look only defined values
             if (values[key as keyof EventData] != undefined) {
                 // We get the value
                 const eventDataField = eventData[key as keyof EventData];
