@@ -128,13 +128,13 @@ const ModifyEvent: React.FC = () => {
         // Get the right format for the date
         values.date = formatDate(values.date);
 
-        // We'll put in here all the values we'll need to update
+        // We'll put in here all the values we'll need to update the event
         let fields: any = {};
 
         // For each key
         for (let key in eventData) {
             // We check only defined values
-            if (!(values[key as keyof EventData] == undefined)) {
+            if (values[key as keyof EventData] != undefined) {
                 // We get the value
                 const eventDataField = eventData[key as keyof EventData];
                 const valuesField = values[key as keyof EventData];

@@ -37,6 +37,7 @@ const EventDetails: React.FC = () => {
             if (!isNaN(Number(id))) {
 
                 try {
+                    console.log(Api.event.getOne(Number(id)));
                     const eventData = await Api.event.getOne(Number(id));
 
                     setEventData(eventData);

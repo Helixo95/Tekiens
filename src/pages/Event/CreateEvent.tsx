@@ -1,110 +1,131 @@
-import { IonActionSheet, IonButton, IonContent, IonInput, IonItem, IonLabel, IonPage, IonSelect, IonSelectOption, IonSpinner, IonTabButton } from "@ionic/react"
-import React, { useEffect, useState } from "react"
-import HeaderTitleBack from "../../components/HeaderTitleBack"
+import React, { useState, useEffect } from 'react';
+import { IonContent, IonInput, IonButton, IonItem, IonLabel, IonSelect, IonSelectOption, IonTabButton, IonSpinner, IonAlert, IonPage } from '@ionic/react';
+import { useParams } from 'react-router-dom';
+import { EventData } from '../../Tools/Interfaces/EventAndAssoInterface';
+import { useEventDataContext } from '../../contexts/EventDataContext';
+import { useTranslation } from 'react-i18next';
+import { useAuth } from '../../contexts/AuthContext';
+import { eventStatus } from '../../Tools/EventsTools';
 
-import { durationToArray, eventStatus } from "../../Tools/EventsTools"
-import { useTranslation } from "react-i18next"
-import useImageHandler from "../../Tools/UseImage"
-import Api from "../../Tools/Api"
-import { EventData } from "../../Tools/Interfaces/EventAndAssoInterface"
-import { useAuth } from "../../contexts/AuthContext"
+import ImagePicker from '../../components/ImageInput';
+import DurationInput from '../../components/DurationInput';
+import Api from '../../Tools/Api';
+import HeaderTitleBack from '../../components/HeaderTitleBack';
 
-const CreateEvent: React.FC = () => {
+
+const ModifyEvent: React.FC = () => {
     // Use for the translation
     const { t } = useTranslation();
 
-    const { imageUrl, setImageUrl, actionResult, deleteImage } = useImageHandler();
-
+    // Use for the session
     const { session } = useAuth();
 
+    const [selectedImage, setSelectedImage] = useState<string>("");
+    const [duration, setDuration] = useState<number>();
     const [errorText, setErrorText] = useState('');
+    const [formValues, setFormValues] = useState<any>(null);
 
+    // If we're not logged in
     if (!session) {
         history.back();
     }
 
+    // The next two function are used because their value are not in the same component
+
+    /**
+     * Function to update the event poster when the user change it
+     * @param newImage the new image the user selected
+     */
+    const handleImageChange = (newImage: string) => {
+        setSelectedImage(newImage);
+    };
+
+    /**
+     * Function to update the duration when the user change it
+     * @param newDuration the new duration the user wanted
+     */
+    const handleDurationUpdate = (newDuration: number) => {
+        setDuration(newDuration);
+    };
+
+    /**
+     * Function when the user submit the form
+     * @param event the submit event
+     */
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
+        // We get the form values
         const formData = new FormData(e.currentTarget);
-        const values: any = Object.fromEntries(formData.entries());
+        const values: any = Object.fromEntries(formData);
 
+        // To coincide with the API null data 
+        Object.keys(values).forEach(key => {
+            if (values[key] === '') {
+                values[key] = null;
+            }
+        });
 
-        if (!values.title || !values.place || !values.dateTime) {
-            setErrorText('You need to fill the require fileds');
-            return;
-        }
+        // Get the right format for the date
+        values.date = formatDate(values.date);
 
-        const updatedEvent: Partial<EventData> = {
+        const newEvent: Partial<EventData> = {
             title: values.title,
-            poster: parsePoster(imageUrl as string),
+            poster: selectedImage ? selectedImage : null,
             description: values.description ? values.description : null,
-            date: formatDate(values.dateTime),
-            place: values.place ? values.place : null,
-            duration: arrayToDuration([Number(values.days), Number(values.hours), Number(values.minutes)]),
+            date: values.date,
+            place: values.place,
+            duration: duration ? duration : null,
             price: values.price ? values.price : null,
-            link: values.qrCode ? values.qrCode : null,
+            link: values.link ? values.link : null,
             access: values.access ? values.access : null,
             status: values.status,
             capacity: values.capacity ? values.capacity : null,
         };
 
+        // We'll put in here all the values we'll need to create the event
         let fields: any = {};
 
-        for (let key in updatedEvent) {
-            const updatedEventField = updatedEvent[key as keyof EventData]
+        // For each key
+        for (let key in newEvent) {
+            if (newEvent[key as keyof EventData] != null) {
+                const newEventField = newEvent[key as keyof EventData];
 
-            if (updatedEventField != null) {
-                fields[key] = updatedEventField;
+                fields[key] = newEventField;
             }
         }
 
         console.log(fields);
+
+        // We can create our event
         try {
+            Api.event.create(fields);
 
             setErrorText('');
-            //history.back();
+            history.back();
         } catch (error: any) {
             if (error instanceof Error) {
                 setErrorText(error.message);
-            }
-            else {
+            } else {
                 setErrorText("Error while modifying the event, try again");
             }
         }
     };
 
-
-    const arrayToDuration = ([days, hours, minutes]: [number, number, number]) => {
-        const duration = days * 24 * 60 + hours * 60 + minutes;
-        if (duration > 0) {
-            return duration;
-        }
-
-        return null;
-    }
-
+    /**
+     * Function to get the date in the right format yyyy/mm/ddThh:mm to yyyy/mm/dd hh:mm:ss
+     * @param date our date we want to change the format
+     * @returns the right date format
+     */
     const formatDate = (date: string) => {
-        const parts = date.split('T');
-
-        const datePart = parts[0];
-        const timePart = parts[1];
-
+        const [datePart, timePart] = date.split('T');
         return `${datePart} ${timePart}:00`;
-    }
-
-    const parsePoster = (url: string) => {
-        if (url) {
-            const urlObject = new URL(url);
-            return urlObject.pathname;
-        }
-        return null;
     }
 
     return (
         <IonPage>
             <HeaderTitleBack back=''>{t('event.manage.creation.title')}</HeaderTitleBack>
             <IonContent>
+
                 <form className="ion-padding" onSubmit={handleSubmit}>
                     <IonItem className="input-item">
                         <IonInput
@@ -114,6 +135,7 @@ const CreateEvent: React.FC = () => {
                             name="title"
                             type="text"
                             clearInput={true}
+                            required
                         />
                     </IonItem>
 
@@ -122,9 +144,10 @@ const CreateEvent: React.FC = () => {
                             label={t('event.manage.event-date.label')}
                             labelPlacement="floating"
                             placeholder={t('event.manage.event-date.placeholder')}
-                            name="dateTime"
+                            name="date"
                             type="datetime-local"
                             clearInput={true}
+                            required
                         />
                     </IonItem>
 
@@ -136,48 +159,15 @@ const CreateEvent: React.FC = () => {
                             name="place"
                             type="text"
                             clearInput={true}
+                            required
                         />
                     </IonItem>
 
                     <IonItem className="input-item">
-                        <IonLabel position="stacked">{t('event.manage.event-poster.label')}</IonLabel>
-                        {!imageUrl ?
-                            <>
-                                <IonButton id="open-action-sheet">{t('event.manage.event-poster.button.select')}</IonButton>
-                                <IonActionSheet
-                                    trigger="open-action-sheet"
-                                    header="Example header"
-                                    subHeader="Example subheader"
-                                    buttons={[
-                                        {
-                                            text: 'Gallery',
-                                            data: {
-                                                action: 'gallery',
-                                            },
-                                        },
-                                        {
-                                            text: 'Photo',
-                                            data: {
-                                                action: 'photo',
-                                            },
-                                        },
-                                        {
-                                            text: 'Cancel',
-                                            role: 'cancel',
-                                            data: {
-                                                action: 'cancel',
-                                            },
-                                        },
-                                    ]}
-                                    onDidDismiss={({ detail }) => actionResult(detail)}
-                                />
-                            </>
-                            :
-                            <>
-                                <img className="center-screen" src={imageUrl} alt="Selected from Gallery" />
-                                <IonButton onClick={deleteImage}>{t('event.manage.event-poster.button.delete')}</IonButton>
-                            </>
-                        }
+                        <IonLabel>
+                            {t('event.manage.event-poster.label')}
+                        </IonLabel>
+                        <ImagePicker currentImage={selectedImage} onImageSelected={handleImageChange} />
                     </IonItem>
 
                     <IonItem className="input-item">
@@ -205,32 +195,7 @@ const CreateEvent: React.FC = () => {
 
                     <IonItem className="input-item">
                         <IonLabel position="stacked">{t('event.manage.event-duration.label')}</IonLabel>
-                        <IonInput
-                            label={t('event.manage.event-duration.days.label')}
-                            placeholder={t('event.manage.event-duration.days.placeholder')}
-                            name="days"
-                            type="number"
-                            clearInput={true}
-                            min={0}
-                        />
-                        <IonInput
-                            label={t('event.manage.event-duration.hours.label')}
-                            placeholder={t('event.manage.event-duration.hours.placeholder')}
-                            name="hours"
-                            type="number"
-                            clearInput={true}
-                            min={0}
-                            max={23}
-                        />
-                        <IonInput
-                            label={t('event.manage.event-duration.minutes.label')}
-                            placeholder={t('event.manage.event-duration.minutes.placeholder')}
-                            name="minutes"
-                            type="number"
-                            clearInput={true}
-                            min={0}
-                            max={59}
-                        />
+                        <DurationInput initialValue={0} onUpdate={handleDurationUpdate} />
                     </IonItem>
 
                     <IonItem className="input-item">
@@ -238,7 +203,7 @@ const CreateEvent: React.FC = () => {
                             label={t('event.manage.event-qr.label')}
                             labelPlacement="floating"
                             placeholder={t('event.manage.event-qr.placeholder')}
-                            name="qrCode"
+                            name="link"
                             type="url"
                             clearInput={true}
                         />
@@ -257,7 +222,7 @@ const CreateEvent: React.FC = () => {
 
                     <IonItem className="input-item">
                         <IonLabel position="stacked">{t('event.manage.event-status.label')}</IonLabel>
-                        <IonSelect name="status" placeholder={t('event.manage.event-status.placeholder')} value="programmed">
+                        <IonSelect name="status" placeholder={t('event.manage.event-status.placeholder')} value='programmed' >
                             {Object.keys(eventStatus).map(key => (
                                 <IonSelectOption key={key} value={key}>{t(eventStatus[key])}</IonSelectOption>
                             ))}
@@ -276,12 +241,15 @@ const CreateEvent: React.FC = () => {
                         />
                     </IonItem>
 
-                    <IonButton type='submit' className='login-item' style={{ 'width': '100%' }}>{t('event.manage.creation.button')}</IonButton>
+                    <IonButton expand="block" type='submit'>
+                        {t('event.manage.creation.button')}
+                    </IonButton>
                     <span className='error center-screen'>{errorText}</span>
                 </form>
+
             </IonContent>
         </IonPage >
-    )
-}
+    );
+};
 
-export default CreateEvent
+export default ModifyEvent;

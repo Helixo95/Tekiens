@@ -76,9 +76,9 @@ const App: React.FC = () => {
                     <Route path="/event/:id" render={() => <EventDetails />} />
                     <Route path="/event/modify/:id" render={() => <ModifyEvent />} />
                   </EventDataProvider>
+                  <Route path="/createEvent/" render={() => <CreateEvent />} exact={true} />
 
                   <Route path="/preferences" render={() => <Preferences />} exact={true} />
-                  <Route path="/createEvent" render={() => <CreateEvent />} exact={true} />
                   <Route path="/faq" render={() => <FAQ />} exact={true} />
                   <Route path="/links" render={() => <Links />} exact={true} />
                   <Route path="/connexion" render={() => <Connexion />} exact={true} />
