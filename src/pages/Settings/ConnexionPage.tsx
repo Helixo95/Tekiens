@@ -103,7 +103,7 @@ const PageConnexion: React.FC = () => {
                     </IonItem>
 
                     <IonButton type='submit' className='login-item' style={{ 'width': '100%' }}>{t('connexion.button')}</IonButton>
-                    <span className='error center-screen'>{errorText}</span>
+                    <span className='error center-screen-padding'>{errorText}</span>
                 </form>
             </IonContent>
 

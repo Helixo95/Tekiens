@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { eventStatus } from '../../Tools/EventsTools';
 
-import ImagePicker from '../../components/ImageInput';
+import ImageInput from '../../components/ImageInput';
 import DurationInput from '../../components/DurationInput';
 import Api from '../../Tools/Api';
 import HeaderTitleBack from '../../components/HeaderTitleBack';
@@ -166,7 +166,7 @@ const ModifyEvent: React.FC = () => {
                         <IonLabel>
                             {t('event.manage.event-poster.label')}
                         </IonLabel>
-                        <ImagePicker currentImage={selectedImage} onImageSelected={handleImageChange} />
+                        <ImageInput currentImage={selectedImage} onImageSelected={handleImageChange} />
                     </IonItem>
 
                     <IonItem className="input-item">
@@ -243,7 +243,7 @@ const ModifyEvent: React.FC = () => {
                     <IonButton expand="block" type='submit'>
                         {t('event.manage.creation.button')}
                     </IonButton>
-                    <span className='error center-screen'>{errorText}</span>
+                    <span className='error center-screen-padding'>{errorText}</span>
                 </form>
 
             </IonContent>

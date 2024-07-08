@@ -89,7 +89,7 @@ const CreateEvent: React.FC = () => {
 
                         {imageUrl &&
                             <>
-                                <img className="center-screen" src={imageUrl} alt="Selected from Gallery" />
+                                <img className="center-screen-padding" src={imageUrl} alt="Selected from Gallery" />
                                 <IonButton onClick={deleteImage}>{t('event.manage.event-poster.button.delete')}</IonButton>
                             </>
                         }
@@ -192,7 +192,7 @@ const CreateEvent: React.FC = () => {
                     </IonItem>
 
                     <IonButton type='submit' className='login-item' style={{ 'width': '100%' }}>{t('event.manage.creation.button')}</IonButton>
-                    <span className='error center-screen'></span>
+                    <span className='error center-screen-padding'></span>
                 </form>
             </IonContent>
         </IonPage>

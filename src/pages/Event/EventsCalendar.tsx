@@ -88,7 +88,7 @@ const EventsList: React.FC = () => {
                     <EventCardComponent key={event.id} event={event} asso={getAssoById(event.asso_id)} />
                 ))
                 : (
-                    <IonLabel className='center-screen title'>{t('events.no-events-calendar')}</IonLabel>
+                    <IonLabel className='center-screen-padding title'>{t('events.no-events-calendar')}</IonLabel>
                 )
             }
         </IonContent>

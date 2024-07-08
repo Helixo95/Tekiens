@@ -125,7 +125,7 @@ const ModifyAsso: React.FC = () => {
                     </IonItem>
 
                     <IonButton type='submit' className='login-item' style={{ 'width': '100%' }}>{t('event.manage.modification.button')}</IonButton>
-                    <span className='error center-screen'></span>
+                    <span className='error center-screen-padding'></span>
                 </form>
             </IonContent>
         </IonPage >

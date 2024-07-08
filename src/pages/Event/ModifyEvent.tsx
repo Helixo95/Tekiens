@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IonContent, IonInput, IonButton, IonItem, IonLabel, IonSelect, IonSelectOption, IonTabButton, IonSpinner, IonAlert, IonPage } from '@ionic/react';
+import { IonContent, IonInput, IonButton, IonItem, IonLabel, IonSelect, IonSelectOption, IonTabButton, IonSpinner, IonAlert, IonPage, IonGrid, IonRow, IonCol } from '@ionic/react';
 import { useParams } from 'react-router-dom';
 import { EventData } from '../../Tools/Interfaces/EventAndAssoInterface';
 import { useEventDataContext } from '../../contexts/EventDataContext';
@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { eventStatus } from '../../Tools/EventsTools';
 
-import ImagePicker from '../../components/ImageInput';
+import ImageInput from '../../components/ImageInput';
 import DurationInput from '../../components/DurationInput';
 import Api from '../../Tools/Api';
 import HeaderTitleBack from '../../components/HeaderTitleBack';
@@ -50,6 +50,7 @@ const ModifyEvent: React.FC = () => {
                 }
             }
         };
+
         fetchData();
     }, [id]);
 
@@ -165,7 +166,13 @@ const ModifyEvent: React.FC = () => {
         try {
             await Api.event.update(eventData.id, fields);
 
+            setEventData(prev => ({
+                ...prev,
+                ...updatedEvent
+            }));
+
             setErrorText('');
+
             history.back();
         } catch (error: any) {
             if (error instanceof Error) {
@@ -235,10 +242,8 @@ const ModifyEvent: React.FC = () => {
                     </IonItem>
 
                     <IonItem className="input-item">
-                        <IonLabel>
-                            {t('event.manage.event-poster.label')}
-                        </IonLabel>
-                        <ImagePicker currentImage={updatedEvent.poster} onImageSelected={handleImageChange} />
+                        <IonLabel>{t('event.manage.event-poster.label')}</IonLabel>
+                        <ImageInput resetValue={eventData.poster} currentImage={updatedEvent.poster} onImageSelected={handleImageChange} />
                     </IonItem>
 
                     <IonItem className="input-item">
@@ -269,8 +274,19 @@ const ModifyEvent: React.FC = () => {
                     </IonItem>
 
                     <IonItem className="input-item">
-                        <IonLabel position="stacked">{t('event.manage.event-duration.label')}</IonLabel>
-                        <DurationInput initialValue={eventData.duration || 0} onUpdate={handleDurationUpdate} />
+                        <IonGrid>
+                            <IonRow>
+                                <IonCol>
+                                    <IonLabel>{t('event.manage.event-duration.label')}</IonLabel>
+                                </IonCol>
+                            </IonRow>
+
+                            <IonRow>
+                                <IonCol>
+                                    <DurationInput initialValue={eventData.duration || 0} onUpdate={handleDurationUpdate} />
+                                </IonCol>
+                            </IonRow>
+                        </IonGrid>
                     </IonItem>
 
                     <IonItem className="input-item">
@@ -325,7 +341,7 @@ const ModifyEvent: React.FC = () => {
                     <IonButton expand="block" type='submit'>
                         {t('event.manage.modification.button')}
                     </IonButton>
-                    <span className='error center-screen'>{errorText}</span>
+                    <span className='error center-screen-padding'>{errorText}</span>
                 </form>
 
                 <IonAlert

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import HeaderTitleBack from '../../components/HeaderTitleBack'
-import { IonAlert, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonPage, IonRow, IonSpinner, IonTabButton, IonText, IonToast, useIonRouter } from '@ionic/react'
+import { IonAlert, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonPage, IonRefresher, IonRefresherContent, IonRow, IonSpinner, IonTabButton, IonText, IonToast, RefresherEventDetail, useIonRouter } from '@ionic/react'
 import { useHistory, useParams } from 'react-router'
 import { AssosData } from '../../Tools/Interfaces/EventAndAssoInterface'
 import { useTranslation } from 'react-i18next'
 import '../../theme/Event/EventDetails.css'
 import { darkenColor, formatDate, duration, getEventStatus } from '../../Tools/EventsTools'
 import { parseText } from '../../Tools/DOMParser'
-import { add, starOutline, star, pushOutline, push, pencilOutline, trashOutline, podiumOutline } from 'ionicons/icons'
+import { add, starOutline, star, pushOutline, push, pencilOutline, trashOutline } from 'ionicons/icons'
 import { useAuth } from '../../contexts/AuthContext'
 import Api from '../../Tools/Api'
 import { isEventSaved, saveEvent } from '../../Tools/LocalStorage/LocalStorageEvents'
@@ -24,39 +24,36 @@ const EventDetails: React.FC = () => {
 
     const { session } = useAuth();
 
-    const [isSaved, setIsSaved] = useState<boolean>(false);
-
     const { eventData, setEventData } = useEventDataContext();
-    const [assoData, setAssoData] = useState<AssosData>();
 
+    const [assoData, setAssoData] = useState<AssosData>();
+    const [isSaved, setIsSaved] = useState<boolean>(false);
     const [description, setDescription] = useState<string>("");
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if (!isNaN(Number(id))) {
+    const fetchData = async () => {
+        if (!isNaN(Number(id))) {
 
-                try {
-                    console.log(Api.event.getOne(Number(id)));
-                    const eventData = await Api.event.getOne(Number(id));
+            try {
+                const eventData = await Api.event.getOne(Number(id));
 
-                    setEventData(eventData);
+                setEventData(eventData);
 
-                    await parseText(eventData.description, setDescription);
-                    setIsSaved(isEventSaved(eventData.id));
+                await parseText(eventData.description, setDescription);
+                setIsSaved(isEventSaved(eventData.id));
 
-                    const assoData = await Api.assos.getOne(eventData.asso_id);
-                    setAssoData(assoData);
+                const assoData = await Api.assos.getOne(eventData.asso_id);
+                setAssoData(assoData);
 
-                    setLoading(false);
-                } catch (error) {
-                    console.error('Error fetching data:', error);
-                    setLoading(false);
-                }
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                setLoading(false);
             }
-        };
+        }
+    };
 
-
+    useEffect(() => {
         fetchData();
     }, [id]);
 
@@ -82,11 +79,19 @@ const EventDetails: React.FC = () => {
         history.push(`/event/modify/${eventData.id}`);
     };
 
+    function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+        fetchData().then(() => event.detail.complete());
+    }
+
     return (
         <IonPage>
             <HeaderTitleBack back="">{t('event.title')}</HeaderTitleBack>
 
             <IonContent>
+                <IonRefresher slot="fixed" pullFactor={0.5} pullMin={100} pullMax={200} onIonRefresh={handleRefresh}>
+                    <IonRefresherContent></IonRefresherContent>
+                </IonRefresher>
+
                 <IonToast
                     trigger="saveEvent"
                     position="bottom"
@@ -141,7 +146,7 @@ const EventDetails: React.FC = () => {
                     </IonFabList>
                 </IonFab>
 
-                <img alt="" src={eventData.poster || ""} width="100%" />
+                <img alt="" src={eventData.poster ? `${eventData.poster}?${Date.now()}` : ""} width="100%" />
                 <IonGrid className='ion-padding'>
                     <IonRow className='info'>
                         <a style={{ color: assoData?.color }} href={"/association/" + eventData.asso_id}>{assoData?.names[0]}</a>

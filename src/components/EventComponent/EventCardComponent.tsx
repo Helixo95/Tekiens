@@ -10,7 +10,7 @@ const EventCardComponent: React.FC<{ event: EventData, asso: AssosData | undefin
 
     return (
         <IonCard button={true} href={'/event/' + event.id}>
-            <img alt="" src={event.poster || ""} />
+            <img src={event.poster ? `${event.poster}?${Date.now()}` : ""} />
             <IonCardHeader>
                 <IonCardTitle>{event.title}</IonCardTitle>
             </IonCardHeader>

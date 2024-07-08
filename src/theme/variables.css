@@ -87,8 +87,15 @@ ion-tab-button {
 	height: 82vh;
 }
 
-.center-screen {
+.center-screen-padding {
 	padding: 10%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.center-screen-text {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
