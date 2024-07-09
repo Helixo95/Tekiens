@@ -83,6 +83,14 @@ const EventDetails: React.FC = () => {
         fetchData().then(() => event.detail.complete());
     }
 
+    const editable = () => {
+        if (!session) {
+            return false;
+        }
+
+        return assoData?.id === session.asso_id;
+    };
+
     return (
         <IonPage>
             <HeaderTitleBack back="">{t('event.title')}</HeaderTitleBack>
@@ -133,7 +141,7 @@ const EventDetails: React.FC = () => {
                             <IonIcon icon={pushOutline} style={{ color: assoData?.color }} />
                         </IonFabButton>
 
-                        {session?.asso_id === assoData?.id &&
+                        {editable() &&
                             <>
                                 <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }} onClick={navigateToModifyEvent}>
                                     <IonIcon icon={pencilOutline} style={{ color: assoData?.color }} />

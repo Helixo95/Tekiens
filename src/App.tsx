@@ -48,6 +48,7 @@ import ModifyEvent from './pages/Event/ModifyEvent';
 import ModifyAsso from './pages/Association/ModifyAsso';
 import { addListeners, registerNotifications } from './Tools/Notifications/NotificationPush';
 import { EventDataProvider } from './contexts/EventDataContext';
+import { AssoDataProvider } from './contexts/AssoDataContext';
 
 setupIonicReact();
 
@@ -70,11 +71,11 @@ const App: React.FC = () => {
 
                   <Route path="/association/:id" render={() => <AssociationDetails />} exact={true} />
                   <Route path="/association/:id/events" render={() => <AssociationEvents />} exact={true} />
-                  <Route path="/association/modify/:id" render={() => <ModifyAsso />} />
+                  <Route path="/association/modify/:id" render={() => <ModifyAsso />} exact={true} />
 
                   <EventDataProvider>
-                    <Route path="/event/:id" render={() => <EventDetails />} />
-                    <Route path="/event/modify/:id" render={() => <ModifyEvent />} />
+                    <Route path="/event/:id" render={() => <EventDetails />} exact={true} />
+                    <Route path="/event/modify/:id" render={() => <ModifyEvent />} exact={true} />
                   </EventDataProvider>
                   <Route path="/createEvent/" render={() => <CreateEvent />} exact={true} />
 

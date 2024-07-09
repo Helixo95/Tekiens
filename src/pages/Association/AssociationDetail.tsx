@@ -18,13 +18,15 @@ const AssociationDetails: React.FC = () => {
     // Use for the translation
     const { t } = useTranslation();
 
+    // Retrieve the asso id from the URL
+    const { id } = useParams<{ id: string }>();
+
     const history = useHistory();
 
     const { session } = useAuth();
 
     const [description, setDescription] = useState<string>("");
     const [isFollowed, setIsFollowed] = useState(false);
-    const { id } = useParams<{ id: string }>(); // Retrieve the asso id from the URL
 
     const [assoData, setAssoData] = useState<AssosData>();
     const [loading, setLoading] = useState(true);

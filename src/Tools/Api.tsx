@@ -21,7 +21,10 @@ const Api = {
         // Return all the association events
         getEvents(id: string): Promise<EventData[]> {
             return sendApiRequest<EventData[]>("GET", "assos/" + encodeURIComponent(id) + "/events", {}, "Getting asso " + id + " events").then(events => events.map(parseEvent));
-        }
+        },
+        update(id: string, asso: any, session = localStorage.getItem("session")) {
+            return sendApiRequest("PUT", "assos/" + encodeURIComponent(id), { ...asso, session }, "Updating asso " + id);
+        },
     },
 
     event: {

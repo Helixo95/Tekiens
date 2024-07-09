@@ -1,6 +1,7 @@
 import DOMPurify from "dompurify";
 import { marked } from "marked";
 import { mangle } from "marked-mangle";
+import turndown from "turndown"
 
 /**
  * Parse a text that use 'mark' by converting it into HTML readable tags
@@ -18,4 +19,14 @@ export async function parseText(text: string | undefined | null, callback: Funct
         const DOMDescription = DOMPurify.sanitize(convertedDescription)
         callback(DOMDescription);
     }
+}
+
+
+/**
+ * unParse a text and convert all the html tags into marked format
+ * @param text The text to parse
+ */
+export function unParseText(text: string) {
+    const turndownService = new turndown();
+    return turndownService.turndown(text);
 }

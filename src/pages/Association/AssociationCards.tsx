@@ -56,13 +56,13 @@ const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
         filteredData.length > 0 ?
           <div>
             {
-              filteredData.map(value =>
-                <div key={value.id} >
-                  <IonCard className="asso-card" button={true} href={"/association/" + value.id}>
-                    <img alt="logo" className="asso-image-size" src={"https://tekiens.net/data/" + value.id + "/logo-0.webp"} style={{ width: '100%' }} />
+              filteredData.map(asso =>
+                <div key={asso.id} >
+                  <IonCard className="asso-card" button={true} href={"/association/" + asso.id}>
+                    <img alt="logo" className="asso-image-size" src={"https://tekiens.net/data/" + asso.id + "/logo-0.webp"} style={{ width: '100%' }} />
                     <IonCardHeader>
-                      <IonCardTitle style={{ color: value.color }} className="card-asso-title">{value.names[0]}</IonCardTitle>
-                      <IonCardSubtitle style={{ color: value.color }} className="card-assos-sub">{value.theme}</IonCardSubtitle>
+                      <IonCardTitle style={{ color: asso.color }} className="card-asso-title">{asso.names[0]}</IonCardTitle>
+                      <IonCardSubtitle style={{ color: asso.color }} className="card-assos-sub">{asso.theme}</IonCardSubtitle>
                     </IonCardHeader>
                   </IonCard>
                 </div>)

@@ -23,16 +23,41 @@ export interface AssosData {
     logo: string;
     color: string;
     description: string;
-    socials: SocialsData[];
+    socials: string[];
     campus: string;
-    room: string;
-    start: string;
-    end: string;
+    room: string,
+    start: string,
+    end: string
 }
-
+/*
 export interface SocialsData {
     id: string;
     display: string;
     link: string;
     value: string;
+}*/
+
+// Register the different ids that can be used in the selectbox of 'SocialsLink.tsx'
+export enum SocialType {
+    DISCORD = 'discord',
+    INSTAGRAM = 'instagram',
+    TWITTER = 'twitter',
+    EMAIL = 'email',
+    TELEGRAM = 'telegram'
+}
+
+export const SocialsDisplay: { [key: string]: string } = {
+    discord: 'Discord',
+    instagram: 'Instagram',
+    twitter: 'twitter',
+    email: 'Email',
+    telegram: 'Telegram'
+}
+
+export const SocialsURL: { [key: string]: string } = {
+    discord: 'https://discord.gg/',
+    instagram: 'https://instagram.com/',
+    twitter: 'https://twitter.com/',
+    email: '',
+    telegram: 'https://t.me/'
 }

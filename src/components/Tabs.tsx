@@ -73,7 +73,7 @@ const Tabs: React.FC = () => {
 
                 <IonTabButton tab='events' onClick={() => setNewEventCount(null)} href='/app/events'>
                     <IonIcon icon={calendarOutline} />
-                    <IonBadge>{newEventCount}</IonBadge>
+                    {newEventCount ? newEventCount > 0 && <IonBadge>{newEventCount}</IonBadge> : ''}
                     <IonLabel>{t('events.tab-title')}</IonLabel>
                 </IonTabButton>
 
