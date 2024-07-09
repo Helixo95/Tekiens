@@ -100,7 +100,7 @@ const ModifyEvent: React.FC = () => {
             Api.event.create(fields);
 
             setErrorText('');
-            history.back();
+            //history.back();
         } catch (error: any) {
             if (error instanceof Error) {
                 setErrorText(error.message);
@@ -163,10 +163,10 @@ const ModifyEvent: React.FC = () => {
                     </IonItem>
 
                     <IonItem className="input-item">
-                        <IonLabel>
-                            {t('event.manage.event-poster.label')}
-                        </IonLabel>
-                        <ImageInput currentImage={selectedImage} onImageSelected={handleImageChange} />
+                        <div>
+                            <IonLabel>{t('event.manage.event-poster.label')}</IonLabel>
+                            <ImageInput currentImage={selectedImage} onImageSelected={handleImageChange} />
+                        </div>
                     </IonItem>
 
                     <IonItem className="input-item">
@@ -193,8 +193,10 @@ const ModifyEvent: React.FC = () => {
                     </IonItem>
 
                     <IonItem className="input-item">
-                        <IonLabel position="stacked">{t('event.manage.event-duration.label')}</IonLabel>
-                        <DurationInput initialValue={0} onUpdate={handleDurationUpdate} />
+                        <div>
+                            <IonLabel position="stacked">{t('event.manage.event-duration.label')}</IonLabel>
+                            <DurationInput initialValue={0} onUpdate={handleDurationUpdate} />
+                        </div>
                     </IonItem>
 
                     <IonItem className="input-item">

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { IonInput, IonLabel } from '@ionic/react';
+import { IonInput, IonLabel, IonRow } from '@ionic/react';
 import { useTranslation } from 'react-i18next';
+import '../theme/DurationInput.css'
 
 interface DurationInputProps {
     // Initial duration
@@ -61,11 +62,8 @@ const DurationInput: React.FC<DurationInputProps> = ({ initialValue, onUpdate })
     };
 
     return (
-        <>
-            <div>
-                <IonLabel position="stacked">
-                    {t('event.manage.event-duration.days.label')}{days > 1 ? 's' : ''}
-                </IonLabel>
+        <div>
+            <div className="duration-input-item">
                 <IonInput
                     value={days.toString()}
                     type="number"
@@ -73,11 +71,11 @@ const DurationInput: React.FC<DurationInputProps> = ({ initialValue, onUpdate })
                     placeholder="-"
                     onIonChange={handleDaysChange}
                 />
-            </div>
-            <div>
-                <IonLabel position="stacked">
-                    {t('event.manage.event-duration.hours.label')}{hours > 1 ? 's' : ''}
+                <IonLabel className="input-label">
+                    {t('event.manage.event-duration.days.label')}{days > 1 ? 's' : ''}
                 </IonLabel>
+            </div>
+            <div className="duration-input-item">
                 <IonInput
                     value={hours.toString()}
                     type="number"
@@ -86,11 +84,11 @@ const DurationInput: React.FC<DurationInputProps> = ({ initialValue, onUpdate })
                     placeholder="-"
                     onIonChange={handleHoursChange}
                 />
-            </div>
-            <div>
-                <IonLabel position="stacked">
-                    {t('event.manage.event-duration.minutes.label')}{minutes > 1 ? 's' : ''}
+                <IonLabel className="input-label">
+                    {t('event.manage.event-duration.hours.label')}{hours > 1 ? 's' : ''}
                 </IonLabel>
+            </div>
+            <div className="duration-input-item">
                 <IonInput
                     value={minutes.toString()}
                     type="number"
@@ -99,9 +97,11 @@ const DurationInput: React.FC<DurationInputProps> = ({ initialValue, onUpdate })
                     placeholder="-"
                     onIonChange={handleMinutesChange}
                 />
+                <IonLabel className="input-label">
+                    {t('event.manage.event-duration.minutes.label')}{minutes > 1 ? 's' : ''}
+                </IonLabel>
             </div>
-
-        </>
+        </div>
     );
 };
 

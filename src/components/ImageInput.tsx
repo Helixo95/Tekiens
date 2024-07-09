@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { IonButton, IonImg } from '@ionic/react';
 import { useTranslation } from 'react-i18next';
+import '../theme/ImageInput.css'
 
 interface ImagePickerProps {
     // If the user want to use the initial image
@@ -66,7 +67,7 @@ const ImagePicker: React.FC<ImagePickerProps> = ({ resetValue, currentImage, onI
     }
 
     return (
-        <div key={Date.now()}>
+        <div key={Date.now()} className="image-input-container">
             <input
                 type="file"
                 accept="image/*"
@@ -76,7 +77,7 @@ const ImagePicker: React.FC<ImagePickerProps> = ({ resetValue, currentImage, onI
             />
 
             {!currentImage ?
-                <>
+                <div className='image-input-button'>
                     {resetValue
                         &&
                         <IonButton onClick={() => onImageSelected(resetValue)}>
@@ -86,11 +87,15 @@ const ImagePicker: React.FC<ImagePickerProps> = ({ resetValue, currentImage, onI
                     <IonButton onClick={() => fileInputRef.current?.click()}>
                         {t('event.manage.event-poster.button.select')}
                     </IonButton>
-                </>
+                </div>
                 :
-                <IonButton onClick={() => onImageSelected("")}>
-                    {t('event.manage.event-poster.button.delete')}
-                </IonButton>}
+                <div className='image-input-button'>
+                    <IonButton onClick={() => onImageSelected("")}>
+                        {t('event.manage.event-poster.button.delete')}
+                    </IonButton>
+                </div>
+            }
+
 
             {currentImage && (
                 <IonImg src={parseImage(currentImage)} />

@@ -242,8 +242,10 @@ const ModifyEvent: React.FC = () => {
                     </IonItem>
 
                     <IonItem className="input-item">
-                        <IonLabel>{t('event.manage.event-poster.label')}</IonLabel>
-                        <ImageInput resetValue={eventData.poster} currentImage={updatedEvent.poster} onImageSelected={handleImageChange} />
+                        <div>
+                            <IonLabel>{t('event.manage.event-poster.label')}</IonLabel>
+                            <ImageInput resetValue={eventData.poster} currentImage={updatedEvent.poster} onImageSelected={handleImageChange} />
+                        </div>
                     </IonItem>
 
                     <IonItem className="input-item">
@@ -274,19 +276,10 @@ const ModifyEvent: React.FC = () => {
                     </IonItem>
 
                     <IonItem className="input-item">
-                        <IonGrid>
-                            <IonRow>
-                                <IonCol>
-                                    <IonLabel>{t('event.manage.event-duration.label')}</IonLabel>
-                                </IonCol>
-                            </IonRow>
-
-                            <IonRow>
-                                <IonCol>
-                                    <DurationInput initialValue={eventData.duration || 0} onUpdate={handleDurationUpdate} />
-                                </IonCol>
-                            </IonRow>
-                        </IonGrid>
+                        <div>
+                            <IonLabel>{t('event.manage.event-duration.label')}</IonLabel>
+                            <DurationInput initialValue={eventData.duration || 0} onUpdate={handleDurationUpdate} />
+                        </div>
                     </IonItem>
 
                     <IonItem className="input-item">

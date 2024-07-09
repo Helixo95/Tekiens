@@ -7,8 +7,6 @@
         "tab-title" : "Associations",
         "title" : "Associations list",
 
-        "no-description": "No description available",
-
         "filter" : {
             "active" : {
                 "label" : "Active",
@@ -54,6 +52,20 @@
 
     "association" : {
         "title" : "Association",
+
+        "about" : "About the association",
+
+        "no-description": "No description available",
+
+        "more-info" : "More informations",
+        
+        "start" : "🆕 Creation year: ",
+
+        "end" : "💥​ Dissolution year: ",
+
+        "campus" : "📍 Campus: ",
+
+        "room" : "📦 Room: ",
 
         "favorite" : {
             "add" : "Association added to favorite",
@@ -134,7 +146,7 @@
 
         "no-description" : "The event has no description",
 
-        "more-info" : "More Informations",
+        "more-info" : "More informations",
 
         "link" : "Event link",
 

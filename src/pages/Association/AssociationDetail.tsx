@@ -1,4 +1,4 @@
-import { IonButton, IonCard, IonCardContent, IonCardTitle, IonContent, IonFab, IonFabButton, IonFabList, IonFooter, IonIcon, IonItem, IonLabel, IonPage, IonSpinner, IonTabButton, IonText, IonToast, IonToolbar } from "@ionic/react";
+import { IonButton, IonCard, IonCardContent, IonCardTitle, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonFooter, IonGrid, IonIcon, IonItem, IonLabel, IonPage, IonRow, IonSpinner, IonTabButton, IonText, IonToast, IonToolbar } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { logoDiscord, logoInstagram, paperPlane, logoLinkedin, globeOutline, leafOutline, atOutline, logoFacebook, locationOutline, extensionPuzzleOutline, calendarOutline, addOutline, addCircle, removeCircleOutline, call, pulseOutline, colorFill, add, starSharp, starOutline, pencilOutline, addCircleOutline } from 'ionicons/icons';
@@ -87,26 +87,6 @@ const AssociationDetails: React.FC = () => {
 
     return (
         <IonPage>
-            <HeaderTitleBack back={''}>{t('association.title')}</HeaderTitleBack>
-            <IonContent>
-                <IonToast
-                    trigger="followAsso"
-                    position="bottom"
-                    swipeGesture="vertical"
-                    message={isFollowed ? t('association.favorite.add') : t('association.favorite.remove')}
-                    duration={1000}
-                />
-
-                <IonCard className="detail-asso-description">
-                    <IonCardContent>
-                        <IonCardTitle style={{ color: assoData.color }}>{assoData.names[0]}</IonCardTitle>
-
-                        <img className="detail-asso-image" width="40%" src={"https://tekiens.net/data/" + assoData.id + "/logo-0.webp"} />
-                        {description == "" ? <div><IonText>{t('associations.no-description')}</IonText></div> : <div dangerouslySetInnerHTML={{ __html: description }}></div>}
-                    </IonCardContent>
-                </IonCard>
-            </IonContent>
-
             <IonFab slot="fixed" vertical="bottom" horizontal="end">
                 <IonFabButton className="detail-socials-button" style={{ '--border-color': assoData.color, '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }}>
                     <IonIcon icon={add} />
@@ -129,7 +109,7 @@ const AssociationDetails: React.FC = () => {
                                 <IonIcon icon={pencilOutline} style={{ color: assoData?.color }} />
                             </IonFabButton>
 
-                            <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }} href="/createEvent">
+                            <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }} onClick={() => history.push("/createEvent")}>
                                 <IonIcon icon={addCircleOutline} style={{ color: assoData?.color }} />
                             </IonFabButton>
                         </>
@@ -138,24 +118,122 @@ const AssociationDetails: React.FC = () => {
                 </IonFabList>
             </IonFab>
 
-            <IonFooter translucent={true}>
-                <IonToolbar slot="bottom">
-                    <IonButton fill="clear" className="detail-socials-button" style={{ '--border-color': assoData.color }}
-                        href={"/association/" + assoData.id + "/events"}>
-                        <IonIcon icon={calendarOutline} style={{ color: assoData.color }} />
-                    </IonButton>
+            <HeaderTitleBack back={''}>{t('association.title')}</HeaderTitleBack>
+            <IonContent>
+                <IonToast
+                    trigger="followAsso"
+                    position="bottom"
+                    swipeGesture="vertical"
+                    message={isFollowed ? t('association.favorite.add') : t('association.favorite.remove')}
+                    duration={1000}
+                />
+                <IonGrid className="ion-padding">
 
-                    <IonItem>
-                        <IonIcon icon={locationOutline} style={{ color: assoData.color }} />
-                        <IonText style={{ color: assoData.color }}>{assoData.campus}</IonText>
-                    </IonItem>
-                    <IonItem lines="none">
-                        <IonIcon icon={extensionPuzzleOutline} style={{ color: assoData.color }} />
-                        <IonText style={{ color: assoData.color }}>{assoData.theme}</IonText>
-                    </IonItem>
-                </IonToolbar>
-            </IonFooter>
-        </IonPage>)
+                    <IonRow class="title-image">
+                        <img className="detail-asso-image" width="40%" src={"https://tekiens.net/data/" + assoData.id + "/logo-0.webp"} />
+                        <div className="name-theme">
+                            <h1 className='title' style={{ color: assoData.color }}>{assoData.names[0]}</h1>
+                            <h4 style={{ color: assoData.color }}>{assoData.theme}</h4>
+                        </div>
+                    </IonRow>
+
+                    <IonCol />
+                    <IonRow>
+                        <div style={{ backgroundColor: assoData?.color, width: '100%', height: '3px' }} />
+                    </IonRow>
+                    <IonCol />
+
+                    <IonRow>
+                        <IonCol>
+                            <IonLabel className='about-asso-title'>{t('association.about')}</IonLabel>
+                        </IonCol>
+                    </IonRow>
+
+                    <IonRow className='justify-text'>
+                        <IonCol>
+                            <IonText>{description ?
+                                <div dangerouslySetInnerHTML={{
+                                    __html:
+                                        `<style>
+                                        div a {
+                                            color: ${assoData?.color}
+                                        }
+                                    </style> ${description}`
+                                }} />
+                                :
+                                t('association.no-description')}
+                            </IonText>
+                        </IonCol>
+                    </IonRow>
+
+                    <IonRow>
+                        <IonCol>
+                            <IonButton className="center-screen-text" style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }} onClick={() => history.push("/association/" + assoData.id + "/events")} >
+                                Voir tous les évènements de l'association
+                            </IonButton>
+                        </IonCol>
+                    </IonRow>
+
+                    <IonCol />
+                    <IonRow>
+                        <div style={{ backgroundColor: assoData?.color, width: '100%', height: '3px' }} />
+                    </IonRow>
+                    <IonCol />
+
+                    <IonRow>
+                        <IonCol>
+                            <IonLabel className='about-event-title'>{t('association.more-info')}</IonLabel>
+                        </IonCol>
+                    </IonRow>
+
+                    {assoData.start &&
+                        <IonRow className='info'>
+                            <IonCol>
+                                <IonLabel>
+                                    {t('association.start')}
+                                    {assoData.start}
+                                </IonLabel>
+                            </IonCol>
+                        </IonRow>
+                    }
+
+                    {assoData.end &&
+                        <IonRow className='info'>
+                            <IonCol>
+                                <IonLabel>
+                                    {t('association.end')}
+                                    {assoData.end}
+                                </IonLabel>
+                            </IonCol>
+                        </IonRow>
+                    }
+
+                    {assoData.campus &&
+                        <IonRow className='info'>
+                            <IonCol>
+                                <IonLabel>
+                                    {t('association.campus')}
+                                    {assoData.campus}
+                                </IonLabel>
+                            </IonCol>
+                        </IonRow>
+                    }
+
+                    {assoData.room &&
+                        <IonRow className='info'>
+                            <IonCol>
+                                <IonLabel>
+                                    {t('association.room')}
+                                    {assoData.room}
+                                </IonLabel>
+                            </IonCol>
+                        </IonRow>
+                    }
+
+                </IonGrid>
+            </IonContent>
+
+        </IonPage >)
 }
 
 export default AssociationDetails;

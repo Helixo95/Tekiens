@@ -25,6 +25,9 @@ export interface AssosData {
     description: string;
     socials: SocialsData[];
     campus: string;
+    room: string;
+    start: string;
+    end: string;
 }
 
 export interface SocialsData {

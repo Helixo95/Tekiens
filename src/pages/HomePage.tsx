@@ -18,44 +18,33 @@ const HomePage: React.FC = () => {
     <IonPage>
       <HeaderTitle>{t('home.title')}</HeaderTitle>
       <IonContent className="ion-padding">
-        <IonGrid>
-          <IonRow>
-            <IonCol>
-              <h1 className="title center-screen-text">Découvrez une assos :</h1>
-            </IonCol>
-          </IonRow>
 
-          <IonRow>
-            <IonCol>
-              <IonItem>
-                <Swiper
-                  spaceBetween={20}
-                  slidesPerView={1}
-                  loop={true}
-                  onSlideChangeTransitionStart={updateRandomAsso}
-                >
-                  <SwiperSlide>
-                    <AssociationCards key={String(bAssoReload)} segValue={"rnd"} />
-                  </SwiperSlide>
 
-                  <SwiperSlide>
-                    <AssociationCards key={String(bAssoReload)} segValue={"rnd"} />
-                  </SwiperSlide>
-                </Swiper>
-              </IonItem>
-            </IonCol>
-          </IonRow>
+        <div>
+          <h1 className="title center-screen-text">Découvrez une assos :</h1>
+          <Swiper
+            spaceBetween={20}
+            slidesPerView={1}
+            loop={true}
+            onSlideChangeTransitionStart={updateRandomAsso}
+          >
+            <SwiperSlide>
+              <AssociationCards key={String(bAssoReload)} segValue={"rnd"} />
+            </SwiperSlide>
 
-          <IonRow>
-            <IonCol>
-              <h1 className="title center-screen-text">Évènements en cours :</h1>
-            </IonCol>
-          </IonRow>
+            <SwiperSlide>
+              <AssociationCards key={String(bAssoReload)} segValue={"rnd"} />
+            </SwiperSlide>
+          </Swiper>
+        </div>
 
-          <IonRow>
-            <EventsComponent filter={"ongoing"} />
-          </IonRow>
-        </IonGrid>
+        <div style={{ backgroundColor: 'var(--ion-color-primary)', width: '100%', height: '3px' }} />
+
+        <div>
+          <h1 className="title center-screen-text">Évènements à venir :</h1>
+          <EventsComponent filter={"futur"} />
+        </div>
+
       </IonContent>
     </IonPage>
   );

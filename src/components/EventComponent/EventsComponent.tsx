@@ -6,6 +6,7 @@ import EventCardComponent from './EventCardComponent';
 
 import { getEventsByWeek, getFilteredEvents, getWeekName } from '../../Tools/EventsTools';
 import Api from '../../Tools/Api';
+import '../../theme/Event/EventsComponent.css'
 
 
 const EventsComponent: React.FC<{ filter: string, assoID?: string }> = ({ filter, assoID = '' }) => {
@@ -60,21 +61,21 @@ const EventsComponent: React.FC<{ filter: string, assoID?: string }> = ({ filter
     const eventByWeek = getEventsByWeek(filteredEvents);
 
     return (
-        <>
+        <div>
             {Object.keys(eventByWeek).length > 0 ? (
-                <IonGrid>
-                    {Object.keys(eventByWeek).map((weekKey, index) => {
-                        const test = getWeekName(weekKey);
-                        return (
-                            <div key={index} className='title'>
-                                <h2>{t(test[0]) + test[1]}</h2>
+                Object.keys(eventByWeek).map((weekKey, index) => {
+                    const weekString = getWeekName(weekKey);
+                    return (
+                        <div key={index} className='title'>
+                            <h2>{t(weekString[0]) + weekString[1]}</h2>
+                            <div className='event-card-container'>
                                 {eventByWeek[weekKey].map((event: EventData) => (
-                                    <EventCardComponent key={`past-${event.id}`} event={event} asso={getAssoById(event.asso_id)} />
+                                    <EventCardComponent event={event} asso={getAssoById(event.asso_id)} />
                                 ))}
                             </div>
-                        );
-                    })}
-                </IonGrid>
+                        </div>
+                    );
+                })
             ) : (
                 <div className='ion-padding all-screen-swipe'>
                     <h1 className='title'>{t('events.filter.' + filter + '.message.title')}</h1>
@@ -82,7 +83,7 @@ const EventsComponent: React.FC<{ filter: string, assoID?: string }> = ({ filter
                 </div>
             )
             }
-        </>
+        </div>
     )
 }
 

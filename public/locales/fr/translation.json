@@ -7,8 +7,6 @@
         "tab-title" : "Associations",
         "title" : "Liste des associations",
 
-        "no-description": "Aucune description disponible",
-
         "filter" : {
             "active" : {
                 "label" : "Actives",
@@ -54,6 +52,20 @@
 
     "association" : {
         "title" : "Association",
+
+        "about" : "À propros de l'association",
+
+        "no-description": "Aucune description disponible",
+
+        "more-info" : "Informations supplémentaires",
+
+        "start" : "🆕 Année de création : ",
+
+        "end" : "💥​ Année de dissolution : ",
+
+        "campus" : "📍 Campus : ",
+
+        "room" : "📦 Salle : ",
 
         "favorite" : {
             "add" : "Association ajouté aux favoris",
