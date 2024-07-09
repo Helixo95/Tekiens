@@ -100,7 +100,7 @@ const ModifyEvent: React.FC = () => {
             Api.event.create(fields);
 
             setErrorText('');
-            //history.back();
+            history.back();
         } catch (error: any) {
             if (error instanceof Error) {
                 setErrorText(error.message);

@@ -5,13 +5,10 @@ import "../../theme/Association/Association.css";
 import { AssosData } from "../../Tools/Interfaces/EventAndAssoInterface";
 import Api from "../../Tools/Api";
 import { filterData } from "../../Tools/AssosTools";
-import { useHistory } from "react-router";
 
 const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
   // Use for the translation
   const { t } = useTranslation();
-
-  const history = useHistory();
 
   // Hooks updated with the assos information when the page is mounted
   const [assosData, setAssosData] = useState<AssosData[]>([]);
@@ -57,11 +54,11 @@ const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
     <>
       {
         filteredData.length > 0 ?
-          <div className="asso-card-container">
+          <div>
             {
               filteredData.map(value =>
                 <div key={value.id} >
-                  <IonCard className="asso-card" button={true} onClick={() => history.push("/association/" + value.id)}>
+                  <IonCard className="asso-card" button={true} href={"/association/" + value.id}>
                     <img alt="logo" className="asso-image-size" src={"https://tekiens.net/data/" + value.id + "/logo-0.webp"} style={{ width: '100%' }} />
                     <IonCardHeader>
                       <IonCardTitle style={{ color: value.color }} className="card-asso-title">{value.names[0]}</IonCardTitle>
@@ -70,7 +67,7 @@ const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
                   </IonCard>
                 </div>)
             }
-          </div > :
+          </div> :
 
           <div className="ion-padding all-screen-swipe" >
             <h1 className="title">{t('associations.filter.' + segValue + '.message.title')}</h1>

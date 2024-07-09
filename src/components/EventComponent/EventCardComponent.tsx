@@ -12,7 +12,7 @@ const EventCardComponent: React.FC<{ event: EventData, asso: AssosData | undefin
     const history = useHistory();
 
     return (
-        <IonCard className='event-card' button={true} onClick={() => history.push('/event/' + event.id)} >
+        <IonCard className='event-card' button={true} href={'/event/' + event.id} >
             <img src={event.poster ? `${event.poster}?${Date.now()}` : ""} />
             <IonCardHeader>
                 <IonCardTitle>{event.title}</IonCardTitle>

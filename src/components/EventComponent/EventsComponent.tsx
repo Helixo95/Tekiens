@@ -7,6 +7,7 @@ import EventCardComponent from './EventCardComponent';
 import { getEventsByWeek, getFilteredEvents, getWeekName } from '../../Tools/EventsTools';
 import Api from '../../Tools/Api';
 import '../../theme/Event/EventsComponent.css'
+import { key } from 'ionicons/icons';
 
 
 const EventsComponent: React.FC<{ filter: string, assoID?: string }> = ({ filter, assoID = '' }) => {
@@ -70,7 +71,7 @@ const EventsComponent: React.FC<{ filter: string, assoID?: string }> = ({ filter
                             <h2>{t(weekString[0]) + weekString[1]}</h2>
                             <div className='event-card-container'>
                                 {eventByWeek[weekKey].map((event: EventData) => (
-                                    <EventCardComponent event={event} asso={getAssoById(event.asso_id)} />
+                                    <EventCardComponent event={event} asso={getAssoById(event.asso_id)} key={event.id} />
                                 ))}
                             </div>
                         </div>
