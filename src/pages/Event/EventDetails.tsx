@@ -320,6 +320,8 @@ const EventDetails: React.FC = () => {
                     }
 
                 </IonGrid>
+
+                <div style={{ margin: '15%' }} />
             </IonContent>
         </IonPage >
     )
