@@ -14,7 +14,7 @@ interface ImagePickerProps {
     onImageSelected: (newImage: string) => void;
 }
 
-const ImagePicker: React.FC<ImagePickerProps> = ({ resetValue, currentImage, onImageSelected }) => {
+const ImageInput: React.FC<ImagePickerProps> = ({ resetValue, currentImage, onImageSelected }) => {
     // Use for the translation
     const { t } = useTranslation();
 
@@ -105,4 +105,4 @@ const ImagePicker: React.FC<ImagePickerProps> = ({ resetValue, currentImage, onI
     );
 };
 
-export default ImagePicker;
+export default ImageInput;
