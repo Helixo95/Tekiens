@@ -20,7 +20,7 @@ export interface AssosData {
     id: string;
     names: string[];
     theme: string;
-    logo: string;
+    logos: string[];
     color: string;
     description: string;
     socials: string[];
