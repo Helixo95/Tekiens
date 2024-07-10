@@ -12,11 +12,11 @@ const Api = {
     assos: {
         // Return an array with all the associations
         get(): Promise<AssosData[]> {
-            return sendApiRequest<AssosData[]>("GET", "assos", {}, "Getting assos")
+            return sendApiRequest<AssosData[]>("GET", "assos", {}, "Getting assos").then(assos => assos.map(parseAsso));
         },
         // Return one association by its id
         getOne(id: string): Promise<AssosData> {
-            return sendApiRequest<AssosData>("GET", "assos/" + encodeURIComponent(id), {}, "Getting asso " + id)
+            return sendApiRequest<AssosData>("GET", "assos/" + encodeURIComponent(id), {}, "Getting asso " + id).then(parseAsso);
         },
         // Return all the association events
         getEvents(id: string): Promise<EventData[]> {
@@ -65,6 +65,12 @@ const Api = {
             return sendApiRequest("DELETE", "sessions/" + encodeURIComponent(id), {}, "Deleting session");
         }
     }
+}
+
+function parseAsso(asso: AssosData) {
+    if (asso.logos)
+        asso.logos = asso.logos.map(logo => baseUrl + logo);
+    return asso;
 }
 
 function parseEvent(event: EventData) {
