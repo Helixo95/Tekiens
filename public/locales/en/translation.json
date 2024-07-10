@@ -100,6 +100,75 @@
         "favorite" : {
             "add" : "Association added to favorite",
             "remove" : "association removed from favorites"
+        },
+
+        "modification" : {
+            "title" : "Asso modification",
+
+            "asso-identifier" : {
+                "label" : "🪪​ Identifier",
+                "placeholder" : "Association ID"
+            },
+
+            "asso-names" : {
+                "label" : "🏷️ Names",
+                "placeholder" : "Association name"
+            },
+
+            "asso-logos" : {
+                "label" : "🖼️ Logos",
+                "placeholder" : "Association logo"
+            },
+
+            "asso-theme" : {
+                "label" : "🧩 Theme",
+                "placeholder" : "Association theme"
+            },
+            
+            "asso-campus" : {
+                "label" : "📍 Campus (optional)",
+                "placeholder" : "Association campus"
+            },
+
+            "asso-room" : {
+                "label" : "📦 Room (optional)",
+                "placeholder" : "Association room"
+            },
+
+            "asso-start" : {
+                "label" : "🆕 Creation year (optional)",
+                "placeholder" : "Association creation year"
+            },
+
+            "asso-end" : {
+                "label" : "💥​ Dissolution year (optional)",
+                "placeholder" : "Association dissolution year"
+            },
+
+            "asso-description" : {
+                "label" : "📝 Description (optional)",
+                "placeholder" : "Association description"
+            },
+
+            "asso-socials" : {
+                "label" : "🌐​ Socials (optional)",
+                "placeholder" : "Association social"
+            },
+
+            "asso-color" : {
+                "label" : "🎨 Color",
+                "placeholder" : "Association color"
+            },
+
+            "button" : "Modify association",
+
+            "alert" : {
+                "header" : "Modification",
+                "message" : "Are you sure you want to modify the association?",
+                "cancel" : "Cancel",
+                "confirm": "Yes"
+            }
+            
         }
 
     },

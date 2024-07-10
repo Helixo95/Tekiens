@@ -100,7 +100,76 @@
         "favorite" : {
             "add" : "Association added to favorite",
             "remove" : "association removed from favorites"
-        } 
+        },
+
+        "modification" : {
+            "title" : "Modification de l'asso",
+
+            "asso-identifier" : {
+                "label" : "🪪​ Identifiant",
+                "placeholder" : "ID de l'association"
+            },
+
+            "asso-names" : {
+                "label" : "🏷️ Noms",
+                "placeholder" : "Nom de l'association"
+            },
+
+            "asso-logos" : {
+                "label" : "🖼️ Logos",
+                "placeholder" : "Logo de l'association"
+            },
+
+            "asso-theme" : {
+                "label" : "🧩 Thème",
+                "placeholder" : "Thème de l'association"
+            },
+            
+            "asso-campus" : {
+                "label" : "📍 Campus (optionnel)",
+                "placeholder" : "Campus de l'association"
+            },
+
+            "asso-room" : {
+                "label" : "📦 Salle (optionnel)",
+                "placeholder" : "Salle de l'association"
+            },
+
+            "asso-start" : {
+                "label" : "🆕 Année de création (optionnel)",
+                "placeholder" : "Année de création de l'association"
+            },
+
+            "asso-end" : {
+                "label" : "💥​ Année de dissolution (optionnel)",
+                "placeholder" : "Année de dissolution de l'association"
+            },
+
+            "asso-description" : {
+                "label" : "📝 Description (optionnel)",
+                "placeholder" : "Description de l'association"
+            },
+
+            "asso-socials" : {
+                "label" : "🌐​ Réseaux sociaux (optionnel)",
+                "placeholder" : "Réseau de l'association"
+            },
+
+            "asso-color" : {
+                "label" : "🎨 Couleur",
+                "placeholder" : "Couleur de l'association"
+            },
+
+            "button" : "Modifier l'association",
+
+            "alert" : {
+                "header" : "Modification",
+                "message" : "Êtes-vous sûr de vouloir modifier l'association ?",
+                "cancel" : "Annuler",
+                "confirm": "Oui"
+            }
+
+        }
     },
 
     "events" : {

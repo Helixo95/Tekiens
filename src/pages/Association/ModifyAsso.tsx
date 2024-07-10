@@ -10,6 +10,9 @@ import {
     IonList,
     ItemReorderEventDetail,
     IonIcon,
+    IonTitle,
+    IonLabel,
+    IonAlert,
 } from "@ionic/react";
 import { useLocation, useHistory } from "react-router";
 import { useTranslation } from "react-i18next";
@@ -19,8 +22,10 @@ import ColorPicker from "../../components/ColorPicker";
 import Api from "../../Tools/Api";
 import { AssosData, SocialsDisplay } from "../../Tools/Interfaces/EventAndAssoInterface";
 import { parseText, unParseText } from "../../Tools/DOMParser";
-import { closeOutline, navigate } from "ionicons/icons";
-import SocialLinks from "../../components/Socials/SocialsLinks";
+import { add, closeOutline, navigate } from "ionicons/icons";
+import SocialLinks from "../../components/SocialsLinks";
+import ImageInput from "../../components/ImageInput";
+import StringReorderGroup from "../../components/StringReorderGroup";
 
 const ModifyAsso: React.FC = () => {
     const { t } = useTranslation();
@@ -28,11 +33,15 @@ const ModifyAsso: React.FC = () => {
     const history = useHistory();
 
     const [assoData, setAssoData] = useState<AssosData | null>(null);
+    const [newAssoData, setNewAssoData] = useState<AssosData | null>(null);
     const [description, setDescription] = useState<string>("");
     const [colorHexVal, setColorHexVal] = useState<string>("");
     const [errorText, setErrorText] = useState<string>("");
-    const [names, setNames] = useState<Array<string>>([]);
+    const [names, setNames] = useState<Array<string>>([""]);
     const [socials, setSocials] = useState<string[][]>([]);
+    const [images, setImages] = useState<Array<string>>([""]);
+    const [showAlert, setShowAlert] = useState(false);
+    const [formValues, setFormValues] = useState<any>(null);
 
     useEffect(() => {
         if (location.state?.asso) {
@@ -41,7 +50,13 @@ const ModifyAsso: React.FC = () => {
             parseText(asso.description, setDescription);
             setColorHexVal(asso.color);
             setNames(asso.names);
+            setImages(asso.logos);
 
+            setNewAssoData(asso);
+
+            console.log(asso.socials);
+
+            // Convert string based socials into a more readable array where [0] => social_id [1] => account_id
             const targetSocials: string[][] = [];
             asso.socials.map(val => {
                 const id = val.id;
@@ -50,53 +65,64 @@ const ModifyAsso: React.FC = () => {
                 targetSocials.push([id, value]);
 
             })
-
             setSocials(targetSocials);
         }
     }, [location.state]);
 
-    const handleAddName = () => {
-        const newNames = [...names, ""];
-        setNames(newNames);
+    const handleAddImages = () => {
+        const imagesCopy = [...images, ""];
+        setImages(imagesCopy);
     };
 
-    const handleNameChange = (e: CustomEvent, index: number) => {
-        const newNames = [...names];
-        newNames[index] = (e.target as HTMLInputElement).value;
-        setNames(newNames);
-    };
+
+    const handleImageChange = (newImage: string, index: any) => {
+        const imagesCopy = [...images];
+        imagesCopy[index] = newImage;
+
+        setImages(imagesCopy);
+    }
 
     const handleReorder = (event: CustomEvent<ItemReorderEventDetail>) => {
-        const reorderedNames = event.detail.complete(names);
-        setNames(reorderedNames);
+        const reorderImages = event.detail.complete(images);
+        setImages(reorderImages);
     };
 
     const handleDeleletionClick = (index: Number) => {
-        console.log(index);
-        const newNames = names.filter((_, i) => i !== index); // Copy all the element except the chosen one
-        setNames(newNames);
+        const imageCopy = images.filter((_, i) => i !== index); // Copy all the element except the chosen one
+        setImages(imageCopy);
+
+        if (newAssoData) {
+            newAssoData.logos = imageCopy;
+        }
     }
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log("Finished Socials =>", socials);
+    /**
+     * Function when the user submit the form
+     * @param event the submit event
+     */
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        // Prevent the form automatic redirection
+        event.preventDefault();
 
+        // We update the form values with the latest we have
+        setFormValues(new FormData(event.currentTarget));
 
+        setShowAlert(true);
+    };
+
+    const confirmSubmit = async () => {
         if (!assoData) return;
 
         const parsedSocials = socials.map(val => `${val[0]}:${val[1]}`);
 
 
         try {
-            const formData = new FormData(e.currentTarget);
-            const values: any = Object.fromEntries(formData.entries());
+            const values: any = Object.fromEntries(formValues.entries());
 
             if (names[0] == "") {
-                console.log(names);
                 setErrorText("First name needs to be non-empty !");
                 return;
             }
-
 
             const updatedAsso: Partial<AssosData> = {
                 id: assoData.id,
@@ -108,10 +134,10 @@ const ModifyAsso: React.FC = () => {
                 room: values.room || assoData.room,
                 start: values.start || assoData.start,
                 end: values.end || assoData.end,
-                socials: parsedSocials
+                socials: parsedSocials,
+                logos: images,
             };
 
-            console.log(updatedAsso);
 
             await Api.assos.update(assoData.id, updatedAsso);
 
@@ -129,10 +155,11 @@ const ModifyAsso: React.FC = () => {
         }
     };
 
+
     if (!assoData) {
         return (
             <IonPage>
-                <HeaderTitleBack back="">{t("association.manage.modification.title")}</HeaderTitleBack>
+                <HeaderTitleBack back="">{t("association.modification.title")}</HeaderTitleBack>
                 <IonContent>
                     <div className="ion-padding">Loading...</div>
                 </IonContent>
@@ -142,14 +169,14 @@ const ModifyAsso: React.FC = () => {
 
     return (
         <IonPage>
-            <HeaderTitleBack back="">{t("association.manage.modification.title")}</HeaderTitleBack>
+            <HeaderTitleBack back="">{t("association.modification.title")}</HeaderTitleBack>
             <IonContent>
                 <form className="ion-padding" onSubmit={handleSubmit}>
                     <IonItem className="input-item">
                         <IonInput
-                            label="Identifiant"
+                            label={t("association.modification.asso-identifier.label")}
                             labelPlacement="floating"
-                            placeholder="id"
+                            placeholder={t("association.modification.asso-identifier.placeholder")}
                             name="assoID"
                             type="text"
                             clearInput={true}
@@ -158,56 +185,77 @@ const ModifyAsso: React.FC = () => {
                         />
                     </IonItem>
 
-                    <IonButton onClick={handleAddName}>Add name !</IonButton>
-                    <IonList>
-                        <IonReorderGroup disabled={false} onIonItemReorder={handleReorder}>
-                            {names.map((name, index) => (
-                                <IonItem key={index}>
-                                    <IonInput
-                                        type="text"
-                                        value={name}
-                                        placeholder={`Item ${index}`}
-                                        onIonInput={(e) => handleNameChange(e, index)}
-                                    />
+                    <IonItem className="input-item">
+                        <div>
+                            <IonLabel style={{ "marginBottom": "3%" }}>{t("association.modification.asso-names.label")}</IonLabel>
+                            <StringReorderGroup componentTag={IonInput} value={names} callback={setNames} changeMethod="onIonInput" additionalProps=
+                                {{
+                                    type: "text"
+                                }}
+                            />
+                        </div>
+                    </IonItem>
 
-                                    <IonIcon icon={closeOutline} onClick={() => handleDeleletionClick(index)} />
-                                    <IonReorder slot="end"></IonReorder>
-                                </IonItem>
-                            ))}
-                        </IonReorderGroup>
-                    </IonList>
+                    <IonItem className="input-item">
+                        <div>
+                            <IonLabel style={{ "marginBottom": "3%" }}>{t("association.modification.asso-logos.label")}</IonLabel>
+
+                            <IonList>
+                                <IonReorderGroup disabled={false} onIonItemReorder={handleReorder}>
+                                    {images.map((img, index) => (
+                                        <IonItem key={index} lines={index === images.length - 1 ? 'none' : undefined}>
+                                            <ImageInput resetValue={assoData?.logos[index]} currentImage={img} onImageSelected={(val) => { handleImageChange(val, index) }} />
+                                            <IonIcon icon={closeOutline} onClick={() => handleDeleletionClick(index)} style={{ "width": "100px" }} />
+                                            <IonReorder slot="end"></IonReorder>
+                                        </IonItem>
+                                    ))}
+
+                                </IonReorderGroup>
+                            </IonList>
+                            <IonButton onClick={handleAddImages} expand="block"><IonIcon icon={add} /></IonButton>
+                        </div>
+                    </IonItem>
 
                     <IonItem className="input-item">
                         <IonInput
-                            label="Thème"
+                            label={t("association.modification.asso-theme.label")}
                             labelPlacement="floating"
-                            placeholder="theme"
+                            placeholder={t("association.modification.asso-theme.placeholder")}
                             name="theme"
                             type="text"
                             clearInput={true}
                             value={assoData.theme}
                             onIonChange={(e) => setAssoData({ ...assoData, theme: e.detail.value! })}
+                            required
                         />
                     </IonItem>
 
                     <IonItem className="input-item">
+                        <div>
+                            <IonLabel style={{ "marginBottom": "3%" }}>{t("association.modification.asso-color.label")}</IonLabel>
+                            <ColorPicker colorVal={colorHexVal} callback={setColorHexVal} />
+                        </div>
+                    </IonItem>
+
+                    <IonItem className="input-item">
                         <IonInput
-                            label="Campus"
+                            label={t("association.modification.asso-campus.label")}
                             labelPlacement="floating"
-                            placeholder="campus"
+                            placeholder={t("association.modification.asso-campus.placeholder")}
                             name="campus"
                             type="text"
                             clearInput={true}
                             value={assoData.campus}
                             onIonChange={(e) => setAssoData({ ...assoData, campus: e.detail.value! })}
+                            required
                         />
                     </IonItem>
 
                     <IonItem className="input-item">
                         <IonInput
-                            label="Local"
+                            label={t("association.modification.asso-room.label")}
                             labelPlacement="floating"
-                            placeholder="local"
+                            placeholder={t("association.modification.asso-room.placeholder")}
                             name="local"
                             type="text"
                             clearInput={true}
@@ -218,9 +266,9 @@ const ModifyAsso: React.FC = () => {
 
                     <IonItem className="input-item">
                         <IonInput
-                            label="Creation"
+                            label={t("association.modification.asso-start.label")}
                             labelPlacement="floating"
-                            placeholder="creation"
+                            placeholder={t("association.modification.asso-start.placeholder")}
                             name="start"
                             type="number"
                             clearInput={true}
@@ -232,9 +280,9 @@ const ModifyAsso: React.FC = () => {
 
                     <IonItem className="input-item">
                         <IonInput
-                            label="Dissolution"
+                            label={t("association.modification.asso-end.label")}
                             labelPlacement="floating"
-                            placeholder="dissolution"
+                            placeholder={t("association.modification.asso-end.placeholder")}
                             name="end"
                             type="number"
                             clearInput={true}
@@ -244,25 +292,46 @@ const ModifyAsso: React.FC = () => {
                         />
                     </IonItem>
 
-                    <IonItem>
-                        <RichTextComponent value={description} callback={setDescription} />
+                    <IonItem className="input-item">
+                        <div>
+                            <IonLabel style={{ "marginBottom": "3%" }} >{t("association.modification.asso-description.label")}</IonLabel>
+                            <RichTextComponent value={description} callback={setDescription} />
+                        </div>
                     </IonItem>
 
-                    <IonItem>
-                        <SocialLinks socials={socials} callback={setSocials} />
+                    <IonItem className="input-item">
+                        <div>
+                            <IonLabel style={{ "marginBottom": "3%" }}>{t("association.modification.asso-socials.label")}</IonLabel>
+                            <SocialLinks socials={socials} callback={setSocials} />
+                        </div>
                     </IonItem>
 
-                    <IonItem>
-                        <ColorPicker colorVal={colorHexVal} callback={setColorHexVal} />
-                    </IonItem>
-
-
-
-                    <IonButton type="submit" className="login-item" style={{ width: "100%" }}>
-                        {t("event.manage.modification.button")}
+                    <IonButton type="submit" expand="block">
+                        {t("association.modification.button")}
                     </IonButton>
+
                     <span className="error center-screen">{errorText}</span>
                 </form>
+
+                <IonAlert
+                    isOpen={showAlert}
+                    header={t('association.modification.alert.header')}
+                    message={t('association.modification.alert.message')}
+                    buttons={[
+                        {
+                            text: t('association.modification.alert.cancel'),
+                            role: 'cancel'
+                        },
+                        {
+                            text: t('association.modification.alert.confirm'),
+                            handler: () => {
+                                confirmSubmit();
+                            }
+                        }
+                    ]}
+                    onDidDismiss={() => setShowAlert(false)}
+                />
+
             </IonContent>
         </IonPage>
     );
