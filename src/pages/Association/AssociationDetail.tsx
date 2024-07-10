@@ -1,7 +1,7 @@
-import { IonButton, IonCard, IonCardContent, IonCardTitle, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonFooter, IonGrid, IonIcon, IonItem, IonLabel, IonPage, IonRow, IonSpinner, IonTabButton, IonText, IonToast, IonToolbar } from "@ionic/react";
-import { useEffect, useState } from "react";
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCardTitle, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonFooter, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonModal, IonPage, IonRow, IonSpinner, IonTabButton, IonText, IonTitle, IonToast, IonToolbar } from "@ionic/react";
+import { useEffect, useRef, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import { logoDiscord, logoInstagram, paperPlane, logoLinkedin, globeOutline, leafOutline, atOutline, logoFacebook, locationOutline, extensionPuzzleOutline, calendarOutline, addOutline, addCircle, removeCircleOutline, call, pulseOutline, colorFill, add, starSharp, starOutline, pencilOutline, addCircleOutline } from 'ionicons/icons';
+import { logoDiscord, logoInstagram, paperPlane, logoLinkedin, globeOutline, leafOutline, atOutline, logoFacebook, locationOutline, extensionPuzzleOutline, calendarOutline, addOutline, addCircle, removeCircleOutline, call, pulseOutline, colorFill, add, starSharp, starOutline, pencilOutline, addCircleOutline, arrowBackOutline } from 'ionicons/icons';
 import { SocialsData } from '../../Tools/Interfaces/EventAndAssoInterface';
 import { parseText } from "../../Tools/DOMParser";
 import { isAssoFollowed, followAssociation } from "../../Tools/LocalStorage/LocalStorageAssos";
@@ -17,6 +17,11 @@ import { useAuth } from "../../contexts/AuthContext";
 const AssociationDetails: React.FC = () => {
     // Use for the translation
     const { t } = useTranslation();
+
+    const modalNames = useRef<HTMLIonModalElement>(null);
+    const modalLogos = useRef<HTMLIonModalElement>(null);
+    const inputRef = useRef(null);
+
 
     // Retrieve the asso id from the URL
     const { id } = useParams<{ id: string }>();
@@ -75,6 +80,10 @@ const AssociationDetails: React.FC = () => {
         );
     }
 
+    // To get all the old names and logos
+    const oldNames = assoData.names.slice(1);
+    const oldLogos = assoData.logos.slice(1);
+
     const navigateToModifyAsso = () => {
         history.push(`/association/modify/${assoData.id}`, { asso: assoData });
     };
@@ -86,6 +95,10 @@ const AssociationDetails: React.FC = () => {
 
         return assoData.id === session.asso_id;
     };
+
+    const icsUrl = () => {
+        return 'tekiens.net/api/assos/' + encodeURIComponent(assoData.id) + '/events.ics';
+    }
 
     return (
         <IonPage>
@@ -132,7 +145,7 @@ const AssociationDetails: React.FC = () => {
                 <IonGrid className="ion-padding">
 
                     <IonRow class="title-image">
-                        <img className="detail-asso-image" width="40%" src={"https://tekiens.net/data/" + assoData.id + "/logo-0.webp"} />
+                        <img className="detail-asso-image" width="40%" src={assoData.logos[0]} />
                         <div className="name-theme">
                             <h1 className='title' style={{ color: assoData.color }}>{assoData.names[0]}</h1>
                             <h4 style={{ color: assoData.color }}>{assoData.theme}</h4>
@@ -171,7 +184,7 @@ const AssociationDetails: React.FC = () => {
                     <IonRow>
                         <IonCol>
                             <IonButton className="center-screen-text" style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }} onClick={() => history.push("/association/" + assoData.id + "/events")} >
-                                Voir tous les évènements de l'association
+                                {t('association.all-events')}
                             </IonButton>
                         </IonCol>
                     </IonRow>
@@ -232,7 +245,110 @@ const AssociationDetails: React.FC = () => {
                         </IonRow>
                     }
 
+                    <IonCol />
+                    <IonRow>
+                        <div style={{ backgroundColor: assoData?.color, width: '100%', height: '3px' }} />
+                    </IonRow>
+                    <IonCol />
+
+                    <IonRow>
+                        <IonCol>
+                            <IonLabel className='about-asso-title'>{t('association.agenda.title')}</IonLabel>
+                        </IonCol>
+                    </IonRow>
+
+                    <IonRow>
+                        <IonCol>
+                            <IonButton expand="block" style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }} href={'webcal://' + icsUrl()}>
+                                {t('association.agenda.button')}
+                            </IonButton>
+                        </IonCol>
+                    </IonRow>
+
+                    <IonRow>
+                        <IonCol>
+                            {t('association.agenda.label')}
+                            <IonInput type="text" value={icsUrl()} readonly />
+                        </IonCol>
+                    </IonRow>
+
+                    {(oldNames.length > 0 || oldLogos.length > 0) &&
+                        <>
+                            <IonCol />
+                            <IonRow>
+                                <div style={{ backgroundColor: assoData?.color, width: '100%', height: '3px' }} />
+                            </IonRow>
+                            <IonCol />
+
+                            <IonRow>
+                                <IonCol>
+                                    <IonLabel className='about-asso-title'>{t('association.old-informations.title')}</IonLabel>
+                                </IonCol>
+                            </IonRow>
+                        </>
+                    }
+
+                    {oldNames.length > 0 &&
+                        <IonRow className='info'>
+                            <IonCol>
+                                <IonButton id="open-modal-names" expand="block" style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }}>
+                                    {t('association.old-informations.old-names.button')}
+                                </IonButton>
+
+                                <IonModal ref={modalNames} trigger="open-modal-names">
+                                    <IonHeader>
+                                        <IonToolbar color='primary'>
+                                            <IonButtons slot="start">
+                                                <IonButton onClick={() => modalNames.current?.dismiss()}>{t('association.old-informations.back')}</IonButton>
+                                            </IonButtons>
+                                            <IonTitle>{t('association.old-informations.old-names.title')}</IonTitle>
+                                        </IonToolbar>
+                                    </IonHeader>
+                                    <IonContent className="ion-padding">
+                                        {oldNames.map((name, index) => (
+                                            <IonItem key={index} lines={index === oldNames.length - 1 ? 'none' : undefined}>
+                                                {name}
+                                            </IonItem>
+                                        ))}
+                                    </IonContent>
+                                </IonModal>
+                            </IonCol>
+                        </IonRow>
+                    }
+
+                    {oldLogos.length > 0 &&
+                        <IonRow className='info'>
+                            <IonCol>
+                                <IonButton id="open-modal-logos" expand="block" style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }}>
+                                    {t('association.old-informations.old-logos.button')}
+                                </IonButton>
+
+                                <IonModal ref={modalLogos} trigger="open-modal-logos">
+                                    <IonHeader >
+                                        <IonToolbar color='primary'>
+                                            <IonButtons slot="start">
+                                                <IonButton onClick={() => modalLogos.current?.dismiss()}>{t('association.old-informations.back')}</IonButton>
+                                            </IonButtons>
+                                            <IonTitle>{t('association.old-informations.old-logos.title')}</IonTitle>
+                                        </IonToolbar>
+                                    </IonHeader>
+                                    <IonContent className="ion-padding">
+                                        <div className="center-screen-text">
+                                            {oldLogos.map((logos, index) => (
+                                                <IonItem key={index} lines={index === oldLogos.length - 1 ? 'none' : undefined}>
+                                                    <img src={logos} style={{ margin: '5%' }} />
+                                                </IonItem>
+                                            ))}
+                                        </div>
+                                    </IonContent>
+                                </IonModal>
+                            </IonCol>
+                        </IonRow>
+                    }
+
                 </IonGrid>
+
+                <div style={{ margin: '15%' }} />
             </IonContent>
 
         </IonPage >)
