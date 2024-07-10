@@ -25,7 +25,7 @@ const SettingsPage: React.FC = () => {
                 <IonToast
                     isOpen={showLogoutToast}
                     onDidDismiss={() => setShowLogoutToast(false)}
-                    message={t('connexion.toast.logout')}
+                    message={t('login.toast.logout')}
                     duration={2000}
                     swipeGesture="vertical"
                 />
@@ -39,11 +39,11 @@ const SettingsPage: React.FC = () => {
                     </IonItem>
 
                     {!session &&
-                        <IonItem routerLink='/connexion'>
+                        <IonItem routerLink='/login'>
                             <IonIcon icon={logInOutline} className="icon" />
                             &nbsp;
                             &nbsp;
-                            <IonLabel className="text">{t('connexion.title')}</IonLabel>
+                            <IonLabel className="text">{t('login.title')}</IonLabel>
                         </IonItem>
                     }
 
@@ -76,7 +76,7 @@ const SettingsPage: React.FC = () => {
                         <IonIcon icon={logOutOutline} className="icon" color='danger' />
                         &nbsp;
                         &nbsp;
-                        <IonLabel className="text" color='danger'>Déconnexion</IonLabel>
+                        <IonLabel className="text" color='danger'>{t('settings.logout')}</IonLabel>
                     </IonItem>
                 }
             </IonContent>

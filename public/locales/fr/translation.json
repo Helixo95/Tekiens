@@ -1,6 +1,10 @@
 {
     "home" : {
-        "title" : "Accueil"
+        "title" : "Accueil",
+
+        "discover" : "Découvrer une association",
+
+        "upcoming" : "Évènements à venir :"
     },
 
     "associations" : {
@@ -57,6 +61,8 @@
 
         "no-description": "Aucune description disponible",
 
+        "all-events" : "Voir tous les évènements de l'association",
+
         "more-info" : "Informations supplémentaires",
 
         "start" : "🆕 Année de création : ",
@@ -67,10 +73,34 @@
 
         "room" : "📦 Salle : ",
 
+        "agenda" : {
+            "title" : "Agenda",
+
+            "button" : "Ajouter à votre agenda",
+
+            "label" : "📅 URL de l'agenda :"
+        },
+
+        "old-informations" : {
+            "title" : "Anciennes information",
+            
+            "back" : "Retour",
+
+            "old-names" : {
+                "title" : "Anciens nom",
+                "button" : "Voir les anciens noms de l'association"
+            },
+
+            "old-logos" : {
+                "title" : "Anciens logos",
+                "button" : "Voir les anciens logos de l'association"   
+            }
+        },
+
         "favorite" : {
-            "add" : "Association ajouté aux favoris",
-            "remove" : "Association supprimé des favoris"
-        }    
+            "add" : "Association added to favorite",
+            "remove" : "association removed from favorites"
+        } 
     },
 
     "events" : {
@@ -255,7 +285,9 @@
     },
 
     "settings" : {
-        "title" : "Paramètres"
+        "title" : "Paramètres",
+
+        "logout" : "Déconnexion"
     },
 
     "preferences" : {
@@ -290,7 +322,7 @@
         }
     },
 
-    "connexion" : {
+    "login" : {
         "title" : "Connexion",
 
         "asso-id" : {

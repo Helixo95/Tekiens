@@ -82,7 +82,7 @@ const App: React.FC = () => {
                   <Route path="/preferences" render={() => <Preferences />} exact={true} />
                   <Route path="/faq" render={() => <FAQ />} exact={true} />
                   <Route path="/links" render={() => <Links />} exact={true} />
-                  <Route path="/connexion" render={() => <Connexion />} exact={true} />
+                  <Route path="/login" render={() => <Connexion />} exact={true} />
                 </IonRouterOutlet>
               </IonReactRouter>
             </AuthProvider>

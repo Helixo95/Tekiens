@@ -21,7 +21,7 @@ const HomePage: React.FC = () => {
 
 
         <div>
-          <h1 className="title center-screen-text">Découvrez une assos :</h1>
+          <h1 className="title center-screen-text">{t('home.discover')}</h1>
           <Swiper
             spaceBetween={20}
             slidesPerView={1}
@@ -41,7 +41,7 @@ const HomePage: React.FC = () => {
         <div style={{ backgroundColor: 'var(--ion-color-primary)', width: '100%', height: '3px' }} />
 
         <div>
-          <h1 className="title center-screen-text">Évènements à venir :</h1>
+          <h1 className="title center-screen-text">{t('home.upcoming')}</h1>
           <EventsComponent filter={"futur"} />
         </div>
 

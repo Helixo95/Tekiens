@@ -1,6 +1,10 @@
 {
     "home" : {
-        "title" : "Home"
+        "title" : "Home",
+
+        "discover" : "Discover an association",
+
+        "upcoming" : "Upcoming events:"
     },
 
     "associations" : {
@@ -32,7 +36,7 @@
                 }
             },
 
-            "favorite" : {
+            "sub" : {
                 "label" : "Associations",
                 "message" : {
                     "title" : "You're not following any associations.",
@@ -57,6 +61,8 @@
 
         "no-description": "No description available",
 
+        "all-events" : "See all association events",
+
         "more-info" : "More informations",
         
         "start" : "🆕 Creation year: ",
@@ -66,6 +72,30 @@
         "campus" : "📍 Campus: ",
 
         "room" : "📦 Room: ",
+
+        "agenda" : {
+            "title" : "Agenda",
+
+            "button" : "Add to your agenda",
+
+            "label" : "📅 Agenda URL:"
+        },
+
+        "old-informations" : {
+            "title" : "Old informations",
+            
+            "back" : "Back",
+
+            "old-names" : {
+                "title" : "Old names",
+                "button" : "See association old names"
+            },
+
+            "old-logos" : {
+                "title" : "Old logos",
+                "button" : "See association old logos"   
+            }
+        },
 
         "favorite" : {
             "add" : "Association added to favorite",
@@ -267,7 +297,9 @@
     },
 
     "settings" : {
-        "title" : "Settings"
+        "title" : "Settings",
+
+        "logout" : "Logout"
     },
 
     "preferences" : {
@@ -302,8 +334,8 @@
         }
     },
 
-    "connexion" : {
-        "title" : "Connexion",
+    "login" : {
+        "title" : "Login",
 
         "asso-id" : {
             "label" : "🪪​ Association id",

@@ -65,12 +65,12 @@ const PageConnexion: React.FC = () => {
 
     return (
         <IonPage>
-            <HeaderTitleBack back='/app/settings'>{t('connexion.title')}</HeaderTitleBack>
+            <HeaderTitleBack back='/app/settings'>{t('login.title')}</HeaderTitleBack>
             <IonContent className='ion-padding'>
                 <IonToast
                     isOpen={showToast}
                     onDidDismiss={() => setShowToast(false)}
-                    message={t('connexion.toast.login')}
+                    message={t('login.toast.login')}
                     duration={2000}
                     swipeGesture="vertical"
                 />
@@ -78,9 +78,9 @@ const PageConnexion: React.FC = () => {
 
                     <IonItem className="input-item">
                         <IonInput
-                            label={t('connexion.asso-id.label')}
+                            label={t('login.asso-id.label')}
                             labelPlacement="floating"
-                            placeholder={t('connexion.asso-id.placeholder')}
+                            placeholder={t('login.asso-id.placeholder')}
                             name="assoId"
                             type='text'
                             clearInput={true}
@@ -91,9 +91,9 @@ const PageConnexion: React.FC = () => {
 
                     <IonItem className='input-item'>
                         <IonInput
-                            label={t('connexion.password.label')}
+                            label={t('login.password.label')}
                             labelPlacement="floating"
-                            placeholder={t('connexion.password.placeholder')}
+                            placeholder={t('login.password.placeholder')}
                             name="password"
                             type='password'
                             clearInput={true}
@@ -102,7 +102,7 @@ const PageConnexion: React.FC = () => {
                         />
                     </IonItem>
 
-                    <IonButton type='submit' className='login-item' style={{ 'width': '100%' }}>{t('connexion.button')}</IonButton>
+                    <IonButton type='submit' className='login-item' style={{ 'width': '100%' }}>{t('login.button')}</IonButton>
                     <span className='error center-screen-padding'>{errorText}</span>
                 </form>
             </IonContent>
