@@ -1,4 +1,14 @@
 {
+    "no-connection" : {
+        "header" : "Connection problem",
+        
+        "title" : "NO CONNECTION!",
+
+        "sub-title-1" : "The application needs an internet connection to work.",
+
+        "sub-title-2" : "Please, try again when you'll be connected yo internet."
+    },
+
     "home" : {
         "title" : "Home",
 

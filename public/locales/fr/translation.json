@@ -1,4 +1,14 @@
 {
+    "no-connection" : {
+        "header" : "Problème de connexion",
+        
+        "title" : "PAS DE CONNEXION !",
+
+        "sub-title-1" : "L'application a besoin d'une connexion internet pour fonctionnner.",
+
+        "sub-title-2" : "S'il vous plaît, réessayer plus tard lorsque vous serez connecté à internet."
+    },
+
     "home" : {
         "title" : "Accueil",
 

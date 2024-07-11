@@ -48,6 +48,7 @@ import ModifyEvent from './pages/Event/ModifyEvent';
 import ModifyAsso from './pages/Association/ModifyAsso';
 import { addListeners, registerNotifications } from './Tools/Notifications/NotificationPush';
 import { EventDataProvider } from './contexts/EventDataContext';
+import NetworkCheck from './components/NetworkCheck';
 
 setupIonicReact();
 
@@ -60,35 +61,37 @@ const App: React.FC = () => {
         <IonApp>
           <ThemeProvider>
             <AuthProvider>
-              <IonReactRouter>
-                <IonRouterOutlet>
-                  <Route path="/" exact={true} >
-                    <Redirect to='/app/home' />
-                  </Route>
+              <NetworkCheck>
+                <IonReactRouter>
+                  <IonRouterOutlet>
+                    <Route path="/" exact={true} >
+                      <Redirect to='/app/home' />
+                    </Route>
 
-                  <Route path="/app" render={() => <Tabs />} />
+                    <Route path="/app" render={() => <Tabs />} />
 
-                  <Route path="/association/:id" render={() => <AssociationDetails />} exact={true} />
-                  <Route path="/association/:id/events" render={() => <AssociationEvents />} exact={true} />
-                  <Route path="/association/modify/:id" render={() => <ModifyAsso />} exact={true} />
+                    <Route path="/association/:id" render={() => <AssociationDetails />} exact={true} />
+                    <Route path="/association/:id/events" render={() => <AssociationEvents />} exact={true} />
+                    <Route path="/association/modify/:id" render={() => <ModifyAsso />} exact={true} />
 
-                  <EventDataProvider>
-                    <Route path="/event/:id" render={() => <EventDetails />} exact={true} />
-                    <Route path="/event/modify/:id" render={() => <ModifyEvent />} exact={true} />
-                  </EventDataProvider>
-                  <Route path="/createEvent/" render={() => <CreateEvent />} exact={true} />
+                    <EventDataProvider>
+                      <Route path="/event/:id" render={() => <EventDetails />} exact={true} />
+                      <Route path="/event/modify/:id" render={() => <ModifyEvent />} exact={true} />
+                    </EventDataProvider>
+                    <Route path="/createEvent/" render={() => <CreateEvent />} exact={true} />
 
-                  <Route path="/preferences" render={() => <Preferences />} exact={true} />
-                  <Route path="/faq" render={() => <FAQ />} exact={true} />
-                  <Route path="/links" render={() => <Links />} exact={true} />
-                  <Route path="/login" render={() => <Connexion />} exact={true} />
-                </IonRouterOutlet>
-              </IonReactRouter>
+                    <Route path="/preferences" render={() => <Preferences />} exact={true} />
+                    <Route path="/faq" render={() => <FAQ />} exact={true} />
+                    <Route path="/links" render={() => <Links />} exact={true} />
+                    <Route path="/login" render={() => <Connexion />} exact={true} />
+                  </IonRouterOutlet>
+                </IonReactRouter>
+              </NetworkCheck>
             </AuthProvider>
           </ThemeProvider>
         </IonApp>
       </React.Suspense>
-    </React.StrictMode>
+    </React.StrictMode >
   );
 }
 
