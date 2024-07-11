@@ -33,7 +33,6 @@ const ModifyAsso: React.FC = () => {
     const history = useHistory();
 
     const [assoData, setAssoData] = useState<AssosData | null>(null);
-    const [newAssoData, setNewAssoData] = useState<AssosData | null>(null);
     const [description, setDescription] = useState<string>("");
     const [colorHexVal, setColorHexVal] = useState<string>("");
     const [errorText, setErrorText] = useState<string>("");
@@ -51,10 +50,6 @@ const ModifyAsso: React.FC = () => {
             setColorHexVal(asso.color);
             setNames(asso.names);
             setImages(asso.logos);
-
-            setNewAssoData(asso);
-
-            console.log(asso.socials);
 
             // Convert string based socials into a more readable array where [0] => social_id [1] => account_id
             const targetSocials: string[][] = [];
@@ -91,9 +86,6 @@ const ModifyAsso: React.FC = () => {
         const imageCopy = images.filter((_, i) => i !== index); // Copy all the element except the chosen one
         setImages(imageCopy);
 
-        if (newAssoData) {
-            newAssoData.logos = imageCopy;
-        }
     }
 
     /**
