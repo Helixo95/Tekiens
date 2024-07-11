@@ -24,8 +24,8 @@ import '@ionic/react/css/display.css';
  */
 
 /* import '@ionic/react/css/palettes/dark.always.css'; */
-/* import '@ionic/react/css/palettes/dark.class.css'; */
-import '@ionic/react/css/palettes/dark.system.css';
+import '@ionic/react/css/palettes/dark.class.css';
+/* import '@ionic/react/css/palettes/dark.system.css'; */
 
 /* Theme variables */
 import './theme/variables.css';
@@ -48,7 +48,6 @@ import ModifyEvent from './pages/Event/ModifyEvent';
 import ModifyAsso from './pages/Association/ModifyAsso';
 import { addListeners, registerNotifications } from './Tools/Notifications/NotificationPush';
 import { EventDataProvider } from './contexts/EventDataContext';
-import { AssoDataProvider } from './contexts/AssoDataContext';
 
 setupIonicReact();
 

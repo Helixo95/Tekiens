@@ -1,15 +1,20 @@
-import { IonContent, IonIcon, IonItem, IonItemDivider, IonItemGroup, IonLabel, IonPage, IonSelect, IonSelectOption, IonToggle } from "@ionic/react"
+import { IonContent, IonIcon, IonItem, IonItemDivider, IonItemGroup, IonLabel, IonPage, IonSelect, IonSelectOption, IonToggle, ToggleCustomEvent } from "@ionic/react"
 import { earthOutline, notificationsOutline, schoolOutline, colorPaletteOutline } from "ionicons/icons";
 import HeaderTitleBack from "../../components/HeaderTitleBack";
 import { useTheme } from '../../contexts/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import '../../theme/IconText.css'
+import { useState } from "react";
 
 const PreferencesPage: React.FC = () => {
-    const { theme, setTheme } = useTheme();
+    const { color, setColor, darkTheme, setDarkTheme } = useTheme();
 
     // Use for the translation and change the language
     const { t, i18n } = useTranslation();
+
+    const toggleChange = (ev: ToggleCustomEvent) => {
+        setDarkTheme(ev.detail.checked + '');
+    };
 
     const changeLanguage = (lng: string) => {
         i18n.changeLanguage(lng);
@@ -18,6 +23,10 @@ const PreferencesPage: React.FC = () => {
 
     const changeCampus = (selectedCampus: string) => {
         localStorage.setItem('selectedCampus', selectedCampus);
+    };
+
+    const stringToBoolean = (value: string): boolean => {
+        return value.toLowerCase() === 'true';
     };
 
     return (
@@ -64,11 +73,17 @@ const PreferencesPage: React.FC = () => {
                     </IonLabel>
                 </IonItemDivider>
 
+                <IonItem>
+                    <IonToggle checked={stringToBoolean(darkTheme)} onIonChange={toggleChange} justify="space-between">
+                        Dark theme
+                    </IonToggle>
+                </IonItem>
+
                 <IonItem lines="none">
-                    <IonSelect label={t('preferences.theme.label')} value={theme} onIonChange={(e) => setTheme(e.detail.value)}>
+                    <IonSelect label={t('preferences.theme.label')} value={color} onIonChange={(e) => setColor(e.detail.value)}>
                         <IonSelectOption value="">{t('preferences.theme.themes.default')}</IonSelectOption>
-                        <IonSelectOption value="theme-dark">Thème dark</IonSelectOption>
-                        <IonSelectOption value="theme-bleu">Thème bleu</IonSelectOption>
+                        <IonSelectOption value="green-color">Green</IonSelectOption>
+                        <IonSelectOption value="blue-color">Blue</IonSelectOption>
                     </IonSelect>
                 </IonItem>
             </IonItemGroup>

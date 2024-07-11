@@ -374,7 +374,7 @@
 
         "theme" : {
             "title" : "Apparence",
-            "label" : "Choix du thème",
+            "label" : "Choix de la couleur",
             "themes" : {
                 "default" : "Par défaut"
             }

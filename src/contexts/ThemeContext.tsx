@@ -1,8 +1,10 @@
 import { createContext, useState, useContext, useEffect, ReactNode, FC } from 'react';
 
 type ThemeContextType = {
-    theme: string;
-    setTheme: (theme: string) => void;
+    color: string;
+    setColor: (color: string) => void;
+    darkTheme: string;
+    setDarkTheme: (darkTheme: string) => void;
 };
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -20,29 +22,48 @@ type ThemeProviderProps = {
 };
 
 export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
-    const [theme, setThemeState] = useState('');
+    const [color, setColorState] = useState('');
+    const [darkTheme, setDarkState] = useState('');
 
     useEffect(() => {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            setThemeState(savedTheme);
-        }
-    })
+        const savedColor = localStorage.getItem('savedColor');
+        const savedDark = localStorage.getItem('savedDark');
 
-    const setTheme = (newTheme: string) => {
-        localStorage.setItem('theme', newTheme);
-        setThemeState(newTheme);
+        if (savedColor) {
+            setColorState(savedColor);
+        }
+        if (savedDark) {
+            setDarkState(savedDark);
+        }
+    }, [])
+
+    const setColor = (newColor: string) => {
+        localStorage.setItem('savedColor', newColor);
+        setColorState(newColor);
+    }
+
+    const setDarkTheme = (newDark: string) => {
+        localStorage.setItem('savedDark', newDark);
+        setDarkState(newDark);
     }
 
     useEffect(() => {
-        document.body.classList.remove('theme-bleu', 'theme-dark');
-        if (theme) {
-            document.body.classList.add(theme);
+        document.body.classList.remove('blue-color', 'green-color');
+        if (color) {
+            document.body.classList.add(color);
         }
-    }, [theme]);
+    }, [color]);
+
+    useEffect(() => {
+        document.documentElement.classList.toggle('ion-palette-dark', stringToBoolean(darkTheme));
+    }, [darkTheme]);
+
+    const stringToBoolean = (value: string): boolean => {
+        return value.toLowerCase() === 'true';
+    };
 
     return (
-        <ThemeContext.Provider value={{ theme, setTheme }}>
+        <ThemeContext.Provider value={{ color, setColor, darkTheme, setDarkTheme }}>
             {children}
         </ThemeContext.Provider>
     );
