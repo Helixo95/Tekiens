@@ -384,11 +384,18 @@
             "label" : "Language choice"
         },
 
-        "theme" : {
+        "appearance" : {
             "title" : "Appearance",
-            "label" : "Theme choice",
-            "themes" : {
-                "default" : "Default theme"
+
+            "theme" : "Dark theme",
+            
+            "color" : {
+                "label" : "Color choice",
+                "colors" : {
+                    "default" : "Default",
+                    "green" : "Green",
+                    "blue" : "Blue"
+                }
             }
         },
 

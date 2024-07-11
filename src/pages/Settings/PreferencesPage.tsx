@@ -69,21 +69,21 @@ const PreferencesPage: React.FC = () => {
                     <IonLabel>
                         <IonIcon icon={colorPaletteOutline} className="icon" />
                         &nbsp;
-                        <div className="text">{t('preferences.theme.title')}</div>
+                        <div className="text">{t('preferences.appearance.title')}</div>
                     </IonLabel>
                 </IonItemDivider>
 
                 <IonItem>
                     <IonToggle checked={stringToBoolean(darkTheme)} onIonChange={toggleChange} justify="space-between">
-                        Dark theme
+                        {t('preferences.appearance.theme')}
                     </IonToggle>
                 </IonItem>
 
                 <IonItem lines="none">
-                    <IonSelect label={t('preferences.theme.label')} value={color} onIonChange={(e) => setColor(e.detail.value)}>
-                        <IonSelectOption value="">{t('preferences.theme.themes.default')}</IonSelectOption>
-                        <IonSelectOption value="green-color">Green</IonSelectOption>
-                        <IonSelectOption value="blue-color">Blue</IonSelectOption>
+                    <IonSelect label={t('preferences.appearance.color.label')} value={color} onIonChange={(e) => setColor(e.detail.value)}>
+                        <IonSelectOption value="">{t('preferences.appearance.color.colors.default')}</IonSelectOption>
+                        <IonSelectOption value="green-color">{t('preferences.appearance.color.colors.green')}</IonSelectOption>
+                        <IonSelectOption value="blue-color">{t('preferences.appearance.color.colors.blue')}</IonSelectOption>
                     </IonSelect>
                 </IonItem>
             </IonItemGroup>

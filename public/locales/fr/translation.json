@@ -372,11 +372,18 @@
             "label" : "Choix de la langue"
         },
 
-        "theme" : {
+        "appearance" : {
             "title" : "Apparence",
-            "label" : "Choix de la couleur",
-            "themes" : {
-                "default" : "Par défaut"
+
+            "theme" : "Thème sombre",
+            
+            "color" : {
+                "label" : "Choix de la couleur",
+                "colors" : {
+                    "default" : "Par défaut",
+                    "green" : "Vert",
+                    "blue" : "Bleu"
+                }
             }
         },
 
