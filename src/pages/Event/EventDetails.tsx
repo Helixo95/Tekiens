@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import '../../theme/Event/EventDetails.css'
 import { darkenColor, formatDate, duration, getEventStatus } from '../../Tools/EventsTools'
 import { parseText } from '../../Tools/DOMParser'
-import { add, starOutline, star, pushOutline, push, pencilOutline, trashOutline } from 'ionicons/icons'
+import { add, starOutline, star, pushOutline, push, pencilOutline, trashOutline, searchOutline, help } from 'ionicons/icons'
 import { useAuth } from '../../contexts/AuthContext'
 import Api from '../../Tools/Api'
 import { isEventSaved, saveEvent } from '../../Tools/LocalStorage/LocalStorageEvents'
@@ -60,18 +60,32 @@ const EventDetails: React.FC = () => {
     // Loading appears while waiting for data
     if (loading) {
         return (
-            <IonTabButton disabled>
-                <IonSpinner name='circular' />
-            </IonTabButton>
+            <>
+                <IonContent>
+                    <HeaderTitleBack back="">{t('event.title')}</HeaderTitleBack>
+                    <IonTabButton disabled>
+                        <IonSpinner name='circular' />
+                    </IonTabButton>
+                </IonContent>
+            </>
+
         );
     }
 
     // We check if we have the data we want
     if (!eventData) {
         return (
-            <IonContent>
-                <IonLabel>No data was found</IonLabel>
-            </IonContent>
+            <>
+                <HeaderTitleBack back="">{t('event.title')}</HeaderTitleBack>
+                <IonContent className="ion-padding">
+                    <div className="center-screen-text">
+                        <IonLabel style={{ "marginBottom": "25%" }}>Aucune information n'a été trouvé</IonLabel>
+                        <div>
+                            <IonIcon size="large" icon={searchOutline} /> <IonIcon size="large" icon={help} />
+                        </div>
+                    </div>
+                </IonContent>
+            </>
         );
     }
 
@@ -157,7 +171,7 @@ const EventDetails: React.FC = () => {
                 <img alt="" src={eventData.poster ? `${eventData.poster}?${Date.now()}` : ""} width="100%" />
                 <IonGrid className='ion-padding'>
                     <IonRow className='info'>
-                        <a style={{ color: assoData?.color }} onClick={() => history.push("/association/" + eventData.asso_id)}>{assoData?.names[0]}</a>
+                        <a style={{ color: assoData?.color }} href={`/association/${eventData.asso_id}`}>{assoData?.names[0]}</a>
                     </IonRow>
 
                     <IonRow className='info'>

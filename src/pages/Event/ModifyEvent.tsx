@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IonContent, IonInput, IonButton, IonItem, IonLabel, IonSelect, IonSelectOption, IonTabButton, IonSpinner, IonAlert, IonPage, IonGrid, IonRow, IonCol } from '@ionic/react';
+import { IonContent, IonInput, IonButton, IonItem, IonLabel, IonSelect, IonSelectOption, IonTabButton, IonSpinner, IonAlert, IonPage, IonGrid, IonRow, IonCol, IonIcon } from '@ionic/react';
 import { useParams } from 'react-router-dom';
 import { EventData } from '../../Tools/Interfaces/EventAndAssoInterface';
 import { useEventDataContext } from '../../contexts/EventDataContext';
@@ -11,6 +11,7 @@ import ImageInput from '../../components/ImageInput';
 import DurationInput from '../../components/DurationInput';
 import Api from '../../Tools/Api';
 import HeaderTitleBack from '../../components/HeaderTitleBack';
+import { help, searchOutline } from 'ionicons/icons';
 
 
 const ModifyEvent: React.FC = () => {
@@ -57,18 +58,32 @@ const ModifyEvent: React.FC = () => {
     // Loading appears while waiting for data
     if (loading) {
         return (
-            <IonTabButton disabled>
-                <IonSpinner name='circular' />
-            </IonTabButton>
+            <>
+                <HeaderTitleBack back=''>{t('event.manage.modification.title')}</HeaderTitleBack>
+                <IonContent>
+                    <IonTabButton disabled>
+                        <IonSpinner name='circular' />
+                    </IonTabButton>
+                </IonContent>
+            </>
+
         );
     }
 
     // We check if we have the data we want
     if (!eventData) {
         return (
-            <IonContent>
-                <IonLabel>No data was found</IonLabel>
-            </IonContent>
+            <>
+                <HeaderTitleBack back=''>{t('event.manage.modification.title')}</HeaderTitleBack>
+                <IonContent className="ion-padding">
+                    <div className="center-screen-text">
+                        <IonLabel style={{ "marginBottom": "25%" }}>Aucune information n'a été trouvé</IonLabel>
+                        <div>
+                            <IonIcon size="large" icon={searchOutline} /> <IonIcon size="large" icon={help} />
+                        </div>
+                    </div>
+                </IonContent>
+            </>
         );
     }
 

@@ -23,23 +23,25 @@ const Tabs: React.FC = () => {
         const events = await Api.event.get();
         let newEvents = 0;
 
-        events.map((event: EventData) => {
-            const eventCreationDate = new Date(event.createDate);
+        if (events) {
+            events.map((event: EventData) => {
+                const eventCreationDate = new Date(event.createDate);
 
-            eventCreationDate.setHours(eventCreationDate.getHours() + 2);
+                eventCreationDate.setHours(eventCreationDate.getHours() + 2);
 
-            if (eventCreationDate > lastSavedDate) {
-                newEvents++;
+                if (eventCreationDate > lastSavedDate) {
+                    newEvents++;
+                }
+            })
+
+            if (newEvents > 0) {
+                setNewEventCount(newEvents);
+            } else {
+                setNewEventCount(null);
             }
-        })
 
-        if (newEvents > 0) {
-            setNewEventCount(newEvents);
-        } else {
-            setNewEventCount(null);
+            localStorage.setItem('lastCheckedDate', new Date().toISOString());
         }
-
-        localStorage.setItem('lastCheckedDate', new Date().toISOString());
     };
 
     useEffect(() => {

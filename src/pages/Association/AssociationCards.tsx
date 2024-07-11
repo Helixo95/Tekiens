@@ -1,10 +1,11 @@
-import { IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonLabel, IonRow, IonSpinner, IonTabButton, IonTitle } from "@ionic/react";
+import { IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonIcon, IonLabel, IonRow, IonSpinner, IonTabButton, IonTitle } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import "../../theme/Association/Association.css";
 import { AssosData } from "../../Tools/Interfaces/EventAndAssoInterface";
 import Api from "../../Tools/Api";
 import { filterData } from "../../Tools/AssosTools";
+import { help, searchOutline } from "ionicons/icons";
 
 const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
   // Use for the translation
@@ -42,9 +43,16 @@ const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
   // We check if we have the data we want
   if (!assosData) {
     return (
-      <IonContent>
-        <IonLabel>No data was found</IonLabel>
-      </IonContent>
+      <>
+        <IonContent className="ion-padding">
+          <div className="center-screen-text">
+            <IonLabel style={{ "marginBottom": "25%" }}>Aucune information n'a été trouvé</IonLabel>
+            <div>
+              <IonIcon size="large" icon={searchOutline} /> <IonIcon size="large" icon={help} />
+            </div>
+          </div>
+        </IonContent>
+      </>
     );
   }
 

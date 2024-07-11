@@ -1,7 +1,7 @@
 import { IonButton, IonButtons, IonCard, IonCardContent, IonCardTitle, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonFooter, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonModal, IonPage, IonRow, IonSpinner, IonTabButton, IonText, IonTitle, IonToast, IonToolbar } from "@ionic/react";
 import { useEffect, useRef, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import { logoDiscord, logoInstagram, paperPlane, logoLinkedin, globeOutline, leafOutline, atOutline, logoFacebook, locationOutline, extensionPuzzleOutline, calendarOutline, addOutline, addCircle, removeCircleOutline, call, pulseOutline, colorFill, add, starSharp, starOutline, pencilOutline, addCircleOutline, arrowBackOutline } from 'ionicons/icons';
+import { logoDiscord, logoInstagram, paperPlane, logoLinkedin, globeOutline, leafOutline, atOutline, logoFacebook, locationOutline, extensionPuzzleOutline, calendarOutline, addOutline, addCircle, removeCircleOutline, call, pulseOutline, colorFill, add, starSharp, starOutline, pencilOutline, addCircleOutline, arrowBackOutline, searchOutline, help } from 'ionicons/icons';
 import { SocialsData } from '../../Tools/Interfaces/EventAndAssoInterface';
 import { parseText } from "../../Tools/DOMParser";
 import { isAssoFollowed, followAssociation } from "../../Tools/LocalStorage/LocalStorageAssos";
@@ -20,11 +20,11 @@ const AssociationDetails: React.FC = () => {
 
     const modalNames = useRef<HTMLIonModalElement>(null);
     const modalLogos = useRef<HTMLIonModalElement>(null);
-    const inputRef = useRef(null);
-
 
     // Retrieve the asso id from the URL
     const { id } = useParams<{ id: string }>();
+
+    console.log(id);
 
     const history = useHistory();
 
@@ -65,18 +65,32 @@ const AssociationDetails: React.FC = () => {
     // Loading appears while waiting for data
     if (loading) {
         return (
-            <IonTabButton disabled>
-                <IonSpinner name='circular' />
-            </IonTabButton>
+            <>
+                <HeaderTitleBack back={''}>{t('association.title')}</HeaderTitleBack>
+                <IonContent>
+
+                    <IonTabButton disabled>
+                        <IonSpinner name='circular' />
+                    </IonTabButton>
+                </IonContent>
+            </>
         );
     }
 
     // We check if we have the data we want
     if (!assoData) {
         return (
-            <IonContent>
-                <IonLabel>No asso was data found</IonLabel>
-            </IonContent>
+            <>
+                <HeaderTitleBack back={''}>{t('association.title')}</HeaderTitleBack>
+                <IonContent className="ion-padding">
+                    <div className="center-screen-text">
+                        <IonLabel style={{ "marginBottom": "25%" }}>Aucune information n'a été trouvé</IonLabel>
+                        <div>
+                            <IonIcon size="large" icon={searchOutline} /> <IonIcon size="large" icon={help} />
+                        </div>
+                    </div>
+                </IonContent>
+            </>
         );
     }
 

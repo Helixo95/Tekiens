@@ -8,7 +8,7 @@ interface Props {
     back: string;
 }
 
-const HeaderTitleBack = ({ children, back }: Props) => {
+const HeaderTitleBack: React.FC<Props> = ({ children, back }) => {
     const history = useHistory();
 
     const goToPreviousPage = () => {

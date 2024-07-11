@@ -37,10 +37,10 @@ const EventsList: React.FC = () => {
         fetchData();
     }, []);
 
+    // Loading appears while waiting for data
     if (loading) {
         return (
             <IonContent>
-                {/*To center the loading circle*/}
                 <IonTabButton disabled>
                     <IonSpinner name='circular' />
                 </IonTabButton>

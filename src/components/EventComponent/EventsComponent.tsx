@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { AssosData, EventData } from '../../Tools/Interfaces/EventAndAssoInterface';
-import { IonGrid, IonLabel, IonSpinner, IonTabButton } from '@ionic/react';
+import { IonContent, IonGrid, IonIcon, IonLabel, IonSpinner, IonTabButton } from '@ionic/react';
 import EventCardComponent from './EventCardComponent';
 
 import { getEventsByWeek, getFilteredEvents, getWeekName } from '../../Tools/EventsTools';
 import Api from '../../Tools/Api';
 import '../../theme/Event/EventsComponent.css'
-import { key } from 'ionicons/icons';
+import { help, key, searchOutline } from 'ionicons/icons';
 
 
 const EventsComponent: React.FC<{ filter: string, assoID?: string }> = ({ filter, assoID = '' }) => {
@@ -44,12 +44,29 @@ const EventsComponent: React.FC<{ filter: string, assoID?: string }> = ({ filter
         fetchData();
     }, []);
 
+
     if (loading) {
         return (
             // To center the loading circle
             <IonTabButton disabled>
                 <IonSpinner name='circular' />
             </IonTabButton>
+        );
+    }
+
+    // We check if we have the data we want
+    if (!eventsData) {
+        return (
+            <>
+                <IonContent className="ion-padding">
+                    <div className="center-screen-text">
+                        <IonLabel style={{ "marginBottom": "25%" }}>Aucune information n'a été trouvé</IonLabel>
+                        <div>
+                            <IonIcon size="large" icon={searchOutline} /> <IonIcon size="large" icon={help} />
+                        </div>
+                    </div>
+                </IonContent>
+            </>
         );
     }
 
