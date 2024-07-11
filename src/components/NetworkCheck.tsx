@@ -41,7 +41,7 @@ const NetworkCheck: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     });
 
-    if (status == "true") {
+    if (status == "false") {
         return (
             <IonPage>
                 <HeaderTitle>{t('no-connection.header')}</HeaderTitle>
