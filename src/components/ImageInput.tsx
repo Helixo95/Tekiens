@@ -15,12 +15,13 @@ interface ImagePickerProps {
 }
 
 const ImageInput: React.FC<ImagePickerProps> = ({ resetValue, currentImage, onImageSelected }) => {
-    // Use for the translation
+    // Used to translate the page
     const { t } = useTranslation();
 
     // Allow a reference of the input
     const fileInputRef = useRef<HTMLInputElement>(null);
 
+    // If the current image change we update it
     useEffect(() => {
         // Reset file input value if currentImage changes to prevent caching of previous file
         if (currentImage === null && fileInputRef.current) {

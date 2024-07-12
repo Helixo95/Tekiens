@@ -7,9 +7,12 @@ import AssociationCards from "./Association/AssociationCards";
 import EventsComponent from "../components/EventComponent/EventsComponent";
 
 const HomePage: React.FC = () => {
+  // Used to translate the page
   const { t } = useTranslation();
 
   const [bAssoReload, setAssoReaload] = useState(false);
+
+  // At each change we get another random association
   const updateRandomAsso = () => {
     setAssoReaload(!bAssoReload);
   }

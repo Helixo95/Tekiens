@@ -4,27 +4,43 @@ import HeaderTitleBack from "../../components/HeaderTitleBack";
 import { useTheme } from '../../contexts/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import '../../theme/IconText.css'
-import { useState } from "react";
 
 const PreferencesPage: React.FC = () => {
     const { color, setColor, darkTheme, setDarkTheme } = useTheme();
 
-    // Use for the translation and change the language
+    // Used to translate the page and change the language
     const { t, i18n } = useTranslation();
 
-    const toggleChange = (ev: ToggleCustomEvent) => {
-        setDarkTheme(ev.detail.checked + '');
+    /**
+     * Function to update the dark theme
+     * @param event the toggle event 
+     */
+    const toggleChange = (event: ToggleCustomEvent) => {
+        setDarkTheme(event.detail.checked + '');
     };
 
+    /**
+     * Function to update the selected language
+     * @param lng the language the user selected
+     */
     const changeLanguage = (lng: string) => {
         i18n.changeLanguage(lng);
         localStorage.setItem('language', lng);
     };
 
+    /**
+     * Function to update the selected campus
+     * @param selectedCampus the campus the user selected
+     */
     const changeCampus = (selectedCampus: string) => {
         localStorage.setItem('selectedCampus', selectedCampus);
     };
 
+    /**
+     * Function to transform a string to a boolean
+     * @param value the string we want to convert
+     * @returns true if we have "true" and false if not
+     */
     const stringToBoolean = (value: string): boolean => {
         return value.toLowerCase() === 'true';
     };

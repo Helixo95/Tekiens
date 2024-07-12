@@ -2,6 +2,7 @@ import { AssosData, EventData } from "./Interfaces/EventAndAssoInterface";
 import i18next from 'i18next';
 import { filterByCampus } from "./LocalStorage/LocalStorageEvents";
 
+// Possible event status
 export const eventStatus: { [key: string]: string } = {
     programmed: 'event.status.programmed',
     cancelled: 'event.status.cancelled',

@@ -3,7 +3,7 @@ import HeaderTitleBack from "../../components/HeaderTitleBack";
 import { useTranslation } from "react-i18next";
 
 const LinksPage: React.FC = () => {
-    // Use to translte the page
+    // Used to translate the page
     const { t } = useTranslation();
 
     return (

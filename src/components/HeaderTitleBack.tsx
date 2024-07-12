@@ -11,7 +11,9 @@ interface Props {
 const HeaderTitleBack: React.FC<Props> = ({ children, back }) => {
     const history = useHistory();
 
+    // Function to go to the previous page
     const goToPreviousPage = () => {
+        // If we have a specific page we want to go back
         if (back) {
             history.push(back);
         } else {

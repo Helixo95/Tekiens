@@ -6,59 +6,62 @@ import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
 const PageConnexion: React.FC = () => {
-    // Use for the translation
+    // Used to translate the page
     const { t } = useTranslation();
 
     const history = useHistory();
 
+    // Get the desire function from the context
     const { login } = useAuth();
 
     const [errorText, setErrorText] = useState('');
     const [assoId, setAssoId] = useState('');
     const [password, setPassword] = useState('');
-    const [showToast, setShowToast] = useState(false); // State to control toast visibility
 
+    // State to control toast visibility
+    const [showToast, setShowToast] = useState(false);
+
+    // Reset the input value when we change page
     useEffect(() => {
         setAssoId('');
         setPassword('');
         setErrorText('');
     }, [history.location.pathname]);
 
+    /**
+     * Function when the user want to login
+     * @param event the form submit event
+     */
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+        // Prevent the default form redirection
         event.preventDefault();
 
         const form = event.currentTarget;
+
+        // We get the form values
         const values = Object.fromEntries(new FormData(form));
 
+        // We get the association id and password
         const assoId = values.assoId as string;
         const password = values.password as string;
 
-        if (assoId === '' && password === '') {
-            setErrorText('Missings parameters')
-        }
-        else if (assoId === '') {
-            setErrorText('Missing associations ID')
-        }
-        else if (password === '') {
-            setErrorText('Missing password')
-        }
-        else {
+        try {
+            await login(assoId, password);
 
-            try {
-                await login(assoId, password);
+            // Reset the inputs value
+            setErrorText('');
+            setAssoId('');
+            setPassword('');
 
-                setErrorText('');
-                setAssoId('');
-                setPassword('');
-                setShowToast(true); // Show toast upon successful login
-                history.push('/app/settings');
-            } catch (error: any) {
-                if (error instanceof Error) {
-                    setErrorText(error.message);
-                }
-                else {
-                    setErrorText("Error while login, try again");
-                }
+            // Show toast upon successful login
+            setShowToast(true);
+            history.goBack();
+        } catch (error: any) {
+            if (error instanceof Error) {
+                setErrorText(error.message);
+            }
+            else {
+                setErrorText("Error while login, try again");
             }
         }
     }
@@ -86,6 +89,7 @@ const PageConnexion: React.FC = () => {
                             clearInput={true}
                             onIonChange={(e) => setAssoId(e.detail.value!)}
                             value={assoId}
+                            required
                         />
                     </IonItem>
 
@@ -99,6 +103,7 @@ const PageConnexion: React.FC = () => {
                             clearInput={true}
                             onIonChange={(e) => setPassword(e.detail.value!)}
                             value={password}
+                            required
                         />
                     </IonItem>
 

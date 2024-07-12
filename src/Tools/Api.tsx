@@ -10,44 +10,48 @@ interface SessionCreationResponse {
 
 const Api = {
     assos: {
-        // Return an array with all the associations
+        // Get all the associations
         get(): Promise<AssosData[]> {
             return sendApiRequest<AssosData[]>("GET", "assos", {}, "Getting assos").then(assos => assos.map(parseAsso));
         },
-        // Return one association by its id
+        // Get one association
         getOne(id: string): Promise<AssosData> {
             return sendApiRequest<AssosData>("GET", "assos/" + encodeURIComponent(id), {}, "Getting asso " + id).then(parseAsso);
         },
-        // Return all the association events
+        // Get one association events
         getEvents(id: string): Promise<EventData[]> {
             return sendApiRequest<EventData[]>("GET", "assos/" + encodeURIComponent(id) + "/events", {}, "Getting asso " + id + " events").then(events => events.map(parseEvent));
         },
+        // Update one association
         update(id: string, asso: any, session = localStorage.getItem("session")) {
             return sendApiRequest("PUT", "assos/" + encodeURIComponent(id), { ...asso, session }, "Updating asso " + id);
         },
     },
 
     event: {
-        // Return an array with all the events
+        // Get all events
         get(): Promise<EventData[]> {
             return sendApiRequest<EventData[]>("GET", "events", {}, "Getting event").then(events => events.map(parseEvent));
         },
-        // Return one event by its id
+        // Get one event
         getOne(id: number): Promise<EventData> {
             return sendApiRequest<EventData>("GET", "events/" + encodeURIComponent(id), {}, "Getting event " + id).then(parseEvent);
         },
+        // Update one event
         update(id: number, event: any, session = localStorage.getItem('session')) {
             return sendApiRequest("PUT", "events/" + encodeURIComponent(id), { ...event, session }, "Updating event " + id);
         },
+        // Create one event
         create(event: any, session = localStorage.getItem('session')) {
             return sendApiRequest("POST", "events", { ...event, session }, "Adding event");
         },
+        // Delete one event
         delete(id: number, session = localStorage.getItem('session')) {
             return sendApiRequest("DELETE", "events/" + encodeURIComponent(id), { session }, "Deleting event " + id);
         }
     },
     sessions: {
-        //authentificate the user and return a session id if success
+        // Authentificate the user and return a session id if success
         async create(assoId: string, password: string) {
             //the user call the api to get a challenge
             let { challenge, salt } = await sendApiRequest<SessionCreationResponse>("POST", "sessions", { asso: assoId }, "Challenge session");
@@ -61,24 +65,43 @@ const Api = {
 
 
         },
+        // Delete a session
         delete(id: string) {
             return sendApiRequest("DELETE", "sessions/" + encodeURIComponent(id), {}, "Deleting session");
         }
     }
 }
 
+/**
+ * Function to parse an associations logos
+ * @param asso the association we want to parse
+ * @returns the parsed association
+ */
 function parseAsso(asso: AssosData) {
     if (asso.logos)
         asso.logos = asso.logos.map(logo => baseUrl + logo);
     return asso;
 }
 
+/**
+ * Function to parse an events logos
+ * @param event the event we want to parse
+ * @returns the parsed event
+ */
 function parseEvent(event: EventData) {
     if (event.poster)
         event.poster = baseUrl + event.poster;
     return event;
 }
 
+/**
+ * Function to make an API call
+ * @param method the wanted method : POST, PUT, GET, DELETE
+ * @param endpoint what api endpoint we want to call : assos, events or sessions
+ * @param parameters if we need to pass specific parameter
+ * @param message the message we want to display in the console
+ * @returns the API response
+ */
 async function sendApiRequest<T>(method: string, endpoint: string, parameters: Record<string, any>, message?: string): Promise<T> {
     if (message !== undefined) {
         console.info("[API] " + message);

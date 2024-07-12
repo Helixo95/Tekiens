@@ -3,6 +3,7 @@ import React, { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next';
 
 const ColorPicker: React.FC<{ colorVal: string, callback: Function }> = ({ colorVal, callback }) => {
+    // Used to translate the page
     const { t } = useTranslation();
 
     function handleColorChange(event: ChangeEvent<HTMLInputElement>): void {

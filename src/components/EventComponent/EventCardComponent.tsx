@@ -2,14 +2,11 @@ import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonGrid, 
 import React from 'react'
 import { useTranslation } from 'react-i18next';
 import { AssosData, EventData } from '../../Tools/Interfaces/EventAndAssoInterface';
-import { useHistory } from 'react-router';
 
 
 const EventCardComponent: React.FC<{ event: EventData, asso: AssosData | undefined }> = ({ event, asso }) => {
-    // Use for the translation
+    // Used to translate the page
     const { i18n } = useTranslation();
-
-    const history = useHistory();
 
     return (
         <IonCard className='event-card' button={true} href={'/event/' + event.id} >

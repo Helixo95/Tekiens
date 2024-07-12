@@ -14,7 +14,7 @@ import { isEventSaved, saveEvent } from '../../Tools/LocalStorage/LocalStorageEv
 import { useEventDataContext } from '../../contexts/EventDataContext'
 
 const EventDetails: React.FC = () => {
-    // Use to translte the page
+    // Used to translate the page
     const { t, i18n } = useTranslation();
 
     // Use to get the event's id from the href
@@ -22,8 +22,8 @@ const EventDetails: React.FC = () => {
 
     const history = useHistory();
 
+    // Get the desire function and values from the context
     const { session } = useAuth();
-
     const { eventData, setEventData } = useEventDataContext();
 
     const [assoData, setAssoData] = useState<AssosData>();
@@ -31,6 +31,7 @@ const EventDetails: React.FC = () => {
     const [description, setDescription] = useState<string>("");
     const [loading, setLoading] = useState(true);
 
+    // We get the event data and its association
     const fetchData = async () => {
         if (!isNaN(Number(id))) {
 
@@ -53,6 +54,7 @@ const EventDetails: React.FC = () => {
         }
     };
 
+    // useEffect to call the API when we load the page
     useEffect(() => {
         fetchData();
     }, [id]);
@@ -89,14 +91,20 @@ const EventDetails: React.FC = () => {
         );
     }
 
+    // Function to go to the event modify opage
     const navigateToModifyEvent = () => {
         history.push(`/event/modify/${eventData.id}`);
     };
 
+    // Function if the user want to reload the page
     function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
         fetchData().then(() => event.detail.complete());
     }
 
+    /**
+     * Function to know if an event is editable
+     * @returns true if we can edit it and false if not
+     */
     const editable = () => {
         if (!session) {
             return false;

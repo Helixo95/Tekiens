@@ -15,7 +15,7 @@ import Api from "../../Tools/Api";
 import { useAuth } from "../../contexts/AuthContext";
 
 const AssociationDetails: React.FC = () => {
-    // Use for the translation
+    // Used to translate the page
     const { t } = useTranslation();
 
     const modalNames = useRef<HTMLIonModalElement>(null);
@@ -24,10 +24,9 @@ const AssociationDetails: React.FC = () => {
     // Retrieve the asso id from the URL
     const { id } = useParams<{ id: string }>();
 
-    console.log(id);
-
     const history = useHistory();
 
+    // Get the desire value from the context
     const { session } = useAuth();
 
     const [description, setDescription] = useState<string>("");

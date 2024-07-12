@@ -8,13 +8,14 @@ import { filterData } from "../../Tools/AssosTools";
 import { help, searchOutline } from "ionicons/icons";
 
 const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
-  // Use for the translation
+  // Used to translate the page
   const { t } = useTranslation();
 
   // Hooks updated with the assos information when the page is mounted
   const [assosData, setAssosData] = useState<AssosData[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // We get the associations data
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -56,6 +57,7 @@ const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
     );
   }
 
+  // We get the filtered data
   const filteredData = filterData(assosData, segValue);
 
   return (

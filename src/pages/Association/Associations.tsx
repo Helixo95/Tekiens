@@ -9,23 +9,34 @@ import 'swiper/css/effect-fade';
 import { useTranslation } from "react-i18next";
 
 const Associations: React.FC = () => {
+  // Used to translate the page
   const { t } = useTranslation();
+
   const [filter, setFilter] = useState('active');
   const categories = ["active", "former", "all"];
   const swiperRef = useRef<SwiperRef>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Handle change in desired segment
+  // Function to update the slider when we change the segment value
   const handleSegmentChange = (event: CustomEvent) => {
+    // We get the segement value
     const newFilter = event.detail.value;
+
+    // And update the value
     setFilter(newFilter);
+
+    // With it we update the swiper index
     const newIndex = categories.findIndex(categories => categories === newFilter);
     swiperRef.current?.swiper.slideTo(newIndex);
     setActiveIndex(newIndex);
   };
 
+  // Function to update the semgent when we change the slider value
   const handleSlideChange = (swiper: SwiperClass) => {
+    // We get the swiper index
     const newIndex = swiper.activeIndex;
+
+    // And update the segment index
     setFilter(categories[newIndex]);
     setActiveIndex(newIndex);
   }

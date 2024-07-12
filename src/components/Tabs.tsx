@@ -12,18 +12,24 @@ import Api from '../Tools/Api';
 import { EventData } from '../Tools/Interfaces/EventAndAssoInterface';
 
 const Tabs: React.FC = () => {
-    // Use to translte the page
+    // Used to translate the page
     const { t } = useTranslation();
 
     const [newEventCount, setNewEventCount] = useState<number | null>(null);
 
+    // We get the new events
     const fetchNewEvents = async () => {
+        // We get the last checked date from the local storage
         const lastCheckedDate = localStorage.getItem('lastCheckedDate');
         const lastSavedDate = lastCheckedDate ? new Date(lastCheckedDate) : new Date();
+
+        // We get the events and initialize the counter to 0
         const events = await Api.event.get();
         let newEvents = 0;
 
         if (events) {
+            // For each event we check their date and compare it to the last checked date
+            // If the date is more recent from the last checked date we increment the count
             events.map((event: EventData) => {
                 const eventCreationDate = new Date(event.createDate);
 
@@ -40,10 +46,12 @@ const Tabs: React.FC = () => {
                 setNewEventCount(null);
             }
 
+            // We update the last checked date
             localStorage.setItem('lastCheckedDate', new Date().toISOString());
         }
     };
 
+    // We get the new events
     useEffect(() => {
         fetchNewEvents();
     }, []);

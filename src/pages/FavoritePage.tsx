@@ -10,7 +10,7 @@ import '@ionic/react/css/ionic-swiper.css';
 import EventsComponent from "../components/EventComponent/EventsComponent";
 
 const FavoritePage: React.FC = () => {
-    // Use to translte the page
+    // Used to translate the page
     const { t } = useTranslation();
 
     const [desiredSeg, setDesiredSeg] = useState("assos");
@@ -20,16 +20,26 @@ const FavoritePage: React.FC = () => {
     const swiperRef = useRef<any>(null);
     const segments = ['assos', 'events'];
 
+    // Function to update the slider when we change the segment value
     const handleSegmentChange = (event: CustomEvent) => {
+        // We get the segement value
         const newFilter = event.detail.value;
+
+        // And update the value
         setDesiredSeg(newFilter);
+
+        // With it we update the swiper index
         const newIndex = segments.findIndex(segment => segment === newFilter);
         swiperRef.current?.swiper.slideTo(newIndex);
         setActiveIndex(newIndex);
     };
 
+    // Function to update the semgent when we change the slider value
     const handleSlideChange = (swiper: any) => {
+        // We get the swiper index
         const newIndex = swiper.activeIndex;
+
+        // And update the segment index
         setDesiredSeg(segments[newIndex]);
         setActiveIndex(newIndex);
     };

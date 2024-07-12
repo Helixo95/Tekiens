@@ -7,12 +7,15 @@ import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 
 const SettingsPage: React.FC = () => {
-    // Use to translte the page
+    // Used to translate the page
     const { t } = useTranslation();
 
+    // Get the desire function and values from the context
     const { logout, session } = useAuth();
+
     const [showLogoutToast, setShowLogoutToast] = useState(false);
 
+    // FUuction when the user want to logout from the app
     const handleLogout = () => {
         logout();
         setShowLogoutToast(true);

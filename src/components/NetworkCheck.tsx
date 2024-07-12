@@ -7,11 +7,12 @@ import '../theme/NetworkCheck.css'
 import { useTranslation } from 'react-i18next';
 
 const NetworkCheck: React.FC<{ children: ReactNode }> = ({ children }) => {
-    // Use for the translation
+    // Used to translate the page
     const { t } = useTranslation();
 
     const [status, setStatus] = useState<string>();
 
+    // Function to check the network status and update the use state
     const logCurrentNetworkStatus = async () => {
         const status = await Network.getStatus();
 
@@ -23,12 +24,12 @@ const NetworkCheck: React.FC<{ children: ReactNode }> = ({ children }) => {
         }
     };
 
+    // We get the netword status
     useEffect(() => {
         logCurrentNetworkStatus();
     }, []);
 
-    console.log(status);
-
+    // Listener when the network status change
     Network.addListener('networkStatusChange', async status => {
         console.log('Network status changed', status);
 
@@ -40,6 +41,8 @@ const NetworkCheck: React.FC<{ children: ReactNode }> = ({ children }) => {
         }
 
     });
+
+    // Depending of the network status we're displaying or not the connection error page
 
     if (status == "false") {
         return (

@@ -12,13 +12,14 @@ interface DurationInputProps {
 }
 
 const DurationInput: React.FC<DurationInputProps> = ({ initialValue, onUpdate }) => {
-    // Use for the translation
+    // Used to translate the page
     const { t } = useTranslation();
 
     const [days, setDays] = useState<number>(Math.floor(initialValue / 60 / 24));
     const [hours, setHours] = useState<number>(Math.floor(initialValue / 60 % 24));
     const [minutes, setMinutes] = useState<number>(initialValue % 60);
 
+    // If the initial value change we update it
     useEffect(() => {
         setDays(Math.floor(initialValue / 60 / 24));
         setHours(Math.floor(initialValue / 60 % 24));

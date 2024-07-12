@@ -15,7 +15,7 @@ import { help, searchOutline } from 'ionicons/icons';
 
 
 const ModifyEvent: React.FC = () => {
-    // Use for the translation
+    // Used to translate the page
     const { t } = useTranslation();
 
     // Use for the session
@@ -129,7 +129,7 @@ const ModifyEvent: React.FC = () => {
         setShowAlert(true);
     };
 
-    // When the user
+    // When the user confirm to modify the event
     const confirmSubmit = async () => {
         // We get the form values
         const values: any = Object.fromEntries(formValues.entries());

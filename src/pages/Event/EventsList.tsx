@@ -9,7 +9,7 @@ import '../../theme/Event/Events.css';
 import EventsComponent from '../../components/EventComponent/EventsComponent';
 
 const EventsList: React.FC<{ assoID?: string }> = ({ assoID = '' }) => {
-    // Use for the translation
+    // Used to translate the page
     const { t } = useTranslation();
 
     const [filter, setFilter] = useState('futur');
@@ -19,16 +19,26 @@ const EventsList: React.FC<{ assoID?: string }> = ({ assoID = '' }) => {
     const swiperRef = useRef<any>(null);
     const segments = ['futur', 'ongoing', 'past', 'all'];
 
+    // Function to update the slider when we change the segment value
     const handleSegmentChange = (event: CustomEvent) => {
+        // We get the segement value
         const newFilter = event.detail.value;
+
+        // And update the value
         setFilter(newFilter);
+
+        // With it we update the swiper index
         const newIndex = segments.findIndex(segment => segment === newFilter);
         swiperRef.current?.swiper.slideTo(newIndex);
         setActiveIndex(newIndex);
     };
 
+    // Function to update the semgent when we change the slider value
     const handleSlideChange = (swiper: any) => {
+        // We get the swiper index
         const newIndex = swiper.activeIndex;
+
+        // And update the segment index
         setFilter(segments[newIndex]);
         setActiveIndex(newIndex);
     };

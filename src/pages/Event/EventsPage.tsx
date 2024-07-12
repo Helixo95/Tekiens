@@ -7,11 +7,13 @@ import { listOutline, calendarNumberOutline } from 'ionicons/icons';
 import { useState } from 'react';
 
 const EventsPage: React.FC = () => {
-    // Use to translte the page
+    // Used to translate the page
     const { t } = useTranslation();
 
+    // useState to know if the user want to see the list or the calendar
     const [isList, setList] = useState(true);
 
+    // When the user wants to change the event display method
     const handleEventsChange = () => {
         setList((current) => !current);
     }

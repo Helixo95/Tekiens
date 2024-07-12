@@ -22,6 +22,7 @@ interface EventDataProvider {
 }
 
 export const EventDataProvider: React.FC<EventDataProvider> = ({ children }) => {
+    // We stock the eventData and its setter
     const [eventData, setEventData] = useState<EventData | null>(null);
 
     return (

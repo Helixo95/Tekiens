@@ -8,10 +8,11 @@ import { getEventsByWeek, getFilteredEvents, getWeekName } from '../../Tools/Eve
 import Api from '../../Tools/Api';
 import '../../theme/Event/EventsComponent.css'
 import { help, key, searchOutline } from 'ionicons/icons';
+import HeaderTitle from '../HeaderTitle';
 
 
 const EventsComponent: React.FC<{ filter: string, assoID?: string }> = ({ filter, assoID = '' }) => {
-    // Use for the translation
+    // Used to translate the page
     const { t } = useTranslation();
 
     const [eventsData, setEventData] = useState<EventData[]>([]);
@@ -19,9 +20,11 @@ const EventsComponent: React.FC<{ filter: string, assoID?: string }> = ({ filter
 
     const [loading, setLoading] = useState(true);
 
+    // We get the events and their asso
     useEffect(() => {
         const fetchData = async () => {
             try {
+                // If we want a specific association we just get the association event
                 if (assoID) {
                     const eventsData = await Api.assos.getEvents(assoID);
                     setEventData(eventsData.reverse());
@@ -44,13 +47,16 @@ const EventsComponent: React.FC<{ filter: string, assoID?: string }> = ({ filter
         fetchData();
     }, []);
 
-
+    // Loading appears while waiting for data
     if (loading) {
         return (
-            // To center the loading circle
-            <IonTabButton disabled>
-                <IonSpinner name='circular' />
-            </IonTabButton>
+            <>
+                <IonContent>
+                    <IonTabButton disabled>
+                        <IonSpinner name='circular' />
+                    </IonTabButton>
+                </IonContent>
+            </>
         );
     }
 

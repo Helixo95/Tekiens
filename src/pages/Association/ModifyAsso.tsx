@@ -22,13 +22,15 @@ import ColorPicker from "../../components/ColorPicker";
 import Api from "../../Tools/Api";
 import { AssosData, SocialsDisplay } from "../../Tools/Interfaces/EventAndAssoInterface";
 import { parseText, unParseText } from "../../Tools/DOMParser";
-import { add, closeOutline, navigate } from "ionicons/icons";
+import { add, closeOutline, help, navigate, searchOutline } from "ionicons/icons";
 import SocialLinks from "../../components/SocialsLinks";
 import ImageInput from "../../components/ImageInput";
 import StringReorderGroup from "../../components/StringReorderGroup";
 
 const ModifyAsso: React.FC = () => {
+    // Used to translate the page
     const { t } = useTranslation();
+
     const location = useLocation<{ asso: AssosData }>();
     const history = useHistory();
 
@@ -42,6 +44,7 @@ const ModifyAsso: React.FC = () => {
     const [showAlert, setShowAlert] = useState(false);
     const [formValues, setFormValues] = useState<any>(null);
 
+    // Get the association data
     useEffect(() => {
         if (location.state?.asso) {
             const { asso } = location.state;
@@ -64,12 +67,30 @@ const ModifyAsso: React.FC = () => {
         }
     }, [location.state]);
 
+    // We check if we have the data we want
+    if (!assoData) {
+        return (
+            <>
+                <HeaderTitleBack back=''>{t("association.modification.title")}</HeaderTitleBack>
+                <IonContent className="ion-padding">
+                    <div className="center-screen-text">
+                        <IonLabel style={{ "marginBottom": "25%" }}>Aucune information n'a été trouvé</IonLabel>
+                        <div>
+                            <IonIcon size="large" icon={searchOutline} /> <IonIcon size="large" icon={help} />
+                        </div>
+                    </div>
+                </IonContent>
+            </>
+        );
+    }
+
+    // Function when the user add an image
     const handleAddImages = () => {
         const imagesCopy = [...images, ""];
         setImages(imagesCopy);
     };
 
-
+    // Function when the user select a new image
     const handleImageChange = (newImage: string, index: any) => {
         const imagesCopy = [...images];
         imagesCopy[index] = newImage;
@@ -77,15 +98,16 @@ const ModifyAsso: React.FC = () => {
         setImages(imagesCopy);
     }
 
+    // Function when the user want to change the logos order
     const handleReorder = (event: CustomEvent<ItemReorderEventDetail>) => {
         const reorderImages = event.detail.complete(images);
         setImages(reorderImages);
     };
 
+    // Function when the user want to delete a logo
     const handleDeleletionClick = (index: Number) => {
         const imageCopy = images.filter((_, i) => i !== index); // Copy all the element except the chosen one
         setImages(imageCopy);
-
     }
 
     /**
@@ -102,6 +124,7 @@ const ModifyAsso: React.FC = () => {
         setShowAlert(true);
     };
 
+    // When the user confirm to modify the event
     const confirmSubmit = async () => {
         if (!assoData) return;
 
@@ -146,18 +169,6 @@ const ModifyAsso: React.FC = () => {
             }
         }
     };
-
-
-    if (!assoData) {
-        return (
-            <IonPage>
-                <HeaderTitleBack back="">{t("association.modification.title")}</HeaderTitleBack>
-                <IonContent>
-                    <div className="ion-padding">Loading...</div>
-                </IonContent>
-            </IonPage>
-        );
-    }
 
     return (
         <IonPage>

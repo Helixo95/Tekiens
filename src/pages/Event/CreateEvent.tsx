@@ -12,7 +12,7 @@ import HeaderTitleBack from '../../components/HeaderTitleBack';
 
 
 const ModifyEvent: React.FC = () => {
-    // Use for the translation
+    // Used to translate the page
     const { t } = useTranslation();
 
     // Use for the session
