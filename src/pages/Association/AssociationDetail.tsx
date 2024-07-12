@@ -101,6 +101,10 @@ const AssociationDetails: React.FC = () => {
         history.push(`/association/modify/${assoData.id}`, { asso: assoData });
     };
 
+    /**
+     * Function to know if an event is editable
+     * @returns true if we can edit it and false if not
+     */
     const editable = () => {
         if (!session) {
             return false;
@@ -109,6 +113,7 @@ const AssociationDetails: React.FC = () => {
         return assoData.id === session.asso_id;
     };
 
+    // Function to get the association icsUrl
     const icsUrl = () => {
         return 'tekiens.net/api/assos/' + encodeURIComponent(assoData.id) + '/events.ics';
     }
@@ -196,7 +201,7 @@ const AssociationDetails: React.FC = () => {
 
                     <IonRow>
                         <IonCol>
-                            <IonButton className="center-screen-text" style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }} onClick={() => history.push("/association/" + assoData.id + "/events")} >
+                            <IonButton className="center-screen-text" style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }} >
                                 {t('association.all-events')}
                             </IonButton>
                         </IonCol>
@@ -272,7 +277,7 @@ const AssociationDetails: React.FC = () => {
 
                     <IonRow>
                         <IonCol>
-                            <IonButton expand="block" style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }} href={'webcal://' + icsUrl()}>
+                            <IonButton expand="block" style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }} href={'webcal://' + icsUrl()} target="_blank">
                                 {t('association.agenda.button')}
                             </IonButton>
                         </IonCol>
