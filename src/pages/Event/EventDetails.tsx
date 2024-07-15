@@ -30,6 +30,7 @@ const EventDetails: React.FC = () => {
     const [isSaved, setIsSaved] = useState<boolean>(false);
     const [description, setDescription] = useState<string>("");
     const [loading, setLoading] = useState(true);
+    const [showAlert, setShowAlert] = useState(false);
 
     // We get the event data and its association
     const fetchData = async () => {
@@ -113,6 +114,11 @@ const EventDetails: React.FC = () => {
         return assoData?.id === session.asso_id;
     };
 
+    const validateEmail = (email: string) => {
+        const regex = /^[a-zA-Z0-9._%+-]+@cy-tech.fr/;
+        return regex.test(email);
+    };
+
     return (
         <IonPage>
             <HeaderTitleBack back="">{t('event.title')}</HeaderTitleBack>
@@ -150,6 +156,37 @@ const EventDetails: React.FC = () => {
                     ]}
                 />
 
+                <IonAlert
+                    isOpen={showAlert}
+                    onDidDismiss={() => setShowAlert(false)}
+                    header="Please enter your info"
+                    buttons={[
+                        {
+                            text: 'Cancel',
+                            role: 'cancel',
+                        },
+                        {
+                            text: 'OK',
+                            role: 'confirm',
+                            handler: (alertData) => {
+                                const email = alertData.email;
+                                if (!validateEmail(email)) {
+                                    alert('Please enter a valid email address.');
+                                    return false;
+                                }
+                                return true;
+                            },
+                        },
+                    ]}
+                    inputs={[
+                        {
+                            name: 'email',
+                            type: 'email',
+                            placeholder: 'Email',
+                        },
+                    ]}
+                />
+
                 <IonFab slot="fixed" horizontal="end" vertical="bottom">
                     <IonFabButton style={{ '--background': assoData?.color, '--background-activated': darkenColor(assoData?.color) }}>
                         <IonIcon icon={add}></IonIcon>
@@ -159,7 +196,7 @@ const EventDetails: React.FC = () => {
                             <IonIcon icon={isSaved ? star : starOutline} style={{ color: assoData?.color }} />
                         </IonFabButton>
 
-                        <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }}>
+                        <IonFabButton className='fab-button' onClick={() => setShowAlert(true)} style={{ '--border-color': assoData?.color }}>
                             <IonIcon icon={pushOutline} style={{ color: assoData?.color }} />
                         </IonFabButton>
 
