@@ -28,7 +28,7 @@ const RichTextComponent: React.FC<{ value: string, callback: Function }> = ({ va
     }, []);
 
     return (
-        <div>
+        <div style={{ "marginBottom": "3%" }}>
             <div ref={editorRef} className="rts"></div>
         </div>
     );
