@@ -201,7 +201,7 @@ const AssociationDetails: React.FC = () => {
 
                     <IonRow>
                         <IonCol>
-                            <IonButton className="center-screen-text" style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }} >
+                            <IonButton className="center-screen-text" style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }} onClick={() => history.push("/association/" + assoData.id + "/events")}>
                                 {t('association.all-events')}
                             </IonButton>
                         </IonCol>
