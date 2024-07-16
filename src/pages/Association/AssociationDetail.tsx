@@ -1,4 +1,4 @@
-import { IonButton, IonButtons, IonCard, IonCardContent, IonCardTitle, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonFooter, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonModal, IonPage, IonRow, IonSpinner, IonTabButton, IonText, IonTitle, IonToast, IonToolbar } from "@ionic/react";
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCardTitle, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonFooter, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonModal, IonPage, IonRefresher, IonRefresherContent, IonRow, IonSpinner, IonTabButton, IonText, IonTitle, IonToast, IonToolbar, RefresherEventDetail } from "@ionic/react";
 import { useEffect, useRef, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { logoDiscord, logoInstagram, paperPlane, logoLinkedin, globeOutline, leafOutline, atOutline, logoFacebook, locationOutline, extensionPuzzleOutline, calendarOutline, addOutline, addCircle, removeCircleOutline, call, pulseOutline, colorFill, add, starSharp, starOutline, pencilOutline, addCircleOutline, arrowBackOutline, searchOutline, help } from 'ionicons/icons';
@@ -42,22 +42,23 @@ const AssociationDetails: React.FC = () => {
         linkedin: logoLinkedin, telegram: paperPlane, web: globeOutline, links: leafOutline, email: atOutline, facebook: logoFacebook
     }
 
+
+    const fetchData = async () => {
+        try {
+            const assoData = await Api.assos.getOne(id);
+            setAssoData(assoData)
+
+            await parseText(assoData.description, setDescription);
+            setIsFollowed(isAssoFollowed(assoData.id));
+
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const assoData = await Api.assos.getOne(id);
-                setAssoData(assoData)
-
-                await parseText(assoData.description, setDescription);
-                setIsFollowed(isAssoFollowed(assoData.id));
-
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setLoading(false);
-            }
-        };
-
         fetchData();
     }, [id]);
 
@@ -100,6 +101,11 @@ const AssociationDetails: React.FC = () => {
     const navigateToModifyAsso = () => {
         history.push(`/association/modify/${assoData.id}`, { asso: assoData });
     };
+
+    // Function if the user want to reload the page
+    function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+        fetchData().then(() => event.detail.complete());
+    }
 
     /**
      * Function to know if an event is editable
@@ -153,6 +159,10 @@ const AssociationDetails: React.FC = () => {
 
             <HeaderTitleBack back={''}>{t('association.title')}</HeaderTitleBack>
             <IonContent>
+                <IonRefresher slot="fixed" pullFactor={0.5} pullMin={100} pullMax={200} onIonRefresh={handleRefresh}>
+                    <IonRefresherContent />
+                </IonRefresher>
+
                 <IonToast
                     trigger="followAsso"
                     position="bottom"

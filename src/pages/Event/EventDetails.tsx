@@ -114,10 +114,17 @@ const EventDetails: React.FC = () => {
         return assoData?.id === session.asso_id;
     };
 
+    /**
+     * Function to validate a string format to a CY Tech mail
+     * @param email the string we want to check the format
+     * @returns true is the format is correct and false if not
+     */
     const validateEmail = (email: string) => {
         const regex = /^[a-zA-Z0-9._%+-]+@cy-tech.fr/;
         return regex.test(email);
     };
+
+    console.log(eventData.description);
 
     return (
         <IonPage>
@@ -125,7 +132,7 @@ const EventDetails: React.FC = () => {
 
             <IonContent>
                 <IonRefresher slot="fixed" pullFactor={0.5} pullMin={100} pullMax={200} onIonRefresh={handleRefresh}>
-                    <IonRefresherContent></IonRefresherContent>
+                    <IonRefresherContent />
                 </IonRefresher>
 
                 <IonToast
