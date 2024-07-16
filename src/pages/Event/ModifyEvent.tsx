@@ -13,7 +13,7 @@ import Api from '../../Tools/Api';
 import HeaderTitleBack from '../../components/HeaderTitleBack';
 import { help, searchOutline } from 'ionicons/icons';
 import RichTextComponent from '../../components/RichTextComponent';
-import { parseText } from '../../Tools/DOMParser';
+import { parseText, unParseText } from '../../Tools/DOMParser';
 
 
 const ModifyEvent: React.FC = () => {
@@ -46,9 +46,7 @@ const ModifyEvent: React.FC = () => {
                 try {
                     const eventData = await Api.event.getOne(Number(id));
 
-                    // We parse the event description and update it
-                    await parseText(eventData.description, setDescription);
-                    eventData.description = description;
+                    parseText(eventData.description, setDescription);
 
                     setEventData(eventData);
                     setUpdatedEvent(eventData);
@@ -186,7 +184,7 @@ const ModifyEvent: React.FC = () => {
         }
 
         if (description != eventData.description) {
-            fields['description'] = description;
+            fields['description'] = unParseText(description);
         }
 
         // We can update our event
@@ -278,7 +276,7 @@ const ModifyEvent: React.FC = () => {
                     <IonItem className="input-item">
                         <div>
                             <IonLabel style={{ "marginBottom": "3%" }} >{t('event.manage.event-description.label')}</IonLabel>
-                            <RichTextComponent value={updatedEvent.description || ""} callback={setDescription} />
+                            <RichTextComponent value={description} callback={setDescription} />
                         </div>
                     </IonItem>
 

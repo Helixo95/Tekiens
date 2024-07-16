@@ -12,7 +12,14 @@ const RichTextComponent: React.FC<{ value: string, callback: Function }> = ({ va
         if (editorRef.current && !quillRef.current) {
             const options = {
                 modules: {
-                    toolbar: true,
+                    toolbar: [
+                        [{ 'header': '1' }, { 'header': '2' }, { 'header': '3' }],
+                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                        ['bold', 'italic', 'strike'],
+                        ['link', 'image'],
+                        ['clean'],
+                        ['blockquote', 'code']
+                    ],
                 },
                 theme: 'snow'
             };

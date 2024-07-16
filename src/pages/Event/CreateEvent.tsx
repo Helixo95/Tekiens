@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IonContent, IonInput, IonButton, IonItem, IonLabel, IonSelect, IonSelectOption, IonPage } from '@ionic/react';
+import { IonContent, IonInput, IonButton, IonItem, IonLabel, IonSelect, IonSelectOption, IonPage, IonToast } from '@ionic/react';
 import { EventData } from '../../Tools/Interfaces/EventAndAssoInterface';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
@@ -9,6 +9,8 @@ import ImageInput from '../../components/ImageInput';
 import DurationInput from '../../components/DurationInput';
 import Api from '../../Tools/Api';
 import HeaderTitleBack from '../../components/HeaderTitleBack';
+import RichTextComponent from '../../components/RichTextComponent';
+import { unParseText } from '../../Tools/DOMParser';
 
 
 const ModifyEvent: React.FC = () => {
@@ -19,6 +21,7 @@ const ModifyEvent: React.FC = () => {
     const { session } = useAuth();
 
     const [selectedImage, setSelectedImage] = useState<string>("");
+    const [description, setDescription] = useState<string>("");
     const [duration, setDuration] = useState<number>();
     const [errorText, setErrorText] = useState('');
 
@@ -93,6 +96,10 @@ const ModifyEvent: React.FC = () => {
                 // And we put them in our fields
                 fields[key] = newEventField;
             }
+        }
+
+        if (description) {
+            fields['description'] = unParseText(description);
         }
 
         // We can create our event
@@ -170,14 +177,10 @@ const ModifyEvent: React.FC = () => {
                     </IonItem>
 
                     <IonItem className="input-item">
-                        <IonInput
-                            label={t('event.manage.event-description.label')}
-                            labelPlacement="floating"
-                            placeholder={t('event.manage.event-description.placeholder')}
-                            name="description"
-                            type="text"
-                            clearInput={true}
-                        />
+                        <div>
+                            <IonLabel style={{ "marginBottom": "3%" }} >{t('event.manage.event-description.label')}</IonLabel>
+                            <RichTextComponent value={description} callback={setDescription} />
+                        </div>
                     </IonItem>
 
                     <IonItem className="input-item">
