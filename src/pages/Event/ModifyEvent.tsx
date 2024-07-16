@@ -12,6 +12,8 @@ import DurationInput from '../../components/DurationInput';
 import Api from '../../Tools/Api';
 import HeaderTitleBack from '../../components/HeaderTitleBack';
 import { help, searchOutline } from 'ionicons/icons';
+import RichTextComponent from '../../components/RichTextComponent';
+import { parseText } from '../../Tools/DOMParser';
 
 
 const ModifyEvent: React.FC = () => {
@@ -26,6 +28,7 @@ const ModifyEvent: React.FC = () => {
 
     const { eventData, setEventData } = useEventDataContext();
     const [updatedEvent, setUpdatedEvent] = useState<EventData>();
+    const [description, setDescription] = useState<string>("");
     const [loading, setLoading] = useState(true);
     const [errorText, setErrorText] = useState('');
     const [showAlert, setShowAlert] = useState(false);
@@ -42,6 +45,11 @@ const ModifyEvent: React.FC = () => {
             if (!isNaN(Number(id))) {
                 try {
                     const eventData = await Api.event.getOne(Number(id));
+
+                    // We parse the event description and update it
+                    await parseText(eventData.description, setDescription);
+                    eventData.description = description;
+
                     setEventData(eventData);
                     setUpdatedEvent(eventData);
                     setLoading(false);
@@ -162,7 +170,7 @@ const ModifyEvent: React.FC = () => {
             }
         }
 
-        // We need to manually update the poster and the duration because they are treated differently
+        // We need to manually update the poster, the duration and the description because they are treated differently
 
         if (updatedEvent.duration != eventData.duration) {
             if (updatedEvent.duration != 0) {
@@ -175,6 +183,10 @@ const ModifyEvent: React.FC = () => {
 
         if (updatedEvent.poster != eventData.poster) {
             fields['poster'] = updatedEvent.poster;
+        }
+
+        if (description != eventData.description) {
+            fields['description'] = description;
         }
 
         // We can update our event
@@ -264,16 +276,10 @@ const ModifyEvent: React.FC = () => {
                     </IonItem>
 
                     <IonItem className="input-item">
-                        <IonInput
-                            label={t('event.manage.event-description.label')}
-                            labelPlacement="floating"
-                            placeholder={t('event.manage.event-description.placeholder')}
-                            name="description"
-                            type="text"
-                            clearInput={true}
-                            value={updatedEvent.description}
-                            onIonChange={(e) => setUpdatedEvent({ ...updatedEvent, description: e.detail.value || null })}
-                        />
+                        <div>
+                            <IonLabel style={{ "marginBottom": "3%" }} >{t('event.manage.event-description.label')}</IonLabel>
+                            <RichTextComponent value={updatedEvent.description || ""} callback={setDescription} />
+                        </div>
                     </IonItem>
 
                     <IonItem className="input-item">
@@ -292,7 +298,7 @@ const ModifyEvent: React.FC = () => {
 
                     <IonItem className="input-item">
                         <div>
-                            <IonLabel>{t('event.manage.event-duration.label')}</IonLabel>
+                            <IonLabel style={{ "marginBottom": "3%" }}>{t('event.manage.event-duration.label')}</IonLabel>
                             <DurationInput initialValue={eventData.duration || 0} onUpdate={handleDurationUpdate} />
                         </div>
                     </IonItem>
