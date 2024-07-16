@@ -12,9 +12,9 @@
     "home" : {
         "title" : "Accueil",
 
-        "discover" : "Découvrer une association",
+        "discover" : "Découvrir une association",
 
-        "upcoming" : "Évènements à venir :"
+        "upcoming" : "Événements à venir :"
     },
 
     "associations" : {
@@ -42,7 +42,7 @@
                 "label" : "Toutes",
                 "message" : {
                     "title" : "Aucune association",
-                    "text" : "Revenez plus tard quand il y aura une association, ou créez la vôtre."
+                    "text" : "Revenez plus tard, quand il y aura une association, ou créez la vôtre."
                 }
             },
 
@@ -50,15 +50,15 @@
                 "label" : "Associations",
                 "message" : {
                     "title" : "Vous ne suivez aucune association",
-                    "text" : "Allez sur la page d'une assiciation pour la suivre."
+                    "text" : "Allez sur la page d'une association pour la suivre."
                 }
             },
 
             "rnd" : {
-                "label" : "Toutes",
+                "label" : "Aléatoire",
                 "message" : {
                     "title" : "Aucune association",
-                    "text" : "Revenez plus tard quand il y aura une association, ou créez la vôtre."
+                    "text" : "Revenez plus tard, quand il y aura une association, ou créez la vôtre."
                 }
             }
         }
@@ -71,7 +71,7 @@
 
         "no-description": "Aucune description disponible",
 
-        "all-events" : "Voir tous les évènements de l'association",
+        "all-events" : "Voir tous les événements de l'association",
 
         "more-info" : "Informations supplémentaires",
 
@@ -92,12 +92,12 @@
         },
 
         "old-informations" : {
-            "title" : "Anciennes information",
+            "title" : "Anciennes informations",
             
             "back" : "Retour",
 
             "old-names" : {
-                "title" : "Anciens nom",
+                "title" : "Anciens noms",
                 "button" : "Voir les anciens noms de l'association"
             },
 
@@ -108,8 +108,8 @@
         },
 
         "favorite" : {
-            "add" : "Association added to favorite",
-            "remove" : "association removed from favorites"
+            "add" : "Association ajouté aux favoris",
+            "remove" : "Association retiré des favoris"
         },
 
         "modification" : {
@@ -183,14 +183,14 @@
     },
 
     "events" : {
-        "tab-title" : "Évènements",
+        "tab-title" : "Événements",
         
         "title" : {
-            "list" : "Liste des évènements",
-            "calendar" : "Calendrier évènements"
+            "list" : "Liste des événements",
+            "calendar" : "Calendrier événements"
         },
 
-        "no-events-calendar" : "Aucun évènement à cette date",
+        "no-events-calendar" : "Aucun événement à cette date",
 
         "filter" : {
             "futur" : {
@@ -204,7 +204,7 @@
             "ongoing" : {
                 "label" : "En cours",
                 "message" : {
-                    "title" : "Aucun événement en ce moment",
+                    "title" : "Aucun événement en cours",
                     "text" : "Revenez plus tard, ou consultez la liste des événements passés ou à venir."
                 }
             },
@@ -221,15 +221,15 @@
                 "label" : "Tous",
                 "message" : {
                     "title" : "Aucun événement",
-                    "text" : "Revenez plus tard quand il y aura des évènements"
+                    "text" : "Revenez plus tard, quand il y aura des événements."
                 }
             },
             
             "favorite" : {
                 "label" : "Événements",
                 "message" : {
-                    "title" : "Vous n'avez aucun évènement favori",
-                    "text" : "Allez sur la page d'un évènement pour l'ajouter à vos favoris."
+                    "title" : "Vous n'avez aucun événement favori",
+                    "text" : "Allez sur la page d'un événement pour l'ajouter à vos favoris."
                 }
             }
         },
@@ -246,17 +246,17 @@
         "title" : "Événement",
 
         "favorite" : {
-            "add" : "Évènement ajouté aux favoris",
-            "remove" : "Évènement supprimé des favoris"
+            "add" : "Événement ajouté aux favoris",
+            "remove" : "Événement retiré des favoris"
         },
         
         "about" : "À propros de l'événement",
 
-        "no-description" : "L'évènement n'a pas de description",
+        "no-description" : "L'événement n'a pas de description",
 
         "more-info" : "Informations supplémentaires",
 
-        "link" : "Lien l'évènement",
+        "link" : "Lien de l'événement",
 
         "status" : {
             "programmed" : "🟩 À venir",
@@ -268,22 +268,22 @@
             "ongoing" : "🟪 En cours"
         },
 
-        "create" : "📝 Crée le",
+        "create" : "📝 Créée le",
         
         "update" : "🔄 Dernière mise à jour le",
 
         "manage" : {
             "creation" : {
-                "title" : "Créer un évènement",
-                "button" : "Créer l'évènement"
+                "title" : "Créer un événement",
+                "button" : "Créer l'événement"
             },
 
             "modification" : {
-                "title" : "Modifier un évènement",
-                "button" : "Modifier l'évènement",
+                "title" : "Modifier un événement",
+                "button" : "Modifier l'événement",
                 "alert" : {
                     "header" : "Modification",
-                    "message" : "Êtes-vous sûr de vouloir modifier l'évènement ?",
+                    "message" : "Êtes-vous sûr de vouloir modifier l'événement ?",
                     "cancel" : "Annuler",
                     "confirm": "Oui"
                 }
@@ -291,22 +291,22 @@
 
             "event-title" : {
                 "label" : "🏷️​ Titre",
-                "placeholder" : "Nom de l'évènement"
+                "placeholder" : "Nom de l'événement"
             },
 
             "event-date" : {
                 "label" : "📅 Date et heure",
-                "placeholder" : "Date et heure de l'évènement"
+                "placeholder" : "Date et heure de l'événement"
             },
 
             "event-place" : {
                 "label" : "📍 Lieu",
-                "placeholder" : "Lieu de l'évènement"
+                "placeholder" : "Lieu de l'événement"
             },
 
             "event-poster" : {
-                "label" : "🖼️​ Affiche (optionnel)",
-                "placeholder" : "Lien de l'affiche de l'évènement",
+                "label" : "🖼️​ Affiche (optionnelle)",
+                "placeholder" : "Lien de l'affiche de l'événement",
                 "button" : {
                     "select" : "Selectionner une image",
                     "delete" : "Supprimer l'image"
@@ -314,8 +314,8 @@
             },
 
             "event-description" : {
-                "label" : "📝​​ Description (optionnel)",
-                "placeholder" : "Description de l'évènement"
+                "label" : "📝​​ Description (optionnelle)",
+                "placeholder" : "Description de l'événement"
             },
 
             "event-price" : {
@@ -324,7 +324,7 @@
             },
 
             "event-duration" : {
-                "label" : "⌛ Durée (optionnel)",
+                "label" : "⌛ Durée (optionnelle)",
 
                 "days" : {
                     "label" : "Jour"
@@ -339,7 +339,7 @@
 
             "event-qr" : {
                 "label" : "🖇 Lien du QR code (optionnel)",
-                "placeholder" : "Lien du QR code de l'évènement"
+                "placeholder" : "Lien du QR code de l'événement"
             },
 
             "event-access" : {
@@ -353,8 +353,8 @@
             },
 
             "event-capacity" : {
-                "label" : "👥 Capacité (optionnel)",
-                "placeholder" : "Capacité de l'évènement"
+                "label" : "👥 Capacité (optionnelle)",
+                "placeholder" : "Capacité de l'événement"
             }
         }
     },

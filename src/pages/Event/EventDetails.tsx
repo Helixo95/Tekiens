@@ -138,7 +138,7 @@ const EventDetails: React.FC = () => {
 
                 <IonAlert
                     header="Suppression"
-                    message="Voulez-vous vraiment supprimer l'évènement ?"
+                    message="Voulez-vous vraiment supprimer l'événement ?"
                     trigger="delete-event"
                     buttons={[
                         {
