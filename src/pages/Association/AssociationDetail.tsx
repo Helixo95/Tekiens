@@ -280,7 +280,7 @@ const AssociationDetails: React.FC = () => {
                             <IonButton expand="block"
                                 style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }}
                                 href={icsUrl()}
-                                download="events.ics">
+                                download={"events-" + assoData.id + ".ics"}>
                                 {t('association.agenda.button')}
                             </IonButton>
                         </IonCol>
