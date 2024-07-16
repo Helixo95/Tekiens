@@ -86,7 +86,7 @@
         "agenda" : {
             "title" : "Agenda",
 
-            "button" : "Ajouter à votre agenda",
+            "button" : "Télécharger le ficher ICS de l'agenda",
 
             "label" : "📅 URL de l'agenda :"
         },

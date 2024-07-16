@@ -115,7 +115,7 @@ const AssociationDetails: React.FC = () => {
 
     // Function to get the association icsUrl
     const icsUrl = () => {
-        return 'tekiens.net/api/assos/' + encodeURIComponent(assoData.id) + '/events.ics';
+        return 'https://tekiens.net/api/assos/' + encodeURIComponent(assoData.id) + '/events.ics';
     }
 
     return (
@@ -277,7 +277,10 @@ const AssociationDetails: React.FC = () => {
 
                     <IonRow>
                         <IonCol>
-                            <IonButton expand="block" style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }} href={'webcal://' + icsUrl()} target="_blank">
+                            <IonButton expand="block"
+                                style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }}
+                                href={icsUrl()}
+                                download="events.ics">
                                 {t('association.agenda.button')}
                             </IonButton>
                         </IonCol>
@@ -286,7 +289,7 @@ const AssociationDetails: React.FC = () => {
                     <IonRow>
                         <IonCol>
                             {t('association.agenda.label')}
-                            <IonInput type="text" value={icsUrl()} readonly />
+                            <IonInput type="url" value={icsUrl()} readonly />
                         </IonCol>
                     </IonRow>
 
