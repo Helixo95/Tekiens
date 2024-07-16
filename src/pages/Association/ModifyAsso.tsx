@@ -297,7 +297,7 @@ const ModifyAsso: React.FC = () => {
 
                     <IonItem className="input-item">
                         <div>
-                            <IonLabel style={{ "marginBottom": "3%" }} >{t("association.modification.asso-description.label")}</IonLabel>
+                            <IonLabel style={{ "marginBottom": "3%" }}>{t("association.modification.asso-description.label")}</IonLabel>
                             <RichTextComponent value={description} callback={setDescription} />
                         </div>
                     </IonItem>
