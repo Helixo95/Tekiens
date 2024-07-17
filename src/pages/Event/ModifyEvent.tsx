@@ -214,9 +214,19 @@ const ModifyEvent: React.FC = () => {
      * @returns the right date format
      */
     const formatDate = (date: string) => {
+        if (!date) {
+            return '';
+        }
+
         const [datePart, timePart] = date.split('T');
+        if (!timePart) {
+            return datePart;
+        }
+
         return `${datePart} ${timePart}:00`;
     }
+
+    console.log(updatedEvent.date);
 
     return (
         <IonPage>
