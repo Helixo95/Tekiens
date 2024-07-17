@@ -70,7 +70,7 @@ export const darkenColor = (hex: string | undefined, amount = 20) => {
  * @returns the date from the string
  */
 export const formatDate = (date: string) => {
-    return new Date(date + 'Z').toLocaleString(i18next.language, { weekday: 'long', day: 'numeric', month: 'long' });
+    return new Date(date + 'Z').toLocaleString(i18next.language, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 }
 
 /**
