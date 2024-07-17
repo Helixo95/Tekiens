@@ -46,15 +46,13 @@ import AssociationEvents from './pages/Association/AssociationEvents';
 import CreateEvent from './pages/Event/CreateEvent';
 import ModifyEvent from './pages/Event/ModifyEvent';
 import ModifyAsso from './pages/Association/ModifyAsso';
-import { addListeners, registerNotifications } from './Tools/Notifications/NotificationPush';
 import { EventDataProvider } from './contexts/EventDataContext';
 import NetworkCheck from './components/NetworkCheck';
 
 setupIonicReact();
 
 const App: React.FC = () => {
-  addListeners();
-  registerNotifications();
+
   return (
     <React.StrictMode>
       <React.Suspense>

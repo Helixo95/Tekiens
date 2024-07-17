@@ -1,5 +1,4 @@
 import { AssosData } from "../Interfaces/EventAndAssoInterface";
-import { subscribeToTopic, unsubscribeFromTopic } from "../Notifications/TopicSub";
 
 /**
  * Function to return data filtered by the campus
@@ -65,7 +64,6 @@ function removeFollowedAsso(assoID: any) {
         // Update localStorage with the new array
         localStorage.setItem("followedAssos", JSON.stringify(followedAssos));
 
-        unsubscribeFromTopic(assoID);
     }
     else {
         console.log("Can't remove " + assoID + " because he's not in the followed associations.");
@@ -90,7 +88,6 @@ function addFollowedAsso(assoID: any) {
         // Update localStorage with the new array
         localStorage.setItem("followedAssos", JSON.stringify(followedAssos));
 
-        subscribeToTopic(assoID);
     }
     else {
         console.log("Can't add " + assoID + " because he's already followed.");
