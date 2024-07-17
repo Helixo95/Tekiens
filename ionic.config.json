@@ -1,7 +1,0 @@
-{
-  "name": "Tekiens",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react-vite"
-}
