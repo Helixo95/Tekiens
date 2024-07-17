@@ -22,11 +22,10 @@ const HomePage: React.FC = () => {
       <HeaderTitle>{t('home.title')}</HeaderTitle>
       <IonContent className="ion-padding">
 
-
-        <div>
+        <div style={{ height: '300px' }}>
           <h1 className="title center-screen-text">{t('home.discover')}</h1>
           <Swiper
-            spaceBetween={20}
+            spaceBetween={20000}
             slidesPerView={1}
             loop={true}
             onSlideChangeTransitionStart={updateRandomAsso}
@@ -43,13 +42,13 @@ const HomePage: React.FC = () => {
 
         <div style={{ backgroundColor: 'var(--ion-color-primary)', width: '100%', height: '3px' }} />
 
-        <div>
-          <h1 className="title center-screen-text">{t('home.upcoming')}</h1>
+        <div className="center-screen-text">
+          <h1 className="title">{t('home.upcoming')}</h1>
           <EventsComponent filter={"futur"} />
         </div>
 
-      </IonContent>
-    </IonPage>
+      </IonContent >
+    </IonPage >
   );
 }
 

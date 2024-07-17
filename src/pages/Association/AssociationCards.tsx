@@ -29,8 +29,9 @@ const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
       }
     };
 
+
     fetchData();
-  }, []);
+  }, [segValue]);
 
   // Loading appears while waiting for data
   if (loading) {
@@ -64,20 +65,20 @@ const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
     <>
       {
         filteredData.length > 0 ?
-          <div>
+          <div className="assos">
             {
               filteredData.map(asso =>
-                <div key={asso.id} >
-                  <IonCard className="asso-card" button={true} href={"/association/" + asso.id}>
-                    <img alt="logo" className="asso-image-size" src={asso.logos[0]} style={{ width: '100%' }} />
-                    <IonCardHeader>
-                      <IonCardTitle style={{ color: asso.color }} className="card-asso-title">{asso.names[0]}</IonCardTitle>
-                      <IonCardSubtitle style={{ color: asso.color }} className="card-assos-sub">{asso.theme}</IonCardSubtitle>
+                <div key={asso.id}>
+                  <IonCard className="asso-card" button={true} href={"/association/" + asso.id} >
+                    <img alt={'logo' + asso.names[0]} className="asso-image-size" src={asso.logos[0]} style={{ width: '100%' }} />
+                    <IonCardHeader style={{ padding: '0px', 'paddingTop': '5%', 'paddingBottom': '5%' }}>
+                      <IonCardTitle style={{ color: asso.color, 'fontSize': '1em' }}>{asso.names[0]}</IonCardTitle>
+                      <IonCardSubtitle style={{ color: asso.color, 'fontSize': '0.8em' }}>{asso.theme}</IonCardSubtitle>
                     </IonCardHeader>
                   </IonCard>
                 </div>)
             }
-          </div> :
+          </div > :
 
           <div className="ion-padding all-screen-swipe" >
             <h1 className="title">{t('associations.filter.' + segValue + '.message.title')}</h1>
