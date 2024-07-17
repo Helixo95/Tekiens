@@ -124,8 +124,6 @@ const EventDetails: React.FC = () => {
         return regex.test(email);
     };
 
-    console.log(eventData.description);
-
     return (
         <IonPage>
             <HeaderTitleBack back="">{t('event.title')}</HeaderTitleBack>
