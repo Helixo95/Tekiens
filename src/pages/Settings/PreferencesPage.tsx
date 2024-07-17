@@ -73,7 +73,7 @@ const PreferencesPage: React.FC = () => {
                 </IonItemDivider>
 
                 <IonItem lines="none">
-                    <IonSelect label={t('preferences.language.label')} value={i18n.language} onIonChange={(e) => changeLanguage(e.detail.value)}>
+                    <IonSelect label={t('preferences.language.label')} value={i18n.language || 'fr'} onIonChange={(e) => changeLanguage(e.detail.value)}>
                         <IonSelectOption value="fr">Français</IonSelectOption>
                         <IonSelectOption value="en">English</IonSelectOption>
                     </IonSelect>
