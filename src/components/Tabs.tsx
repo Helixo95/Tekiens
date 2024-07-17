@@ -71,30 +71,30 @@ const Tabs: React.FC = () => {
             </IonRouterOutlet>
 
             <IonTabBar slot='bottom'>
-                <IonTabButton tab='home' onClick={() => fetchNewEvents()} href='/app/home'>
+                <IonTabButton className='tabs-button' tab='home' onClick={() => fetchNewEvents()} href='/app/home'>
                     <IonIcon icon={homeOutline} />
-                    <IonLabel>{t('home.title')}</IonLabel>
+                    <IonLabel className='tabs-label'>{t('home.title')}</IonLabel>
                 </IonTabButton>
 
-                <IonTabButton tab='associations' onClick={() => fetchNewEvents()} href='/app/associations'>
+                <IonTabButton className='tabs-button' tab='associations' onClick={() => fetchNewEvents()} href='/app/associations'>
                     <IonIcon icon={readerOutline} />
-                    <IonLabel>{t('associations.tab-title')}</IonLabel>
+                    <IonLabel className='tabs-label'>{t('associations.tab-title')}</IonLabel>
                 </IonTabButton>
 
-                <IonTabButton tab='events' onClick={() => setNewEventCount(null)} href='/app/events'>
+                <IonTabButton className='tabs-button' tab='events' onClick={() => setNewEventCount(null)} href='/app/events'>
                     <IonIcon icon={calendarOutline} />
                     {newEventCount ? newEventCount > 0 && <IonBadge>{newEventCount}</IonBadge> : ''}
-                    <IonLabel>{t('events.tab-title')}</IonLabel>
+                    <IonLabel className='tabs-label'>{t('events.tab-title')}</IonLabel>
                 </IonTabButton>
 
-                <IonTabButton tab='favorite' onClick={() => fetchNewEvents()} href='/app/favorite'>
+                <IonTabButton className='tabs-button' tab='favorite' onClick={() => fetchNewEvents()} href='/app/favorite'>
                     <IonIcon icon={starOutline} />
-                    <IonLabel>{t('favorite.title')}</IonLabel>
+                    <IonLabel className='tabs-label'>{t('favorite.title')}</IonLabel>
                 </IonTabButton>
 
-                <IonTabButton tab='settings' onClick={() => fetchNewEvents()} href='/app/settings'>
+                <IonTabButton className='tabs-button' tab='settings' onClick={() => fetchNewEvents()} href='/app/settings'>
                     <IonIcon icon={settingsOutline} />
-                    <IonLabel>{t('settings.title')}</IonLabel>
+                    <IonLabel className='tabs-label'>{t('settings.title')}</IonLabel>
                 </IonTabButton>
             </IonTabBar>
         </IonTabs>

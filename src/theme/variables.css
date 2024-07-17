@@ -45,6 +45,8 @@ http://ionicframework.com/docs/theming/ */
 ion-tab-button {
 	--color: var(--ion-color-medium);
 	--color-selected: var(--ion-color-primary);
+	flex: 1;
+    text-align: center;
   
 	&::before {
 	  background-color: transparent;
@@ -109,4 +111,14 @@ ion-tab-button {
 
 .error {
 	color: red;
+}
+
+@media screen and (max-width: 390px) {
+	.tabs-button {
+		padding: 0px;
+	}
+
+    .tabs-label {
+		font-size: 0.7em;
+	}
 }
