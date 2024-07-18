@@ -23,6 +23,9 @@ const Tabs: React.FC = () => {
         const lastCheckedDate = localStorage.getItem('lastCheckedDate');
         const lastSavedDate = lastCheckedDate ? new Date(lastCheckedDate) : new Date();
 
+        // We get the last number of new events from the local storage
+        const lastNewEvents = Number(localStorage.getItem('lastNewEvents')) || 0;
+
         // We get the events and initialize the counter to 0
         const events = await Api.event.get();
         let newEvents = 0;
@@ -40,14 +43,19 @@ const Tabs: React.FC = () => {
                 }
             })
 
-            if (newEvents > 0) {
-                setNewEventCount(newEvents);
+            const numberNewEvent = lastNewEvents + newEvents;
+
+            if (numberNewEvent > 0) {
+                setNewEventCount(numberNewEvent);
             } else {
                 setNewEventCount(null);
             }
 
             // We update the last checked date
             localStorage.setItem('lastCheckedDate', new Date().toISOString());
+
+            // We update the last new events
+            localStorage.setItem('lastNewEvents', numberNewEvent + '');
         }
     };
 
@@ -55,6 +63,11 @@ const Tabs: React.FC = () => {
     useEffect(() => {
         fetchNewEvents();
     }, []);
+
+    const resetNumberNewEvents = () => {
+        setNewEventCount(null)
+        localStorage.setItem('lastNewEvents', '0');
+    }
 
     return (
         <IonTabs>
@@ -81,7 +94,7 @@ const Tabs: React.FC = () => {
                     <IonLabel className='tabs-label'>{t('associations.tab-title')}</IonLabel>
                 </IonTabButton>
 
-                <IonTabButton className='tabs-button' tab='events' onClick={() => setNewEventCount(null)} href='/app/events'>
+                <IonTabButton className='tabs-button' tab='events' onClick={resetNumberNewEvents} href='/app/events'>
                     <IonIcon icon={calendarOutline} />
                     {newEventCount ? newEventCount > 0 && <IonBadge>{newEventCount}</IonBadge> : ''}
                     <IonLabel className='tabs-label'>{t('events.tab-title')}</IonLabel>
