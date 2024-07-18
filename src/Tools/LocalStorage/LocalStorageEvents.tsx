@@ -31,7 +31,6 @@ export function filterByCampus(eventData: EventData[], assosData: AssosData[]) {
  * @param setIsSaved the useState function to update isSaved
  */
 export const saveEvent = (eventID: number, setIsSaved: Function) => {
-    console.log(eventID);
     if (isEventSaved(eventID)) {
         removeSavedEvent(eventID);
         setIsSaved(false);
@@ -47,7 +46,6 @@ export const saveEvent = (eventID: number, setIsSaved: Function) => {
  * @returns true if the event's saved or false if not
  */
 export const isEventSaved = (eventID: number) => {
-    console.log(eventID)
     const savedEvents = JSON.parse(localStorage.getItem("savedEvents") || "[]");
 
     if (savedEvents) {
