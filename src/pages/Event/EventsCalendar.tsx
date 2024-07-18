@@ -8,6 +8,7 @@ import { AssosData, EventData } from '../../Tools/Interfaces/EventAndAssoInterfa
 import Api from '../../Tools/Api';
 import HeaderTitle from '../../components/HeaderTitle';
 import { help, searchOutline } from 'ionicons/icons';
+import { filterByCampus } from '../../Tools/LocalStorage/LocalStorageEvents';
 
 const EventsList: React.FC = () => {
     // Used to translate the page
@@ -68,13 +69,15 @@ const EventsList: React.FC = () => {
         );
     }
 
+    const filteredEventsData = filterByCampus(eventsData, assosData);
+
     // We get an association by its id
     const getAssoById = (id: string) => {
         return assosData.find(asso => asso.id === id);
     }
 
     // We change the color of the date in calandar depending of the association color
-    const dates = eventsData?.map(event => ({
+    const dates = filteredEventsData?.map(event => ({
         date: event.date.split(' ')[0],
         textColor: '#ffff',
         backgroundColor: getAssoById(event.asso_id)?.color || 'var(--ion-color-primary)',
@@ -87,7 +90,7 @@ const EventsList: React.FC = () => {
     const handleDateChange = (event: CustomEvent) => {
         const selectedValue = event.detail.value;
 
-        const eventsForSelectedDate = eventsData.filter(event => {
+        const eventsForSelectedDate = filteredEventsData.filter(event => {
             // Split the event.date to get the date part only
             const eventDate = event.date.split(' ')[0];
             return eventDate === selectedValue.split('T')[0];
