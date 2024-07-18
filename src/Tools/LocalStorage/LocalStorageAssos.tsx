@@ -59,10 +59,10 @@ function removeFollowedAsso(assoID: any) {
     // Check if we have data and check if the asso is followed
     if (followedAssos && followedAssos.includes(assoID)) {
         // Remove the assoID to the array
-        followedAssos.pop(assoID);
+        const newFollowedAssos = followedAssos.filter((id: number) => id !== assoID);
 
         // Update localStorage with the new array
-        localStorage.setItem("followedAssos", JSON.stringify(followedAssos));
+        localStorage.setItem("followedAssos", JSON.stringify(newFollowedAssos));
 
     }
     else {

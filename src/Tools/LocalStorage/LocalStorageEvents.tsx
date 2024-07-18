@@ -31,6 +31,7 @@ export function filterByCampus(eventData: EventData[], assosData: AssosData[]) {
  * @param setIsSaved the useState function to update isSaved
  */
 export const saveEvent = (eventID: number, setIsSaved: Function) => {
+    console.log(eventID);
     if (isEventSaved(eventID)) {
         removeSavedEvent(eventID);
         setIsSaved(false);
@@ -46,6 +47,7 @@ export const saveEvent = (eventID: number, setIsSaved: Function) => {
  * @returns true if the event's saved or false if not
  */
 export const isEventSaved = (eventID: number) => {
+    console.log(eventID)
     const savedEvents = JSON.parse(localStorage.getItem("savedEvents") || "[]");
 
     if (savedEvents) {
@@ -65,10 +67,10 @@ const removeSavedEvent = (eventID: number) => {
     // Check if we have data and check if the event is saved
     if (savedEvents && savedEvents.includes(eventID)) {
         // Remove the eventID to the array
-        savedEvents.pop(eventID);
+        const newSavedEvents = savedEvents.filter((id: number) => id !== eventID);
 
         // Update localStorage with the new array
-        localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
+        localStorage.setItem("savedEvents", JSON.stringify(newSavedEvents));
     }
     else {
         console.log("Can't remove " + eventID + " because he's not in the saved events.");
