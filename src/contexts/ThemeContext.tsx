@@ -59,7 +59,7 @@ export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
 
     // When the color change we update it
     useEffect(() => {
-        document.body.classList.remove('blue-color', 'green-color');
+        document.body.classList.remove('cyje-color', 'green-color');
         if (color) {
             document.body.classList.add(color);
         }

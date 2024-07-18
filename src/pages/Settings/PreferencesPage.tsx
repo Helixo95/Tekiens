@@ -99,7 +99,7 @@ const PreferencesPage: React.FC = () => {
                     <IonSelect label={t('preferences.appearance.color.label')} value={color} onIonChange={(e) => setColor(e.detail.value)}>
                         <IonSelectOption value="">{t('preferences.appearance.color.colors.default')}</IonSelectOption>
                         <IonSelectOption value="green-color">{t('preferences.appearance.color.colors.green')}</IonSelectOption>
-                        <IonSelectOption value="blue-color">{t('preferences.appearance.color.colors.blue')}</IonSelectOption>
+                        <IonSelectOption value="cyje-color">{t('preferences.appearance.color.colors.cyje')}</IonSelectOption>
                     </IonSelect>
                 </IonItem>
             </IonItemGroup>
