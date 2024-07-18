@@ -39,7 +39,7 @@ import Connexion from './pages/Settings/ConnexionPage'
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
 import './MultiLang.js'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import EventDetails from './pages/Event/EventDetails';
 import AssociationDetails from './pages/Association/AssociationDetail';
 import AssociationEvents from './pages/Association/AssociationEvents';
@@ -48,8 +48,22 @@ import ModifyEvent from './pages/Event/ModifyEvent';
 import ModifyAsso from './pages/Association/ModifyAsso';
 import { EventDataProvider } from './contexts/EventDataContext';
 import NetworkCheck from './components/NetworkCheck';
+import {LocalNotifications} from "@capacitor/local-notifications"
 
 setupIonicReact();
+
+/*
+
+useEffect(() => {
+  const handlePermission = async () => {
+    const {display} = await LocalNotifications.checkPermissions();
+    if(display != 'granted'){
+      await LocalNotifications.requestPermissions();
+    }
+
+    handlePermission();
+  }
+}, []);*/
 
 const App: React.FC = () => {
 

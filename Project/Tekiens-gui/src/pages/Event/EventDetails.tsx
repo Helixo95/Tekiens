@@ -7,11 +7,12 @@ import { useTranslation } from 'react-i18next'
 import '../../theme/Event/EventDetails.css'
 import { darkenColor, formatDate, duration, getEventStatus } from '../../Tools/EventsTools'
 import { parseText } from '../../Tools/DOMParser'
-import { add, starOutline, star, pushOutline, push, pencilOutline, trashOutline, searchOutline, help } from 'ionicons/icons'
+import { add, starOutline, star, pushOutline, push, pencilOutline, trashOutline, searchOutline, help, notificationsCircleOutline, notificationsOffCircleOutline, notificationsOutline, notificationsOffOutline } from 'ionicons/icons'
 import { useAuth } from '../../contexts/AuthContext'
 import Api from '../../Tools/Api'
 import { isEventSaved, saveEvent } from '../../Tools/LocalStorage/LocalStorageEvents'
 import { useEventDataContext } from '../../contexts/EventDataContext'
+import { cancelNotification, doesNotificationExist, sendNotification } from '../../Tools/NotificationsHandler'
 
 const EventDetails: React.FC = () => {
     // Used to translate the page
@@ -31,6 +32,8 @@ const EventDetails: React.FC = () => {
     const [description, setDescription] = useState<string>("");
     const [loading, setLoading] = useState(true);
     const [showAlert, setShowAlert] = useState(false);
+    const [bcanSelectNotification, setCanSelectNotification] = useState<boolean>(false);
+    const [bDoesNotficationExist, setNotificationExist] = useState<boolean>(false);
 
     // We get the event data and its association
     const fetchData = async () => {
@@ -48,12 +51,64 @@ const EventDetails: React.FC = () => {
                 setAssoData(assoData);
 
                 setLoading(false);
-            } catch (error) {
+
+                const currentDate = new Date();
+                const parsedDate = new Date(eventData.date.replace(' ', 'T'));
+                parsedDate.setHours(parsedDate.getHours() + 2);
+
+
+                if(currentDate.getTime() < parsedDate.getTime()){
+                    // Check if a notification already exist
+                    const bDoesExist = await doesNotificationExist(Number(id));
+                    setCanSelectNotification(true);
+                    setNotificationExist(bDoesExist);
+                }
+            } 
+            
+            catch (error) {
                 console.error('Error fetching data:', error);
                 setLoading(false);
             }
         }
     };
+
+    const handleNotificationClick = async () => {
+        try {
+            if (!eventData) {
+                throw new Error("Event data is null");
+            }
+    
+            const id_Number = Number(id);
+            
+            // Check if the notification already exists
+            const bDoesExist = await doesNotificationExist(id_Number);
+    
+            // Remove or cancel the notification if it exists
+            if (bDoesExist) {
+                await cancelNotification(id_Number);
+            } else {
+                // Create new notification
+                const parsedDate = eventData.date.replace(' ', 'T');
+                const NotificationDate = new Date(parsedDate);
+                NotificationDate.setHours(NotificationDate.getHours() + 2);
+    
+                // Send notification
+                await sendNotification(`Evenement ${id} arrive`, "Veuillez participer à l'événement", NotificationDate, id_Number);
+    
+                // Update state to indicate notification exists
+                setNotificationExist(true);
+            }
+    
+            // Check notification existence again (this could be unnecessary if you handled it correctly above)
+            const val = await doesNotificationExist(Number(id));
+            setNotificationExist(val);
+    
+            console.log("Value of notification event: ", val);
+        } catch (error) {
+            console.error("Error in handleNotificationClick:", error);
+        }
+    };
+    
 
     // useEffect to call the API when we load the page
     useEffect(() => {
@@ -204,6 +259,12 @@ const EventDetails: React.FC = () => {
                         <IonFabButton className='fab-button' onClick={() => setShowAlert(true)} style={{ '--border-color': assoData?.color }}>
                             <IonIcon icon={pushOutline} style={{ color: assoData?.color }} />
                         </IonFabButton>
+
+                        {bcanSelectNotification && <>
+                            <IonFabButton className='fab-button' onClick={handleNotificationClick} style={{ '--border-color': assoData?.color }}>
+                            <IonIcon icon={bDoesNotficationExist ? notificationsOutline : notificationsOffOutline} style={{ color: assoData?.color }}/>
+                        </IonFabButton>
+                        </>}
 
                         {editable() &&
                             <>

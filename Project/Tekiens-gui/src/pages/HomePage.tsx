@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import AssociationCards from "./Association/AssociationCards";
 import EventsComponent from "../components/EventComponent/EventsComponent";
+import { getPending } from "../Tools/NotificationsHandler";
 
 const HomePage: React.FC = () => {
   // Used to translate the page
@@ -21,6 +22,7 @@ const HomePage: React.FC = () => {
     <IonPage>
       <HeaderTitle>{t('home.title')}</HeaderTitle>
       <IonContent className="ion-padding">
+      <IonButton onClick={() => getPending()}>Pending notifications</IonButton>
 
         <div style={{ height: '300px' }}>
           <h1 className="title center-screen-text">{t('home.discover')}</h1>
@@ -39,9 +41,7 @@ const HomePage: React.FC = () => {
             </SwiperSlide>
           </Swiper>
         </div>
-
         <div style={{ backgroundColor: 'var(--ion-color-primary)', width: '100%', height: '3px' }} />
-
         <div className="center-screen-text">
           <h1 className="title">{t('home.upcoming')}</h1>
           <EventsComponent filter={"futur"} />
