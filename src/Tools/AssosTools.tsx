@@ -13,6 +13,10 @@ export function filterData(assosData: AssosData[], filterChoice: string) {
 
     let campusFilteredData = filterByCampus(assosData);
 
+    if (campusFilteredData.length === 0) {
+        return [];
+    }
+
     switch (filterChoice) {
         case 'all':
             return campusFilteredData;
