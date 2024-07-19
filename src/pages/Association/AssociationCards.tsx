@@ -1,4 +1,4 @@
-import { IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonIcon, IonLabel, IonRow, IonSpinner, IonTabButton, IonTitle } from "@ionic/react";
+import { IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonIcon, IonLabel, IonRefresher, IonRefresherContent, IonRow, IonSpinner, IonTabButton, IonTitle, RefresherEventDetail } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import "../../theme/Association/Association.css";
@@ -16,20 +16,19 @@ const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
   const [loading, setLoading] = useState(true);
 
   // We get the associations data
+  const fetchData = async () => {
+    try {
+      const assosData = await Api.assos.get();
+      setAssosData(assosData);
+
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const assosData = await Api.assos.get();
-        setAssosData(assosData);
-
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoading(false);
-      }
-    };
-
-
     fetchData();
   }, [segValue]);
 
@@ -61,8 +60,16 @@ const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
   // We get the filtered data
   const filteredData = filterData(assosData, segValue);
 
+  // Function if the user want to reload the page
+  function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+    fetchData().then(() => event.detail.complete());
+  }
+
   return (
     <>
+      <IonRefresher slot="fixed" pullFactor={0.5} pullMin={100} pullMax={200} onIonRefresh={handleRefresh}>
+        <IonRefresherContent />
+      </IonRefresher>
       {
         filteredData.length > 0 ?
           <div className="assos">

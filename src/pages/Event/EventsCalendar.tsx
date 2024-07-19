@@ -1,4 +1,4 @@
-import { IonContent, IonDatetime, IonIcon, IonLabel, IonSpinner, IonTabButton } from '@ionic/react';
+import { IonContent, IonDatetime, IonIcon, IonLabel, IonRefresher, IonRefresherContent, IonSpinner, IonTabButton, RefresherEventDetail } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -22,22 +22,22 @@ const EventsList: React.FC = () => {
     const [loading, setLoading] = useState(true);
 
     // We get all the events and associations
+    const fetchData = async () => {
+        try {
+            const eventsData = await Api.event.get();
+            setEventData(eventsData.reverse());
+
+            const assosData = await Api.assos.get();
+            setAssosData(assosData);
+
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const eventsData = await Api.event.get();
-                setEventData(eventsData.reverse());
-
-                const assosData = await Api.assos.get();
-                setAssosData(assosData);
-
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setLoading(false);
-            }
-        };
-
         fetchData();
     }, []);
 
@@ -52,11 +52,15 @@ const EventsList: React.FC = () => {
         );
     }
 
+    // Function if the user want to reload the page
+    function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+        fetchData().then(() => event.detail.complete());
+    }
+
     // We check if we have the data we want
     if (!eventsData) {
         return (
             <>
-                <HeaderTitle>{t('event.title')}</HeaderTitle>
                 <IonContent className="ion-padding">
                     <div className="center-screen-text">
                         <IonLabel style={{ "marginBottom": "25%" }}>Aucune information n'a été trouvé</IonLabel>
@@ -101,6 +105,10 @@ const EventsList: React.FC = () => {
 
     return (
         <IonContent className='ion-padding' >
+            <IonRefresher slot="fixed" pullFactor={0.5} pullMin={100} pullMax={200} onIonRefresh={handleRefresh}>
+                <IonRefresherContent />
+            </IonRefresher>
+
             <IonDatetime
                 highlightedDates={dates}
                 presentation="date"

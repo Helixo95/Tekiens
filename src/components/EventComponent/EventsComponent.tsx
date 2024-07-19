@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { AssosData, EventData } from '../../Tools/Interfaces/EventAndAssoInterface';
-import { IonContent, IonGrid, IonIcon, IonLabel, IonSpinner, IonTabButton } from '@ionic/react';
+import { IonContent, IonGrid, IonIcon, IonLabel, IonRefresher, IonRefresherContent, IonSpinner, IonTabButton, RefresherEventDetail } from '@ionic/react';
 import EventCardComponent from './EventCardComponent';
 
 import { getEventsByWeek, getFilteredEvents, getWeekName } from '../../Tools/EventsTools';
@@ -21,29 +21,29 @@ const EventsComponent: React.FC<{ filter: string, assoID?: string }> = ({ filter
     const [loading, setLoading] = useState(true);
 
     // We get the events and their asso
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // If we want a specific association we just get the association event
-                if (assoID) {
-                    const eventsData = await Api.assos.getEvents(assoID);
-                    setEventData(eventsData.reverse());
-                }
-                else {
-                    const eventsData = await Api.event.get();
-                    setEventData(eventsData.reverse());
-                }
-
-                const assosData = await Api.assos.get();
-                setAssosData(assosData);
-
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setLoading(false);
+    const fetchData = async () => {
+        try {
+            // If we want a specific association we just get the association event
+            if (assoID) {
+                const eventsData = await Api.assos.getEvents(assoID);
+                setEventData(eventsData.reverse());
             }
-        };
+            else {
+                const eventsData = await Api.event.get();
+                setEventData(eventsData.reverse());
+            }
 
+            const assosData = await Api.assos.get();
+            setAssosData(assosData);
+
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
         fetchData();
     }, []);
 
@@ -84,8 +84,17 @@ const EventsComponent: React.FC<{ filter: string, assoID?: string }> = ({ filter
 
     const eventByWeek = getEventsByWeek(filteredEvents);
 
+    // Function if the user want to reload the page
+    function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+        fetchData().then(() => event.detail.complete());
+    }
+
     return (
         <div>
+            <IonRefresher slot="fixed" pullFactor={0.5} pullMin={100} pullMax={200} onIonRefresh={handleRefresh}>
+                <IonRefresherContent />
+            </IonRefresher>
+
             {Object.keys(eventByWeek).length > 0 ? (
                 Object.keys(eventByWeek).map((weekKey, index) => {
                     const weekString = getWeekName(weekKey);
