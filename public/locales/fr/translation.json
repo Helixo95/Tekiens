@@ -447,5 +447,10 @@
             "glpi" : "GLPI : support informatique",
             "doc" : "Documentation CY Tech"
         }
+    },
+
+    "notification" : {
+        "active" : "Vous serez notifié du début de cet événement",
+        "not-active" : "Vous ne serez pas notifié du début de cet événement"
     }
 }

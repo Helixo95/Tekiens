@@ -459,5 +459,10 @@
             "glpi" : "GLPI : IT support",
             "doc" : "CY Tech documentation"
         }
+    },
+
+    "notification" : {
+        "active" : "You'll be notified when this event begins",
+        "not-active" : "You'll not be notified when this event begins"
     }
 }

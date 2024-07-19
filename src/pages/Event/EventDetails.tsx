@@ -32,6 +32,7 @@ const EventDetails: React.FC = () => {
     const [description, setDescription] = useState<string>("");
     const [loading, setLoading] = useState(true);
     const [showAlert, setShowAlert] = useState(false);
+    const [showNotifToast, setShowNotifToast] = useState(false);
     const [bcanSelectNotification, setCanSelectNotification] = useState<boolean>(false);
     const [bDoesNotficationExist, setNotificationExist] = useState<boolean>(false);
 
@@ -102,6 +103,8 @@ const EventDetails: React.FC = () => {
             // Check notification existence again (this could be unnecessary if you handled it correctly above)
             const val = await doesNotificationExist(Number(id));
             setNotificationExist(val);
+
+            setShowNotifToast(true);
 
             console.log("Value of notification event: ", val);
         } catch (error) {
@@ -189,7 +192,16 @@ const EventDetails: React.FC = () => {
                 </IonRefresher>
 
                 <IonToast
-                    trigger="saveEvent"
+                    isOpen={showNotifToast}
+                    onDidDismiss={() => setShowNotifToast(false)}
+                    position="bottom"
+                    swipeGesture="vertical"
+                    message={bDoesNotficationExist ? t('notification.active') : t('notification.not-active')}
+                    duration={1000}
+                />
+
+                <IonToast
+                    trigger="save-event"
                     position="bottom"
                     swipeGesture="vertical"
                     message={isSaved ? t('event.favorite.add') : t('event.favorite.remove')}
@@ -252,7 +264,7 @@ const EventDetails: React.FC = () => {
                         <IonIcon icon={add}></IonIcon>
                     </IonFabButton>
                     <IonFabList side="top">
-                        <IonFabButton className='fab-button' onClick={() => saveEvent(eventData.id, setIsSaved)} id="saveEvent" style={{ '--border-color': assoData?.color }}>
+                        <IonFabButton className='fab-button' onClick={() => saveEvent(eventData.id, setIsSaved)} id="save-event" style={{ '--border-color': assoData?.color }}>
                             <IonIcon icon={isSaved ? star : starOutline} style={{ color: assoData?.color }} />
                         </IonFabButton>
 
@@ -260,11 +272,11 @@ const EventDetails: React.FC = () => {
                             <IonIcon icon={pushOutline} style={{ color: assoData?.color }} />
                         </IonFabButton>
 
-                        {bcanSelectNotification && <>
-                            <IonFabButton className='fab-button' onClick={handleNotificationClick} style={{ '--border-color': assoData?.color }}>
+                        {bcanSelectNotification &&
+                            <IonFabButton className='fab-button' id='notif-event' onClick={handleNotificationClick} style={{ '--border-color': assoData?.color }}>
                                 <IonIcon icon={bDoesNotficationExist ? notificationsOutline : notificationsOffOutline} style={{ color: assoData?.color }} />
                             </IonFabButton>
-                        </>}
+                        }
 
                         {editable() &&
                             <>
