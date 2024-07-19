@@ -49,6 +49,15 @@ const ModifyEvent: React.FC = () => {
                     parseText(eventData.description, setDescription);
 
                     setEventData(eventData);
+
+                    const parsedDate = eventData.date.replace(' ', 'T');
+                    const eventDate = new Date(parsedDate);
+                    eventDate.setHours(eventDate.getHours() + 2);
+
+                    const correctDate = eventDate.toLocaleString("sv-SE");
+
+                    eventData.date = correctDate;
+
                     setUpdatedEvent(eventData);
                     setLoading(false);
                 } catch (error) {
@@ -147,8 +156,16 @@ const ModifyEvent: React.FC = () => {
             }
         });
 
+        console.log(values.date)
+
+        const parsedDate = values.date.replace(' ', 'T');
+        const eventDate = new Date(parsedDate);
+        eventDate.setHours(eventDate.getHours() - 2);
+
+        const correctDate = eventDate.toLocaleString("sv-SE");
+
         // Get the right format for the date
-        values.date = formatDate(values.date);
+        values.date = formatDate(correctDate);
 
         // We'll put in here all the values we'll need to update the event
         let fields: any = {};
@@ -225,8 +242,6 @@ const ModifyEvent: React.FC = () => {
 
         return `${datePart} ${timePart}:00`;
     }
-
-    console.log(updatedEvent.date);
 
     return (
         <IonPage>
