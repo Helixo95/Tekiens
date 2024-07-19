@@ -5,10 +5,11 @@ const config: CapacitorConfig = {
   appName: 'Tekiens',
   webDir: 'dist',
   plugins: {
-    PushNotifications: {
-        presentationOptions: ['badge', 'sound', 'alert']
+      "LocalNotifications": {
+        "iconColor": "#488AFF",
+        "sound": "beep.wav"
+      }
     }
-  }
 };
 
 export default config;
