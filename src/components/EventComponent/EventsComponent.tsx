@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { AssosData, EventData } from '../../Tools/Interfaces/EventAndAssoInterface';
-import { IonContent, IonGrid, IonIcon, IonLabel, IonRefresher, IonRefresherContent, IonSpinner, IonTabButton, RefresherEventDetail } from '@ionic/react';
+import { IonContent, IonIcon, IonLabel, IonRefresher, IonRefresherContent, IonSpinner, IonTabButton, RefresherEventDetail } from '@ionic/react';
 import EventCardComponent from './EventCardComponent';
 
 import { getEventsByWeek, getFilteredEvents, getWeekName } from '../../Tools/EventsTools';
 import Api from '../../Tools/Api';
-import '../../theme/Event/EventsComponent.css'
-import { help, key, searchOutline } from 'ionicons/icons';
-import HeaderTitle from '../HeaderTitle';
-
+import { help, searchOutline } from 'ionicons/icons';
 
 const EventsComponent: React.FC<{ filter: string, assoID?: string }> = ({ filter, assoID = '' }) => {
     // Used to translate the page
@@ -99,14 +96,17 @@ const EventsComponent: React.FC<{ filter: string, assoID?: string }> = ({ filter
                 Object.keys(eventByWeek).map((weekKey, index) => {
                     const weekString = getWeekName(weekKey);
                     return (
-                        <div key={index} className='title'>
-                            <h2>{t(weekString[0]) + weekString[1]}</h2>
+                        <div key={index}>
+                            <div className='title center-screen-text'>
+                                <h2>{t(weekString[0]) + weekString[1]}</h2>
+                            </div>
                             <div className='event-card-container'>
                                 {eventByWeek[weekKey].map((event: EventData) => (
                                     <EventCardComponent event={event} asso={getAssoById(event.asso_id)} key={event.id} />
                                 ))}
                             </div>
                         </div>
+
                     );
                 })
             ) : (
