@@ -9,9 +9,12 @@ const EventCardComponent: React.FC<{ event: EventData, asso: AssosData | undefin
     // Used to translate the page
     const { i18n } = useTranslation();
 
+    // When the event hasn't a poster
+    const placeholderImage = "https://upload.wikimedia.org/wikipedia/commons/8/89/HD_transparent_picture.png";
+
     return (
         <IonCard className='event-card' button={true} href={'/event/' + event.id} >
-            <IonImg className='event-image' src={event.poster ? `${event.poster}?${Date.now()}` : ""} style={{ backgroundColor: asso?.color }} />
+            <IonImg className='event-image' alt="" src={event.poster ? `${event.poster}?${Date.now()}` : `${placeholderImage}`} style={{ backgroundColor: asso?.color }} />
             <IonCardHeader>
                 <IonCardTitle>{event.title}</IonCardTitle>
             </IonCardHeader>
