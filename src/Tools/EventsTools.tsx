@@ -170,11 +170,24 @@ export const getFilteredEvents = (eventsData: EventData[], assosData: AssosData[
         case 'ongoing':
             return campusFilteredData.filter(event => {
                 const eventDate = new Date(event.date + 'Z');
+                if (event.duration) {
+                    // Convert minutes to milliseconds and add to eventDate
+                    const eventEndDate = new Date(eventDate.getTime() + event.duration * 60000);
+                    return eventDate <= currentDate && currentDate <= eventEndDate;
+                }
                 return eventDate.toDateString() === currentDate.toDateString();
             });
 
         case 'past':
-            return campusFilteredData.filter(event => new Date(event.date + 'Z') < currentDate);
+            return campusFilteredData.filter(event => {
+                const eventDate = new Date(event.date + 'Z');
+                if (event.duration) {
+                    // Convert minutes to milliseconds and add to eventDate
+                    const eventEndDate = new Date(eventDate.getTime() + event.duration * 60000);
+                    return eventDate < currentDate && currentDate > eventEndDate;
+                }
+                return new Date(event.date + 'Z') < currentDate
+            });
 
         case 'favorite':
             const savedEvents = JSON.parse(localStorage.getItem('savedEvents') || '[]');
