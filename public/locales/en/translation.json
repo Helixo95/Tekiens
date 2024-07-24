@@ -14,7 +14,9 @@
 
         "discover" : "Discover an association",
 
-        "upcoming" : "Upcoming events:"
+        "upcoming" : "Upcoming events:",
+
+        "ongoing" : "Ongoin events:"
     },
 
     "associations" : {
@@ -463,6 +465,7 @@
 
     "notification" : {
         "active" : "You'll be notified when this event begins",
-        "not-active" : "You'll not be notified when this event begins"
+        "not-active" : "You'll not be notified when this event begins",
+        "body" : "The event start"
     }
 }
