@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import AssociationCards from "./Association/AssociationCards";
 import EventsComponent from "../components/EventComponent/EventsComponent";
+import EventCarousel from "../components/EventComponent/EventCarousel";
 
 const HomePage: React.FC = () => {
   // Used to translate the page
@@ -20,7 +21,7 @@ const HomePage: React.FC = () => {
   return (
     <IonPage>
       <HeaderTitle>{t('home.title')}</HeaderTitle>
-      <IonContent className="ion-padding">
+      <IonContent class="ion-padding">
 
         <div style={{ height: '300px' }}>
           <h1 className="title center-screen-text">{t('home.discover')}</h1>
@@ -44,7 +45,14 @@ const HomePage: React.FC = () => {
 
         <div className="center-screen-text">
           <h1 className="title">{t('home.upcoming')}</h1>
-          <EventsComponent filter={"futur"} />
+          <EventCarousel filter={"futur"} />
+        </div>
+
+        <div style={{ backgroundColor: 'var(--ion-color-primary)', width: '100%', height: '3px' }} />
+
+        <div className="center-screen-text">
+          <h1 className="title">{t('home.ongoing')}</h1>
+          <EventCarousel filter={"ongoing"} />
         </div>
 
       </IonContent >

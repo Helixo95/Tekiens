@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { AssosData, EventData } from '../../Tools/Interfaces/EventAndAssoInterface';
-import { IonContent, IonIcon, IonLabel, IonRefresher, IonRefresherContent, IonSpinner, IonTabButton, RefresherEventDetail } from '@ionic/react';
+import { IonContent, IonIcon, IonLabel, IonPage, IonSpinner, IonTabButton } from '@ionic/react';
 import EventCardComponent from './EventCardComponent';
 
-import { getEventsByWeek, getFilteredEvents, getWeekName } from '../../Tools/EventsTools';
+import { getFilteredEvents } from '../../Tools/EventsTools';
 import Api from '../../Tools/Api';
 import { help, searchOutline } from 'ionicons/icons';
 
-const EventsComponent: React.FC<{ filter: string, assoID?: string }> = ({ filter, assoID = '' }) => {
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import '@ionic/react/css/ionic-swiper.css';
+
+import '../../theme/Event/EventCarousel.css'
+
+const EventCarousel: React.FC<{ filter: string, assoID?: string }> = ({ filter, assoID = '' }) => {
     // Used to translate the page
     const { t } = useTranslation();
 
@@ -79,45 +85,28 @@ const EventsComponent: React.FC<{ filter: string, assoID?: string }> = ({ filter
 
     const filteredEvents = getFilteredEvents(eventsData, assosData, filter);
 
-    const eventByWeek = getEventsByWeek(filteredEvents);
-
-    // Function if the user want to reload the page
-    function handleRefresh(event: CustomEvent<RefresherEventDetail>) {
-        fetchData().then(() => event.detail.complete());
-    }
-
     return (
-        <div>
-            <IonRefresher slot="fixed" pullFactor={0.5} pullMin={100} pullMax={200} onIonRefresh={handleRefresh}>
-                <IonRefresherContent />
-            </IonRefresher>
-
-            {Object.keys(eventByWeek).length > 0 ? (
-                Object.keys(eventByWeek).map((weekKey, index) => {
-                    const weekString = getWeekName(weekKey);
-                    return (
-                        <div key={index}>
-                            <div className='title center-screen-text'>
-                                <h2>{t(weekString[0]) + weekString[1]}</h2>
-                            </div>
-                            <div className='event-card-container'>
-                                {eventByWeek[weekKey].map((event: EventData) => (
-                                    <EventCardComponent event={event} asso={getAssoById(event.asso_id)} key={event.id} />
-                                ))}
-                            </div>
-                        </div>
-
-                    );
-                })
-            ) : (
-                <div className='ion-padding all-screen-swipe'>
-                    <h1 className='title'>{t('events.filter.' + filter + '.message.title')}</h1>
-                    <div className='justify-text'><IonLabel>{t('events.filter.' + filter + '.message.text')}</IonLabel></div>
-                </div>
+        <>
+            {filteredEvents.length > 0 ? (
+                <Swiper className='swiper-carousel'>
+                    {filteredEvents.map((event) => {
+                        return (
+                            <SwiperSlide key={event.id}>
+                                <EventCardComponent event={event} asso={getAssoById(event.asso_id)} key={event.id} />
+                            </SwiperSlide>
+                        );
+                    })}
+                </Swiper>
             )
+                : (
+                    <div className='ion-padding'>
+                        <h1 className='title'>{t('events.filter.' + filter + '.message.title')}</h1>
+                        <div className='justify-text'><IonLabel>{t('events.filter.' + filter + '.message.text')}</IonLabel></div>
+                    </div>
+                )
             }
-        </div>
+        </>
     )
 }
 
-export default EventsComponent
+export default EventCarousel

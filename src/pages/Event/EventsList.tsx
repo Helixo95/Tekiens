@@ -66,6 +66,7 @@ const EventsList: React.FC<{ assoID?: string }> = ({ assoID = '' }) => {
 
                 <Swiper
                     ref={swiperRef}
+                    slidesPerView={1}
                     onSlideChange={handleSlideChange}
                     initialSlide={0}
                     loop={false}

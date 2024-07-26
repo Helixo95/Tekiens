@@ -1,16 +1,20 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonGrid, IonLabel, IonRow } from '@ionic/react'
+import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonGrid, IonImg, IonLabel, IonRow } from '@ionic/react'
 import React from 'react'
 import { useTranslation } from 'react-i18next';
 import { AssosData, EventData } from '../../Tools/Interfaces/EventAndAssoInterface';
+import '../../theme/Event/EventCard.css'
 
 
 const EventCardComponent: React.FC<{ event: EventData, asso: AssosData | undefined }> = ({ event, asso }) => {
     // Used to translate the page
     const { i18n } = useTranslation();
 
+    // When the event hasn't a poster
+    const placeholderImage = "https://upload.wikimedia.org/wikipedia/commons/8/89/HD_transparent_picture.png";
+
     return (
         <IonCard className='event-card' button={true} href={'/event/' + event.id} >
-            <img src={event.poster ? `${event.poster}?${Date.now()}` : ""} />
+            <IonImg className='event-image' alt="" src={event.poster ? `${event.poster}?${Date.now()}` : `${placeholderImage}`} style={{ backgroundColor: asso?.color }} />
             <IonCardHeader>
                 <IonCardTitle>{event.title}</IonCardTitle>
             </IonCardHeader>

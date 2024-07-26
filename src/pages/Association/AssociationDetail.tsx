@@ -1,7 +1,7 @@
 import { IonButton, IonButtons, IonCard, IonCardContent, IonCardTitle, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonFooter, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonModal, IonPage, IonRefresher, IonRefresherContent, IonRow, IonSpinner, IonTabButton, IonText, IonTitle, IonToast, IonToolbar, RefresherEventDetail } from "@ionic/react";
 import { useEffect, useRef, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import { logoDiscord, logoInstagram, paperPlane, logoLinkedin, globeOutline, leafOutline, atOutline, logoFacebook, locationOutline, extensionPuzzleOutline, calendarOutline, addOutline, addCircle, removeCircleOutline, call, pulseOutline, colorFill, add, starSharp, starOutline, pencilOutline, addCircleOutline, arrowBackOutline, searchOutline, help } from 'ionicons/icons';
+import { logoDiscord, logoInstagram, paperPlane, logoLinkedin, globeOutline, leafOutline, atOutline, logoFacebook, locationOutline, extensionPuzzleOutline, calendarOutline, addOutline, addCircle, removeCircleOutline, call, pulseOutline, colorFill, add, starSharp, starOutline, pencilOutline, addCircleOutline, arrowBackOutline, searchOutline, help, logoTwitter } from 'ionicons/icons';
 import { SocialsData } from '../../Tools/Interfaces/EventAndAssoInterface';
 import { parseText } from "../../Tools/DOMParser";
 import { isAssoFollowed, followAssociation } from "../../Tools/LocalStorage/LocalStorageAssos";
@@ -38,7 +38,7 @@ const AssociationDetails: React.FC = () => {
     // List all the used logos in an associative array
     interface Logos { [key: string]: string; }
     const logos: Logos = {
-        discord: logoDiscord, instagram: logoInstagram,
+        discord: logoDiscord, instagram: logoInstagram, twitter: logoTwitter,
         linkedin: logoLinkedin, telegram: paperPlane, web: globeOutline, links: leafOutline, email: atOutline, facebook: logoFacebook
     }
 
@@ -133,6 +133,7 @@ const AssociationDetails: React.FC = () => {
                 <IonFabList side="top">
 
                     {assoData.socials.map((social: SocialsData, index) =>
+
                         <IonFabButton key={index} onClick={() => window.open(social.link, '_system', 'location=yes')} className="detail-socials-button" style={{ '--border-color': assoData.color }}>
                             <IonIcon icon={logos[social.id]} style={{ color: assoData.color }} />
                         </IonFabButton>

@@ -6,5 +6,11 @@
 }
 
 .event-card {
-    max-width: 32em;
+    width: 355px;
+}
+
+.event-image {
+    height: 16em;
+    width: 100%;
+    object-fit: cover;
 }
