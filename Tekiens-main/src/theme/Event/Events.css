@@ -1,0 +1,12 @@
+.date-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: large;
+    font-weight: 500
+}
+
+.info {
+    padding: 5px;
+}

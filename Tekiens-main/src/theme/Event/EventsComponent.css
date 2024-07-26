@@ -1,0 +1,10 @@
+.event-card-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.event-card {
+    max-width: 32em;
+}
