@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import HeaderTitleBack from '../../components/HeaderTitleBack'
-import { IonAlert, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonPage, IonRefresher, IonRefresherContent, IonRow, IonSpinner, IonTabButton, IonText, IonToast, RefresherEventDetail, useIonRouter } from '@ionic/react'
+import { IonAlert, IonButton, IonCol, IonContent, IonFab, IonFabButton, IonFabList, IonGrid, IonIcon, IonLabel, IonPage, IonRefresher, IonRefresherContent, IonRow, IonSpinner, IonTabButton, IonText, IonToast, RefresherEventDetail, useIonRouter } from '@ionic/react'
 import { useHistory, useParams } from 'react-router'
 import { AssosData } from '../../Tools/Interfaces/EventAndAssoInterface'
 import { useTranslation } from 'react-i18next'
@@ -73,14 +73,15 @@ const EventDetails: React.FC = () => {
         }
     };
 
-    const handleNotificationClick = async () => {
+    const handleNotificationClick = async (data: string[]) => {
         try {
+
             if (!eventData) {
                 throw new Error("Event data is null");
             }
 
+            // Retrieve the id of the event, that will also become the id of the notification
             const id_Number = Number(id);
-
             // Check if the notification already exists
             const bDoesExist = await doesNotificationExist(id_Number);
 
@@ -88,13 +89,36 @@ const EventDetails: React.FC = () => {
             if (bDoesExist) {
                 await cancelNotification(id_Number);
             } else {
+                const name = data[0] || eventData.title;
+                const description = data[1] || t('notification.description');
+
+
                 // Create new notification
+                const nowDate = new Date();
+                nowDate.setHours(nowDate.getHours() + 2);
                 const parsedDate = eventData.date.replace(' ', 'T');
-                const NotificationDate = new Date(parsedDate);
+
+                let NotificationDate = new Date(parsedDate);
                 NotificationDate.setHours(NotificationDate.getHours() + 2);
+                console.log(NotificationDate);
+
+                // Un-used notification lead time system (Can have the notification played x hours before it starts)
+
+                // Adjust the  time zone and the lead time
+                /*
+                // const leadTime = Math.max(0, Math.min(parseInt(data[2], 10), 8)); // Automatically clamp the leadTime from 0 to 8
+                NotificationDate.setHours(NotificationDate.getHours() + 2 - leadTime);
+
+                // Send the notification now if the notification date has already been past
+                if(NotificationDate.getTime() - nowDate.getTime() <= 0){
+                    NotificationDate =  nowDate;
+                }
+
+                NotificationDate.setSeconds(NotificationDate.getSeconds() + );
+                console.log("Notification Date: ",  NotificationDate);*/
 
                 // Send notification
-                await sendNotification(`Evenement ${id} arrive`, "Veuillez participer à l'événement", NotificationDate, id_Number);
+                await sendNotification(name, description, NotificationDate, id_Number);
 
                 // Update state to indicate notification exists
                 setNotificationExist(true);
@@ -106,11 +130,10 @@ const EventDetails: React.FC = () => {
 
             setShowNotifToast(true);
 
-            console.log("Value of notification event: ", val);
         } catch (error) {
             console.error("Error in handleNotificationClick:", error);
         }
-    };
+    }
 
 
     // useEffect to call the API when we load the page
@@ -273,8 +296,38 @@ const EventDetails: React.FC = () => {
                         </IonFabButton>
 
                         {bcanSelectNotification &&
-                            <IonFabButton className='fab-button' id='notif-event' onClick={handleNotificationClick} style={{ '--border-color': assoData?.color }}>
-                                <IonIcon icon={bDoesNotficationExist ? notificationsOutline : notificationsOffOutline} style={{ color: assoData?.color }} />
+                            <IonFabButton className='fab-button' id='notif-event' style={{ '--border-color': assoData?.color }}>
+
+                                <IonIcon
+                                    icon={bDoesNotficationExist ? notificationsOutline : notificationsOffOutline}
+                                    style={{ color: assoData?.color }}
+                                    onClick={bDoesNotficationExist ? () => handleNotificationClick([""]) : undefined}
+                                />
+
+                                {!bDoesNotficationExist &&
+                                    <IonAlert
+                                        trigger='notif-event'
+                                        header='NOTIFICATION (No text result in default message)'
+
+                                        buttons={[{ text: "OK", handler: (data) => handleNotificationClick(data) }]}
+                                        inputs={[
+                                            {
+                                                type: 'textarea',
+                                                placeholder: 'Notification name',
+                                            },
+                                            {
+                                                type: "textarea",
+                                                placeholder: 'Notification description'
+                                            },
+                                            /*
+                                            {
+                                                type: 'number',
+                                                placeholder: 'Notify 0-8 hours prior (auto-clamp)',
+                                                min: 0,
+                                                max: 8,
+                                            },*/
+                                        ]}
+                                    />}
                             </IonFabButton>
                         }
 
