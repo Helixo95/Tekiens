@@ -1,4 +1,4 @@
-import { IonButton, IonCol, IonContent, IonGrid, IonItem, IonPage, IonRow } from "@ionic/react";
+import { IonButton, IonCol, IonContent, IonGrid, IonItem, IonLabel, IonPage, IonRow } from "@ionic/react";
 import HeaderTitle from "../components/HeaderTitle";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
@@ -22,6 +22,13 @@ const HomePage: React.FC = () => {
     <IonPage>
       <HeaderTitle>{t('home.title')}</HeaderTitle>
       <IonContent class="ion-padding">
+
+        <div style={{ marginBottom: '10%' }} className="center-screen-text justify-text">
+          <h1 className="title ">{t('home.app-title')}</h1>
+          <IonLabel>{t('home.app-description')}</IonLabel>
+        </div>
+
+        <div style={{ backgroundColor: 'var(--ion-color-primary)', width: '100%', height: '3px' }} />
 
         <div style={{ height: '300px' }}>
           <h1 className="title center-screen-text">{t('home.discover')}</h1>

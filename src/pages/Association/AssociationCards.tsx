@@ -35,9 +35,13 @@ const AssociationCards: React.FC<{ segValue: string }> = ({ segValue }) => {
   // Loading appears while waiting for data
   if (loading) {
     return (
-      <IonTabButton disabled>
-        <IonSpinner name='circular' />
-      </IonTabButton>
+      <>
+        <IonContent>
+          <IonTabButton disabled>
+            <IonSpinner name='circular' />
+          </IonTabButton>
+        </IonContent>
+      </>
     );
   }
 

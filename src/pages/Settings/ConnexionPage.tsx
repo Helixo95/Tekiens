@@ -12,7 +12,7 @@ const PageConnexion: React.FC = () => {
     const history = useHistory();
 
     // Get the desire function from the context
-    const { login } = useAuth();
+    const { session, login } = useAuth();
 
     const [errorText, setErrorText] = useState('');
     const [assoId, setAssoId] = useState('');
@@ -27,6 +27,10 @@ const PageConnexion: React.FC = () => {
         setPassword('');
         setErrorText('');
     }, [history.location.pathname]);
+
+    if (session) {
+        history.goBack();
+    }
 
     /**
      * Function when the user want to login

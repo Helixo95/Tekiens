@@ -88,7 +88,7 @@ const EventCarousel: React.FC<{ filter: string, assoID?: string }> = ({ filter, 
     return (
         <>
             {filteredEvents.length > 0 ? (
-                <Swiper className='swiper-carousel'>
+                <Swiper className='swiper-carousel' loop={true}>
                     {filteredEvents.map((event) => {
                         return (
                             <SwiperSlide key={event.id}>
