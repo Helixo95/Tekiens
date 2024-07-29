@@ -156,8 +156,6 @@ const ModifyEvent: React.FC = () => {
             }
         });
 
-        console.log(values.date)
-
         const parsedDate = values.date.replace(' ', 'T');
         const eventDate = new Date(parsedDate);
         eventDate.setHours(eventDate.getHours() - 2);
