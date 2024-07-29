@@ -68,7 +68,6 @@ const AssociationDetails: React.FC = () => {
             <>
                 <HeaderTitleBack back={''}>{t('association.title')}</HeaderTitleBack>
                 <IonContent>
-
                     <IonTabButton disabled>
                         <IonSpinner name='circular' />
                     </IonTabButton>
