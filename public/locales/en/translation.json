@@ -388,7 +388,7 @@
         
         "notifications" : {
             "title" : "Notifications",
-            "text" : "Disable notifications"
+            "text" : "Notifications enabled ?"
         },
 
         "language" : {

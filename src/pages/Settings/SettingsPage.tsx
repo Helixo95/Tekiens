@@ -1,6 +1,6 @@
-import { IonContent, IonIcon, IonItem, IonLabel, IonList, IonPage, IonToast } from '@ionic/react';
+import { IonContent, IonIcon, IonItem, IonLabel, IonList, IonPage, IonToast, IonToggle } from '@ionic/react';
 import HeaderTitle from '../../components/HeaderTitle';
-import { constructOutline, logInOutline, happyOutline, helpCircleOutline, linkOutline, logOutOutline } from 'ionicons/icons';
+import { constructOutline, logInOutline, happyOutline, helpCircleOutline, linkOutline, logOutOutline, notificationsOutline } from 'ionicons/icons';
 import { useTranslation } from 'react-i18next';
 import '../../theme/IconText.css'
 import { useState } from 'react';

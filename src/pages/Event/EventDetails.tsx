@@ -145,9 +145,8 @@ const EventDetails: React.FC = () => {
     if (loading) {
         return (
             <>
-
-                <HeaderTitleBack back="">{t('event.title')}</HeaderTitleBack>
                 <IonContent>
+                    <HeaderTitleBack back="">{t('event.title')}</HeaderTitleBack>
                     <IonTabButton disabled>
                         <IonSpinner name='circular' />
                     </IonTabButton>

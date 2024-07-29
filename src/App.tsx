@@ -48,30 +48,13 @@ import ModifyEvent from './pages/Event/ModifyEvent';
 import ModifyAsso from './pages/Association/ModifyAsso';
 import { EventDataProvider } from './contexts/EventDataContext';
 import NetworkCheck from './components/NetworkCheck';
-import { LocalNotifications } from "@capacitor/local-notifications";
+import { askUserForNotification, checkNotificationPermission } from './Tools/NotificationsHandler';
 
 setupIonicReact();
 
 const App: React.FC = () => {
-  // Ask the user for notifications permissions
-  useEffect(() => {
-    const requestNotificationPermission = async () => {
-      const granted  = await LocalNotifications.requestPermissions();
-      if (granted) {
-        console.log('Notification permission granted');
-      } else {
-        console.log('Notification permission denied');
-      }
-    };
-
-    const checkNotificationPermission = async () => {
-      const { display } = await LocalNotifications.checkPermissions();
-      console.log('Notification permission status:', display);
-    };
-
-    requestNotificationPermission();
-    checkNotificationPermission();
-  }, []);
+  checkNotificationPermission();
+  askUserForNotification();
 
   return (
     <React.StrictMode>
