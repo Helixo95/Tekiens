@@ -1,5 +1,4 @@
 import { LocalNotifications, ScheduleOptions } from "@capacitor/local-notifications"
-import { notifications } from "ionicons/icons";
 
 /** Try sending a notification to the users mobile
  * @param title The name of the notification
@@ -78,4 +77,19 @@ export async function doesNotificationExist(id: number) {
         console.error('Error checking notification existence:', error);
         return false; // Return false if there's an error (could not determine existence)
     }
+}
+
+/** Ask the user for notifications permissions
+ */
+export async function askUserForNotification() {
+    await LocalNotifications.requestPermissions();
+}
+
+/** Check the notification values
+ * @return A string value checking that the permission isn't denied 'on' or 'off'
+ */
+export async function checkNotificationPermission() {
+    const display = (await LocalNotifications.checkPermissions()).display;
+    console.log('Notification permission status:', display);
+    return display != "denied"
 }

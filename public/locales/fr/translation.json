@@ -12,7 +12,7 @@
     "home" : {
         "title" : "Accueil",
 
-        "app-title" : "Bienvenue sur Tekiens : Votre Guide des Événements Associatifs de CY Tech",
+        "app-title" : "Bienvenue sur Tekiens : Votre guide des événements associatifs de CY Tech",
 
         "app-description" : "Explorez les événements organisés par les associations de CY Tech. Ne manquez plus jamais une opportunité de vous impliquer !",
 
@@ -380,7 +380,7 @@
         
         "notifications" : {
             "title" : "Notifications",
-            "text" : "Désactiver les notifications"
+            "text" : "Notifications actives ?"
         },
 
         "language" : {

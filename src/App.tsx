@@ -35,11 +35,11 @@ import Tabs from './components/Tabs';
 import Preferences from './pages/Settings/PreferencesPage';
 import Links from './pages/Settings/LinksPage';
 import FAQ from './pages/Settings/FAQPage';
-import Connexion from './pages/Settings/ConnexionPage'
+import Connexion from './pages/Settings/ConnexionPage';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
-import './MultiLang.js'
-import React from 'react';
+import './MultiLang.js';
+import React, { useEffect } from 'react';
 import EventDetails from './pages/Event/EventDetails';
 import AssociationDetails from './pages/Association/AssociationDetail';
 import AssociationEvents from './pages/Association/AssociationEvents';
@@ -48,40 +48,38 @@ import ModifyEvent from './pages/Event/ModifyEvent';
 import ModifyAsso from './pages/Association/ModifyAsso';
 import { EventDataProvider } from './contexts/EventDataContext';
 import NetworkCheck from './components/NetworkCheck';
-
+import { askUserForNotification, checkNotificationPermission } from './Tools/NotificationsHandler';
 setupIonicReact();
 
 const App: React.FC = () => {
+  checkNotificationPermission();
+  askUserForNotification();
 
   return (
     <React.StrictMode>
-      <React.Suspense>
+      <React.Suspense fallback={<div>Loading...</div>}>
         <IonApp>
           <ThemeProvider>
             <AuthProvider>
               <NetworkCheck>
                 <IonReactRouter>
                   <IonRouterOutlet>
-                    <Route path="/" exact={true} >
+                    <Route path="/" exact>
                       <Redirect to='/app/home' />
                     </Route>
-
-                    <Route path="/app" render={() => <Tabs />} />
-
-                    <Route path="/association/:id" render={() => <AssociationDetails />} exact={true} />
-                    <Route path="/association/:id/events" render={() => <AssociationEvents />} exact={true} />
-                    <Route path="/association/modify/:id" render={() => <ModifyAsso />} exact={true} />
-
+                    <Route path="/app" component={Tabs} />
+                    <Route path="/association/:id" component={AssociationDetails} exact />
+                    <Route path="/association/:id/events" component={AssociationEvents} exact />
+                    <Route path="/association/modify/:id" component={ModifyAsso} exact />
                     <EventDataProvider>
-                      <Route path="/event/:id" render={() => <EventDetails />} exact={true} />
-                      <Route path="/event/modify/:id" render={() => <ModifyEvent />} exact={true} />
+                      <Route path="/event/:id" component={EventDetails} exact />
+                      <Route path="/event/modify/:id" component={ModifyEvent} exact />
                     </EventDataProvider>
-                    <Route path="/createEvent/" render={() => <CreateEvent />} exact={true} />
-
-                    <Route path="/preferences" render={() => <Preferences />} exact={true} />
-                    <Route path="/faq" render={() => <FAQ />} exact={true} />
-                    <Route path="/links" render={() => <Links />} exact={true} />
-                    <Route path="/login" render={() => <Connexion />} exact={true} />
+                    <Route path="/createEvent/" component={CreateEvent} exact />
+                    <Route path="/preferences" component={Preferences} exact />
+                    <Route path="/faq" component={FAQ} exact />
+                    <Route path="/links" component={Links} exact />
+                    <Route path="/login" component={Connexion} exact />
                   </IonRouterOutlet>
                 </IonReactRouter>
               </NetworkCheck>
@@ -89,8 +87,8 @@ const App: React.FC = () => {
           </ThemeProvider>
         </IonApp>
       </React.Suspense>
-    </React.StrictMode >
+    </React.StrictMode>
   );
-}
+};
 
 export default App;
