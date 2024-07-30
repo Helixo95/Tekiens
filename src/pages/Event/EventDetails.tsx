@@ -145,7 +145,6 @@ const EventDetails: React.FC = () => {
     if (loading) {
         return (
             <>
-
                 <HeaderTitleBack back="">{t('event.title')}</HeaderTitleBack>
                 <IonContent>
                     <IonTabButton disabled>
