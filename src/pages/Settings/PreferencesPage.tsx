@@ -1,4 +1,4 @@
-import { IonCheckbox, IonContent, IonIcon, IonItem, IonItemDivider, IonItemGroup, IonLabel, IonPage, IonSelect, IonSelectOption, IonToggle, ToggleCustomEvent } from "@ionic/react"
+import { IonContent, IonIcon, IonItem, IonItemDivider, IonItemGroup, IonLabel, IonPage, IonSelect, IonSelectOption, IonToggle, ToggleCustomEvent } from "@ionic/react"
 import { earthOutline, notificationsOutline, schoolOutline, colorPaletteOutline, notificationsOffOutline } from "ionicons/icons";
 import HeaderTitleBack from "../../components/HeaderTitleBack";
 import { useTheme } from '../../contexts/ThemeContext';
@@ -25,6 +25,18 @@ const PreferencesPage: React.FC = () => {
     }, [])
 
 
+
+    const [bNotificationEnbable, setNotificationEnable] = useState<boolean>(false);
+
+    /** Initialise notification value */
+    useEffect(() => {
+        const checkForNotification = async () => {
+            const value = await checkNotificationPermission();
+            setNotificationEnable(value);
+        }
+
+        checkForNotification();
+    }, [])
 
     /**
      * Function to update the dark theme

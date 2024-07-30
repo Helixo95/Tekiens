@@ -1,4 +1,5 @@
 import { LocalNotifications, ScheduleOptions } from "@capacitor/local-notifications"
+
 /** Try sending a notification to the users mobile
  * @param title The name of the notification
  * @param body A brief description of the notification
@@ -80,14 +81,14 @@ export async function doesNotificationExist(id: number) {
 
 /** Ask the user for notifications permissions
  */
-export async function askUserForNotification(){
+export async function askUserForNotification() {
     await LocalNotifications.requestPermissions();
 }
 
 /** Check the notification values
  * @return A string value checking that the permission isn't denied 'on' or 'off'
  */
-export async function checkNotificationPermission(){
+export async function checkNotificationPermission() {
     const display = (await LocalNotifications.checkPermissions()).display;
     console.log('Notification permission status:', display);
     return display != "denied"

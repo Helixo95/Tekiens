@@ -12,6 +12,10 @@
     "home" : {
         "title" : "Accueil",
 
+        "app-title" : "Bienvenue sur Tekiens : Votre guide des événements associatifs de CY Tech",
+
+        "app-description" : "Explorez les événements organisés par les associations de CY Tech. Ne manquez plus jamais une opportunité de vous impliquer !",
+
         "discover" : "Découvrir une association",
 
         "upcoming" : "Événements à venir :",

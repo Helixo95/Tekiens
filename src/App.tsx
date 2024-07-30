@@ -1,4 +1,4 @@
-import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
+import { IonApp, IonContent, IonRouterOutlet, IonSpinner, IonTabButton, setupIonicReact } from '@ionic/react';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -58,7 +58,13 @@ const App: React.FC = () => {
 
   return (
     <React.StrictMode>
-      <React.Suspense fallback={<div>Loading...</div>}>
+      <React.Suspense fallback={
+        <IonContent>
+          <IonTabButton disabled>
+            <IonSpinner name='circular' />
+          </IonTabButton>
+        </IonContent>
+      }>
         <IonApp>
           <ThemeProvider>
             <AuthProvider>

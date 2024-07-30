@@ -12,6 +12,10 @@
     "home" : {
         "title" : "Home",
 
+        "app-title" : "Welcome to Tekiens: Your guide to CY Tech association avents",
+
+        "app-description" : "Explore the events organized by CY Tech associations. Never miss another opportunity to get involved!",
+
         "discover" : "Discover an association",
 
         "upcoming" : "Upcoming events:",
