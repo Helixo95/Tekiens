@@ -1,10 +1,9 @@
-import { IonButton, IonCol, IonContent, IonGrid, IonItem, IonLabel, IonPage, IonRow } from "@ionic/react";
+import { IonContent, IonLabel, IonPage } from "@ionic/react";
 import HeaderTitle from "../components/HeaderTitle";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import AssociationCards from "./Association/AssociationCards";
-import EventsComponent from "../components/EventComponent/EventsComponent";
 import EventCarousel from "../components/EventComponent/EventCarousel";
 
 const HomePage: React.FC = () => {
@@ -23,7 +22,7 @@ const HomePage: React.FC = () => {
       <HeaderTitle>{t('home.title')}</HeaderTitle>
       <IonContent class="ion-padding">
 
-        <div style={{ marginBottom: '10%' }} className="center-screen-text justify-text">
+        <div style={{ marginBottom: '20px' }} className="center-screen-text justify-text">
           <h1 className="title ">{t('home.app-title')}</h1>
           <IonLabel>{t('home.app-description')}</IonLabel>
         </div>
