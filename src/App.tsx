@@ -49,6 +49,7 @@ import ModifyAsso from './pages/Association/ModifyAsso';
 import { EventDataProvider } from './contexts/EventDataContext';
 import NetworkCheck from './components/NetworkCheck';
 import { askUserForNotification, checkNotificationPermission } from './Tools/NotificationsHandler';
+
 setupIonicReact();
 
 const App: React.FC = () => {

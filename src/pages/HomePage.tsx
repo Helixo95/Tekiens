@@ -21,7 +21,7 @@ const HomePage: React.FC = () => {
     <IonPage>
       <HeaderTitle>{t('home.title')}</HeaderTitle>
       <IonContent class="ion-padding">
-
+        
         <div style={{ marginBottom: '20px' }} className="center-screen-text justify-text">
           <h1 className="title ">{t('home.app-title')}</h1>
           <IonLabel>{t('home.app-description')}</IonLabel>

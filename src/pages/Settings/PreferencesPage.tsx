@@ -12,6 +12,19 @@ const PreferencesPage: React.FC = () => {
 
     // Used to translate the page and change the language
     const { t, i18n } = useTranslation();
+    const [bNotificationEnbable, setNotificationEnable] = useState<boolean>(false);
+
+    /** Initialise notification value */
+    useEffect(() => {
+        const checkForNotification = async () => {
+            const value = await checkNotificationPermission();
+            setNotificationEnable(value);
+        }
+
+        checkForNotification();
+    }, [])
+
+
 
     const [bNotificationEnbable, setNotificationEnable] = useState<boolean>(false);
 
