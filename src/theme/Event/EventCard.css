@@ -1,0 +1,16 @@
+.event-card-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.event-card {
+    width: 355px;
+}
+
+.event-image {
+    height: 16em;
+    width: 100%;
+    object-fit: cover;
+}

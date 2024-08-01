@@ -1,0 +1,20 @@
+sudo apt install nodejs
+sudo apt install npm
+
+npm install -g @ionic/cli
+npm install capacitor
+npm install i18next
+npm install react-router-dom
+npm install swiper@latest
+npm install bcryptjs
+npm install domPurify
+npm install marked
+npm install marked-mangle
+npm install turndown
+npm install quill@2.0.2
+npm install @capacitor/network
+npm install @capacitor/local-notifications
+
+npm install @capacitor/push-notifications
+npm install firebase
+npm install firebase-admin

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "134009207786",
+    "project_id": "tekiens-app",
+    "storage_bucket": "tekiens-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134009207786:android:30f40bef9c95df0fbd5093",
+        "android_client_info": {
+          "package_name": "com.cyje.tekiens"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7A0HAmmd-OwI-kIF5jIz3sNzNEiRh5WI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

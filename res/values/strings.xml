@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<resources>
+    <string name="app_name">Tekiens</string>
+    <string name="title_activity_main">Tekiens</string>
+    <string name="package_name">com.cyje.tekiens</string>
+    <string name="custom_url_scheme">com.cyje.tekiens</string>
+</resources>
