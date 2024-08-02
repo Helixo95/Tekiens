@@ -3,7 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next';
 import { AssosData, EventData } from '../../Tools/Interfaces/EventAndAssoInterface';
 import '../../theme/Event/EventCard.css'
-import { isColorDark } from '../../Tools/GeneralTools';
+import { brightenColor, isColorDark } from '../../Tools/GeneralTools';
 
 
 const EventCardComponent: React.FC<{ event: EventData, asso: AssosData | undefined }> = ({ event, asso }) => {
@@ -17,7 +17,7 @@ const EventCardComponent: React.FC<{ event: EventData, asso: AssosData | undefin
         <IonCard className='event-card' button={true} href={'/event/' + event.id} >
             <IonImg className='event-image' alt="" src={event.poster ? `${event.poster}?${Date.now()}` : `${placeholderImage}`} style={{ backgroundColor: asso?.color }} />
             <IonCardHeader>
-                <IonCardTitle style={{ color: asso?.color }} className={isColorDark(asso?.color) ? "border-text" : ""}>{event.title}</IonCardTitle>
+                <IonCardTitle style={{ color: isColorDark(asso?.color) ? brightenColor(asso?.color) : asso?.color }}>{event.title}</IonCardTitle>
             </IonCardHeader>
 
             <IonCardContent>
@@ -38,7 +38,7 @@ const EventCardComponent: React.FC<{ event: EventData, asso: AssosData | undefin
                         <IonCol>
                             <IonGrid style={{ 'textAlign': 'left' }}>
                                 <IonRow className='info'>
-                                    <IonLabel style={{ color: asso?.color }} className={isColorDark(asso?.color) ? "border-text" : ""}>{asso?.names[0]}</IonLabel>
+                                    <IonLabel style={{ color: isColorDark(asso?.color) ? brightenColor(asso?.color) : asso?.color }}>{asso?.names[0]}</IonLabel>
                                 </IonRow>
 
                                 <IonRow className='info'>
