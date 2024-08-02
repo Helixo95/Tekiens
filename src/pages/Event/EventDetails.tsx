@@ -32,7 +32,6 @@ const EventDetails: React.FC = () => {
     const [isSaved, setIsSaved] = useState<boolean>(false);
     const [description, setDescription] = useState<string>("");
     const [loading, setLoading] = useState(true);
-    const [showAlert, setShowAlert] = useState(false);
     const [showNotifToast, setShowNotifToast] = useState(false);
     const [bcanSelectNotification, setCanSelectNotification] = useState<boolean>(false);
     const [bDoesNotficationExist, setNotificationExist] = useState<boolean>(false);
@@ -252,37 +251,6 @@ const EventDetails: React.FC = () => {
                     ]}
                 />
 
-                <IonAlert
-                    isOpen={showAlert}
-                    onDidDismiss={() => setShowAlert(false)}
-                    header="Please enter your info"
-                    buttons={[
-                        {
-                            text: 'Cancel',
-                            role: 'cancel',
-                        },
-                        {
-                            text: 'OK',
-                            role: 'confirm',
-                            handler: (alertData) => {
-                                const email = alertData.email;
-                                if (!validateEmail(email)) {
-                                    alert('Please enter a valid email address.');
-                                    return false;
-                                }
-                                return true;
-                            },
-                        },
-                    ]}
-                    inputs={[
-                        {
-                            name: 'email',
-                            type: 'email',
-                            placeholder: 'Email',
-                        },
-                    ]}
-                />
-
                 <IonFab slot="fixed" horizontal="end" vertical="bottom">
                     <IonFabButton className="detail-socials-button" style={{ '--border-color': 'white', '--background': assoData?.color, '--background-activated': darkenColor(assoData?.color) }}>
                         <IonIcon icon={add}></IonIcon>
@@ -290,10 +258,6 @@ const EventDetails: React.FC = () => {
                     <IonFabList side="top">
                         <IonFabButton className='detail-socials-button fab-button' onClick={() => saveEvent(eventData.id, setIsSaved)} id="save-event" style={{ '--border-color': 'white', '--background': assoData?.color, '--background-activated': darkenColor(assoData?.color) }}>
                             <IonIcon icon={isSaved ? star : starOutline} style={{ color: 'white' }} />
-                        </IonFabButton>
-
-                        <IonFabButton className='detail-socials-button fab-button' onClick={() => setShowAlert(true)} style={{ '--border-color': 'white', '--background': assoData?.color, '--background-activated': darkenColor(assoData?.color) }}>
-                            <IonIcon icon={pushOutline} style={{ color: 'white' }} />
                         </IonFabButton>
 
                         {bcanSelectNotification &&
