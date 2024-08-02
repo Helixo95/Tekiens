@@ -2,7 +2,7 @@ import { AssosData } from "./Interfaces/EventAndAssoInterface";
 import { filterByCampus } from "./LocalStorage/LocalStorageAssos";
 
 /** Filter an array of asso
- * @param filterChoice 'all', 'sub', 'active', 'former'
+ * @param filterChoice 'all', 'sub', 'active', 'old'
  * @param assosData Array of assos amin info
  * @param callback Where to save the result (prefferabmly a useState)
  */

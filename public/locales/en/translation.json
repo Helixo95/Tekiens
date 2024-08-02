@@ -32,14 +32,14 @@
                 "label" : "Active",
                 "message" : {
                     "title" : "No active associations",
-                    "text" : "Come back later, or consult the list of the former or all associationss."
+                    "text" : "Come back later, or consult the list of the old or all associationss."
                 }
             },
 
-            "former" : {
-                "label" : "Former",
+            "old" : {
+                "label" : "Old",
                 "message" : {
-                    "title" : "No former associations",
+                    "title" : "No old associations",
                     "text" : "Come back later, or consult the list of the active or all associations."
                 }
             },

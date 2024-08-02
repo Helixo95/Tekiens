@@ -12,7 +12,7 @@ const Associations: React.FC = () => {
   const { t } = useTranslation();
 
   const [filter, setFilter] = useState('active');
-  const categories = ["active", "former", "all"];
+  const categories = ["active", "old", "all"];
   const swiperRef = useRef<SwiperRef>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -47,8 +47,8 @@ const Associations: React.FC = () => {
         <IonSegmentButton value={'active'}>
           <IonLabel>{t('associations.filter.active.label')}</IonLabel>
         </IonSegmentButton>
-        <IonSegmentButton value={'former'}>
-          <IonLabel>{t('associations.filter.former.label')}</IonLabel>
+        <IonSegmentButton value={'old'}>
+          <IonLabel>{t('associations.filter.old.label')}</IonLabel>
         </IonSegmentButton>
         <IonSegmentButton value={'all'}>
           <IonLabel>{t('associations.filter.all.label')}</IonLabel>
