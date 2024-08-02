@@ -42,17 +42,30 @@ Pour le hashage des mot de passes nous utilisons [bcryptjs](https://www.npmjs.co
 ```sh
 $ npm install bcryptjs
 ```
-Pour parser la description des associations et des évènements nous utilisons [DOMPurify](https://github.com/cure53/DOMPurify), [marked](https://github.com/markedjs/marked) et [marked-mangle](https://github.com/markedjs/marked-mangle).
+Pour parser / unparser la description des associations et des évènements nous utilisons [DOMPurify](https://github.com/cure53/DOMPurify), [marked](https://github.com/markedjs/marked), [marked-mangle](https://github.com/markedjs/marked-mangle) et [turndown](https://github.com/mixmark-io/turndown).
 
 ```sh
 $ npm install domPurify
 $ npm install marked
 $ npm install marked-mangle
+$ npm install turndown
+```
+Pour modifier la description des événement et des associations nous utilisons [quill](https://github.com/slab/quill).
+```sh
+$ npm install quill@2.0.2
+```
+Pour vérifier la connexion à internet nous utilisons l'API [network de capacitor](https://capacitorjs.com/docs/apis/network).
+```sh
+$ npm install @capacitor/network
+```
+Pour la gestion des notifications nous utilisons l'API [local notification de capacitor](https://capacitorjs.com/docs/apis/local-notifications).
+```sh
+$ npm install @capacitor/network
 ```
 ## Utilisation
 Notre application est divisée en 5 pages principales :
--  [Accueil](#accueil)
--  [Associations](#associations)
+- [Accueil](#accueil)
+- [Associations](#associations)
 - [Évènements](#évènements)
 - [Favoris](#favoris)
 - [Paramètres](#paramètres)
