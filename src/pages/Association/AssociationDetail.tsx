@@ -13,6 +13,7 @@ import { darkenColor } from "../../Tools/EventsTools";
 import { AssosData } from "../../Tools/Interfaces/EventAndAssoInterface";
 import Api from "../../Tools/Api";
 import { useAuth } from "../../contexts/AuthContext";
+import { isColorDark } from "../../Tools/GeneralTools";
 
 const AssociationDetails: React.FC = () => {
     // Used to translate the page
@@ -127,30 +128,30 @@ const AssociationDetails: React.FC = () => {
     return (
         <IonPage>
             <IonFab slot="fixed" vertical="bottom" horizontal="end">
-                <IonFabButton className="detail-socials-button" style={{ '--border-color': assoData.color, '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }}>
+                <IonFabButton className="detail-socials-button" style={{ '--border-color': 'white', '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }}>
                     <IonIcon icon={add} />
                 </IonFabButton>
                 <IonFabList side="top">
 
                     {assoData.socials.map((social: SocialsData, index) =>
 
-                        <IonFabButton key={index} onClick={() => window.open(social.link, '_system', 'location=yes')} className="detail-socials-button" style={{ '--border-color': assoData.color }}>
-                            <IonIcon icon={logos[social.id]} style={{ color: assoData.color }} />
+                        <IonFabButton key={index} onClick={() => window.open(social.link, '_system', 'location=yes')} className="detail-socials-button" style={{ '--border-color': 'white', '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }}>
+                            <IonIcon icon={logos[social.id]} style={{ color: 'white' }} />
                         </IonFabButton>
                     )}
 
-                    <IonFabButton className="detail-socials-button" onClick={() => followAssociation(assoData.id, setIsFollowed)} id="followAsso" style={{ '--border-color': assoData.color }}>
-                        <IonIcon icon={isFollowed ? starSharp : starOutline} style={{ color: assoData.color }} />
+                    <IonFabButton className="detail-socials-button" onClick={() => followAssociation(assoData.id, setIsFollowed)} id="followAsso" style={{ '--border-color': 'white', '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }}>
+                        <IonIcon icon={isFollowed ? starSharp : starOutline} style={{ color: 'white' }} />
                     </IonFabButton>
 
                     {editable() &&
                         <>
-                            <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }} onClick={navigateToModifyAsso}>
-                                <IonIcon icon={pencilOutline} style={{ color: assoData?.color }} />
+                            <IonFabButton className='fab-button' style={{ '--border-color': 'white', '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }} onClick={navigateToModifyAsso}>
+                                <IonIcon icon={pencilOutline} style={{ color: 'white' }} />
                             </IonFabButton>
 
-                            <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }} onClick={() => history.push("/createEvent")}>
-                                <IonIcon icon={addCircleOutline} style={{ color: assoData?.color }} />
+                            <IonFabButton className='fab-button' style={{ '--border-color': 'white', '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }} onClick={() => history.push("/createEvent")}>
+                                <IonIcon icon={addCircleOutline} style={{ color: 'white' }} />
                             </IonFabButton>
                         </>
                     }
@@ -176,14 +177,14 @@ const AssociationDetails: React.FC = () => {
                     <IonRow class="title-image">
                         <img className="detail-asso-image" width="40%" src={assoData.logos[0]} />
                         <div className="name-theme">
-                            <h1 className='title' style={{ color: assoData.color }}>{assoData.names[0]}</h1>
-                            <h4 style={{ color: assoData.color }}>{assoData.theme}</h4>
+                            <h1 className={isColorDark(assoData.color) ? "title border-text" : "title"} style={{ color: assoData.color }}>{assoData.names[0]}</h1>
+                            <h4 style={{ color: assoData.color }} className={isColorDark(assoData.color) ? "title border-text" : "title"}>{assoData.theme}</h4>
                         </div>
                     </IonRow>
 
                     <IonCol />
                     <IonRow>
-                        <div style={{ backgroundColor: assoData?.color, width: '100%', height: '3px' }} />
+                        <div style={{ backgroundColor: assoData.color, width: '100%', height: '3px', border: isColorDark(assoData.color) ? "1px solid white" : "" }} />
                     </IonRow>
                     <IonCol />
 
@@ -212,7 +213,7 @@ const AssociationDetails: React.FC = () => {
 
                     <IonRow>
                         <IonCol>
-                            <IonButton className="center-screen-text" style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }} onClick={() => history.push("/association/" + assoData.id + "/events")}>
+                            <IonButton className={isColorDark(assoData.color) ? "center-screen-text button-border" : "center-screen-text"} style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }} onClick={() => history.push("/association/" + assoData.id + "/events")}>
                                 {t('association.all-events')}
                             </IonButton>
                         </IonCol>
@@ -220,7 +221,7 @@ const AssociationDetails: React.FC = () => {
 
                     <IonCol />
                     <IonRow>
-                        <div style={{ backgroundColor: assoData?.color, width: '100%', height: '3px' }} />
+                        <div style={{ backgroundColor: assoData.color, width: '100%', height: '3px', border: isColorDark(assoData.color) ? "0.5px solid white" : "" }} />
                     </IonRow>
                     <IonCol />
 
@@ -276,7 +277,7 @@ const AssociationDetails: React.FC = () => {
 
                     <IonCol />
                     <IonRow>
-                        <div style={{ backgroundColor: assoData?.color, width: '100%', height: '3px' }} />
+                        <div style={{ backgroundColor: assoData.color, width: '100%', height: '3px', border: isColorDark(assoData.color) ? "0.5px solid white" : "" }} />
                     </IonRow>
                     <IonCol />
 
@@ -288,7 +289,9 @@ const AssociationDetails: React.FC = () => {
 
                     <IonRow>
                         <IonCol>
-                            <IonButton expand="block"
+                            <IonButton
+                                className={isColorDark(assoData.color) ? "center-screen-text button-border" : "center-screen-text"}
+                                expand="block"
                                 style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }}
                                 href={icsUrl()}
                                 download={"events-" + assoData.id + ".ics"}>
@@ -308,7 +311,7 @@ const AssociationDetails: React.FC = () => {
                         <>
                             <IonCol />
                             <IonRow>
-                                <div style={{ backgroundColor: assoData?.color, width: '100%', height: '3px' }} />
+                                <div style={{ backgroundColor: assoData.color, width: '100%', height: '3px', border: isColorDark(assoData.color) ? "0.5px solid white" : "" }} />
                             </IonRow>
                             <IonCol />
 
@@ -323,7 +326,7 @@ const AssociationDetails: React.FC = () => {
                     {oldNames.length > 0 &&
                         <IonRow className='info'>
                             <IonCol>
-                                <IonButton id="open-modal-names" expand="block" style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }}>
+                                <IonButton id="open-modal-names" className={isColorDark(assoData.color) ? "center-screen-text button-border" : "center-screen-text"} expand="block" style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }}>
                                     {t('association.old-informations.old-names.button')}
                                 </IonButton>
 
@@ -351,7 +354,7 @@ const AssociationDetails: React.FC = () => {
                     {oldLogos.length > 0 &&
                         <IonRow className='info'>
                             <IonCol>
-                                <IonButton id="open-modal-logos" expand="block" style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }}>
+                                <IonButton id="open-modal-logos" className={isColorDark(assoData.color) ? "center-screen-text button-border" : "center-screen-text"} expand="block" style={{ '--background': assoData.color, '--background-activated': darkenColor(assoData.color) }}>
                                     {t('association.old-informations.old-logos.button')}
                                 </IonButton>
 

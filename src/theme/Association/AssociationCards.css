@@ -12,24 +12,6 @@
     height: auto;
 }
 
-.asso-name {
-    font-size : 1em;
-    text-shadow: -1px 1px 0 #fff,
-    -1px -1px 0 #fff,  
-     1px -1px 0 #fff,
-     -1px 1px 0 #fff,
-      1px 1px 0 #fff;
-}
-
-.asso-theme {
-    font-size : 0.8em;
-    text-shadow: -1px 1px 0 #fff,
-    -1px -1px 0 #fff,  
-     1px -1px 0 #fff,
-     -1px 1px 0 #fff,
-      1px 1px 0 #fff;
-}
-
 .assos {
     display: flex;
     flex-wrap: wrap;
