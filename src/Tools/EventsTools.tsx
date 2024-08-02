@@ -165,7 +165,7 @@ export const getFilteredEvents = (eventsData: EventData[], assosData: AssosData[
 
     switch (filter) {
         case 'futur':
-            return campusFilteredData.filter(event => new Date(event.date + 'Z') > currentDate);
+            return campusFilteredData.filter(event => new Date(event.date + 'Z') > currentDate).reverse();
 
         case 'ongoing':
             return campusFilteredData.filter(event => {
@@ -176,7 +176,7 @@ export const getFilteredEvents = (eventsData: EventData[], assosData: AssosData[
                     return eventDate <= currentDate && currentDate <= eventEndDate;
                 }
                 return eventDate.toDateString() === currentDate.toDateString();
-            });
+            }).reverse();
 
         case 'past':
             return campusFilteredData.filter(event => {
