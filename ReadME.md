@@ -75,5 +75,8 @@ Lorsque que vous lancez l'application vous tomberez sur la page d'accueil. Sur c
 ### Associations
 Sur la page associations vous aurez accès à toutes les associations qu'elles soient actives ou anciennes. Lorsque vous cliquez sur une association vous serez redirigé vers sa page avec toutes ses informations. Vous pouvez aussi accédez à ses évènements.
 ### Évènements
+Tout comme les association, sur la page événements vous aurez accès à tous les événements. Vous pouvez voir les événements à venir, en cours, passés ou tous les événements.
 ### Favoris
+Vous pourrez trouver tous les événements et associations que vous avez enregistrés dans la page favoris.
 ### Paramètres
+Si vous voulez modifier l'apparance de l'application ou que vous êtes une association qui souhaite se connecter, rendez-vous sur la page paramètre.
