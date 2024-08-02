@@ -348,7 +348,7 @@ const EventDetails: React.FC = () => {
                 <img alt="" src={eventData.poster ? `${eventData.poster}?${Date.now()}` : ""} width="100%" />
                 <IonGrid className='ion-padding'>
                     <IonRow className='info'>
-                        <a style={{ color: isColorDark(assoData?.color) ? brightenColor(assoData?.color) : "assoData?.color" }} href={`/association/${eventData.asso_id}`}>{assoData?.names[0]}</a>
+                        <a style={{ color: isColorDark(assoData?.color) ? brightenColor(assoData?.color) : assoData?.color }} href={`/association/${eventData.asso_id}`}>{assoData?.names[0]}</a>
                     </IonRow>
 
                     <IonRow className='info'>
@@ -403,7 +403,7 @@ const EventDetails: React.FC = () => {
                                     __html:
                                         `<style>
                                         div a {
-                                            color: ${isColorDark(assoData?.color) ? brightenColor(assoData?.color) : "assoData?.color"}
+                                            color: ${isColorDark(assoData?.color) ? brightenColor(assoData?.color) : assoData?.color}
                                         }
                                     </style> ${description}`
                                 }} />
@@ -452,7 +452,7 @@ const EventDetails: React.FC = () => {
                             <IonCol>
                                 <IonLabel>
                                     🖇&nbsp;
-                                    <a href={eventData.link} target="_blank" rel="noreferrer" style={{ color: isColorDark(assoData?.color) ? brightenColor(assoData?.color) : "assoData?.color" }}>{t('event.link')}</a>
+                                    <a href={eventData.link} target="_blank" rel="noreferrer" style={{ color: isColorDark(assoData?.color) ? brightenColor(assoData?.color) : assoData?.color }}>{t('event.link')}</a>
                                 </IonLabel>
                             </IonCol>
                         </IonRow>
