@@ -1,6 +1,6 @@
 import { IonPage } from "@ionic/react";
 import { useParams } from "react-router";
-import EventsList from "../Event/EventsList";
+import EventsList from "../../components/EventComponent/EventsList";
 import HeaderTitleBack from "../../components/HeaderTitleBack";
 
 const AssociationEvents: React.FC = () => {

@@ -1,7 +1,7 @@
 import { IonContent, IonLabel, IonPage, IonSegment, IonSegmentButton } from "@ionic/react";
 import HeaderTitle from "../components/HeaderTitle";
 import { useTranslation } from "react-i18next";
-import AssociationCards from "./Association/AssociationCards";
+import AssociationCards from "../components/AssociationComponent/AssociationCards";
 import { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 

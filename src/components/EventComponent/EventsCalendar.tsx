@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import '../../theme/Event/Events.css';
-import EventCardComponent from '../../components/EventComponent/EventCardComponent';
+import EventCardComponent from './EventCardComponent';
 import { AssosData, EventData } from '../../Tools/Interfaces/EventAndAssoInterface';
 import Api from '../../Tools/Api';
-import HeaderTitle from '../../components/HeaderTitle';
+import HeaderTitle from '../HeaderTitle';
 import { help, searchOutline } from 'ionicons/icons';
 import { filterByCampus } from '../../Tools/LocalStorage/LocalStorageEvents';
 

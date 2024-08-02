@@ -1,8 +1,8 @@
 import { IonFab, IonFabButton, IonIcon, IonPage } from '@ionic/react'
 import HeaderTitle from '../../components/HeaderTitle';
 import { useTranslation } from 'react-i18next';
-import EventsList from './EventsList';
-import EventsCalendar from './EventsCalendar';
+import EventsList from '../../components/EventComponent/EventsList';
+import EventsCalendar from '../../components/EventComponent/EventsCalendar';
 import { listOutline, calendarNumberOutline } from 'ionicons/icons';
 import { useState } from 'react';
 

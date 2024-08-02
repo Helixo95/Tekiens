@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import '@ionic/react/css/ionic-swiper.css';
 import '../../theme/Event/Events.css';
-import EventsComponent from '../../components/EventComponent/EventsComponent';
+import EventsComponent from './EventsComponent';
 
 const EventsList: React.FC<{ assoID?: string }> = ({ assoID = '' }) => {
     // Used to translate the page

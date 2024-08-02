@@ -1,7 +1,7 @@
 import { IonContent, IonLabel, IonPage, IonSegment, IonSegmentButton } from "@ionic/react";
 import { useRef, useState } from "react";
 import HeaderTitle from "../../components/HeaderTitle";
-import AssociationCards from "./AssociationCards";
+import AssociationCards from "../../components/AssociationComponent/AssociationCards";
 import { Swiper, SwiperClass, SwiperRef, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
