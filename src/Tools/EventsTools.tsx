@@ -38,33 +38,6 @@ export function getEventStatus(event: EventData): string {
 }
 
 /**
- * Function to darken a color with a set amount
- * @param hex the color we want to darken
- * @param amount the amount we want to darken the color
- * @returns the new darker color
- */
-export const darkenColor = (hex: string | undefined, amount = 20) => {
-    if (hex) {
-
-        hex = hex.slice(1);
-
-        let num = parseInt(hex, 16);
-
-        let r = (num >> 16) - amount;
-        let g = ((num >> 8) & 0x00FF) - amount;
-        let b = (num & 0x0000FF) - amount;
-
-        r = Math.max(r, 0);
-        g = Math.max(g, 0);
-        b = Math.max(b, 0);
-
-        return "#" + (r << 16 | g << 8 | b).toString(16).padStart(6, '0');
-    }
-
-    return '#000000';
-}
-
-/**
  * Function to return a string with the right format to a date
  * @param date the string in the right format
  * @returns the date from the string
@@ -165,7 +138,7 @@ export const getFilteredEvents = (eventsData: EventData[], assosData: AssosData[
 
     switch (filter) {
         case 'futur':
-            return campusFilteredData.filter(event => new Date(event.date + 'Z') > currentDate);
+            return campusFilteredData.filter(event => new Date(event.date + 'Z') > currentDate).reverse();
 
         case 'ongoing':
             return campusFilteredData.filter(event => {
@@ -176,7 +149,7 @@ export const getFilteredEvents = (eventsData: EventData[], assosData: AssosData[
                     return eventDate <= currentDate && currentDate <= eventEndDate;
                 }
                 return eventDate.toDateString() === currentDate.toDateString();
-            });
+            }).reverse();
 
         case 'past':
             return campusFilteredData.filter(event => {

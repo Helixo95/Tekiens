@@ -32,14 +32,14 @@
                 "label" : "Active",
                 "message" : {
                     "title" : "No active associations",
-                    "text" : "Come back later, or consult the list of the former or all associationss."
+                    "text" : "Come back later, or consult the list of the old or all associationss."
                 }
             },
 
-            "former" : {
-                "label" : "Former",
+            "old" : {
+                "label" : "Old",
                 "message" : {
-                    "title" : "No former associations",
+                    "title" : "No old associations",
                     "text" : "Come back later, or consult the list of the active or all associations."
                 }
             },
@@ -451,8 +451,40 @@
         "title" : "My association"
     },
 
-    "faq" : {
-        "title" : "FAQ"
+    "faq": {
+        "title": "FAQ",
+
+        "part1": {
+            "title": "General Information",
+
+            "question1": "What is tekiens.net and what is its purpose?",
+
+            "answer1": "Tekiens.net is the student life website of CY Tech.<br />The purpose of this site is to centralize information about associations and events at the school."
+        },
+
+        "part2": {
+            "title": "Using the Platform",
+
+            "question1": "How can I add my association to tekiens.net?",
+
+            "answer1": "To add your association to tekiens.net, you need to contact the association office at <a href='https://atilla.org/' target='_blank' rel='noreferrer'>ATILLA</a>. <br />The platform is currently dedicated only to associations from CY Tech."
+        },
+
+        "part3": {
+            "title": "Contribution and Support",
+
+            "question1": "How can I contribute to the project?",
+
+            "answer1": "We welcome contributions! Check out our GitLab page to find ways to help. You can submit suggestions, bug reports, or even propose improvements. <br />Interested in exploring the code or just want to help improve the platform? Join us in CY307 or online!",
+
+            "question2": "How can I find the source code for tekiens.net?",
+
+            "answer2": "The source code is available on <a href='https://gitlab.com/ptlc8/tekiens-net' target='_blank' rel='noreferrer'>the public GitLab repository</a>. You can clone, fork, and contribute on the project page.",
+
+            "question3": "How can I report an issue or bug?",
+
+            "answer3": "If you encounter a problem or bug, please create a report on our GitLab page in the issues section or on the ATILLA Discord server. <br />Describe the problem in detail, including steps to reproduce if possible. Our team will review your report promptly."
+        }
     },
 
     "schools-links" : {

@@ -5,7 +5,7 @@ import { useHistory, useParams } from 'react-router'
 import { AssosData } from '../../Tools/Interfaces/EventAndAssoInterface'
 import { useTranslation } from 'react-i18next'
 import '../../theme/Event/EventDetails.css'
-import { darkenColor, formatDate, duration, getEventStatus } from '../../Tools/EventsTools'
+import { formatDate, duration, getEventStatus } from '../../Tools/EventsTools'
 import { parseText } from '../../Tools/DOMParser'
 import { add, starOutline, star, pushOutline, push, pencilOutline, trashOutline, searchOutline, help, notificationsCircleOutline, notificationsOffCircleOutline, notificationsOutline, notificationsOffOutline } from 'ionicons/icons'
 import { useAuth } from '../../contexts/AuthContext'
@@ -13,6 +13,7 @@ import Api from '../../Tools/Api'
 import { isEventSaved, saveEvent } from '../../Tools/LocalStorage/LocalStorageEvents'
 import { useEventDataContext } from '../../contexts/EventDataContext'
 import { cancelNotification, doesNotificationExist, sendNotification } from '../../Tools/NotificationsHandler'
+import { brightenColor, darkenColor, isColorDark } from '../../Tools/GeneralTools'
 
 const EventDetails: React.FC = () => {
     // Used to translate the page
@@ -31,7 +32,6 @@ const EventDetails: React.FC = () => {
     const [isSaved, setIsSaved] = useState<boolean>(false);
     const [description, setDescription] = useState<string>("");
     const [loading, setLoading] = useState(true);
-    const [showAlert, setShowAlert] = useState(false);
     const [showNotifToast, setShowNotifToast] = useState(false);
     const [bcanSelectNotification, setCanSelectNotification] = useState<boolean>(false);
     const [bDoesNotficationExist, setNotificationExist] = useState<boolean>(false);
@@ -251,56 +251,21 @@ const EventDetails: React.FC = () => {
                     ]}
                 />
 
-                <IonAlert
-                    isOpen={showAlert}
-                    onDidDismiss={() => setShowAlert(false)}
-                    header="Please enter your info"
-                    buttons={[
-                        {
-                            text: 'Cancel',
-                            role: 'cancel',
-                        },
-                        {
-                            text: 'OK',
-                            role: 'confirm',
-                            handler: (alertData) => {
-                                const email = alertData.email;
-                                if (!validateEmail(email)) {
-                                    alert('Please enter a valid email address.');
-                                    return false;
-                                }
-                                return true;
-                            },
-                        },
-                    ]}
-                    inputs={[
-                        {
-                            name: 'email',
-                            type: 'email',
-                            placeholder: 'Email',
-                        },
-                    ]}
-                />
-
                 <IonFab slot="fixed" horizontal="end" vertical="bottom">
-                    <IonFabButton style={{ '--background': assoData?.color, '--background-activated': darkenColor(assoData?.color) }}>
+                    <IonFabButton className="detail-socials-button" style={{ '--border-color': 'white', '--background': assoData?.color, '--background-activated': darkenColor(assoData?.color) }}>
                         <IonIcon icon={add}></IonIcon>
                     </IonFabButton>
                     <IonFabList side="top">
-                        <IonFabButton className='fab-button' onClick={() => saveEvent(eventData.id, setIsSaved)} id="save-event" style={{ '--border-color': assoData?.color }}>
-                            <IonIcon icon={isSaved ? star : starOutline} style={{ color: assoData?.color }} />
-                        </IonFabButton>
-
-                        <IonFabButton className='fab-button' onClick={() => setShowAlert(true)} style={{ '--border-color': assoData?.color }}>
-                            <IonIcon icon={pushOutline} style={{ color: assoData?.color }} />
+                        <IonFabButton className='detail-socials-button fab-button' onClick={() => saveEvent(eventData.id, setIsSaved)} id="save-event" style={{ '--border-color': 'white', '--background': assoData?.color, '--background-activated': darkenColor(assoData?.color) }}>
+                            <IonIcon icon={isSaved ? star : starOutline} style={{ color: 'white' }} />
                         </IonFabButton>
 
                         {bcanSelectNotification &&
-                            <IonFabButton className='fab-button' id='notif-event' style={{ '--border-color': assoData?.color }}>
+                            <IonFabButton className='detail-socials-button fab-button' id='notif-event' style={{ '--border-color': 'white', '--background': assoData?.color, '--background-activated': darkenColor(assoData?.color) }}>
 
                                 <IonIcon
                                     icon={bDoesNotficationExist ? notificationsOutline : notificationsOffOutline}
-                                    style={{ color: assoData?.color }}
+                                    style={{ color: 'white' }}
                                     onClick={bDoesNotficationExist ? () => handleNotificationClick([""]) : undefined}
                                 />
 
@@ -333,11 +298,11 @@ const EventDetails: React.FC = () => {
 
                         {editable() &&
                             <>
-                                <IonFabButton className='fab-button' style={{ '--border-color': assoData?.color }} onClick={navigateToModifyEvent}>
-                                    <IonIcon icon={pencilOutline} style={{ color: assoData?.color }} />
+                                <IonFabButton className='detail-socials-button fab-button' style={{ '--border-color': 'white', '--background': assoData?.color, '--background-activated': darkenColor(assoData?.color) }} onClick={navigateToModifyEvent}>
+                                    <IonIcon icon={pencilOutline} style={{ color: 'white' }} />
                                 </IonFabButton>
-                                <IonFabButton className='fab-button' id="delete-event" style={{ '--border-color': assoData?.color }} >
-                                    <IonIcon icon={trashOutline} style={{ color: assoData?.color }} />
+                                <IonFabButton className='detail-socials-button fab-button' id="delete-event" style={{ '--border-color': 'white', '--background': assoData?.color, '--background-activated': darkenColor(assoData?.color) }} >
+                                    <IonIcon icon={trashOutline} style={{ color: 'white' }} />
                                 </IonFabButton>
                             </>
                         }
@@ -347,7 +312,7 @@ const EventDetails: React.FC = () => {
                 <img alt="" src={eventData.poster ? `${eventData.poster}?${Date.now()}` : ""} width="100%" />
                 <IonGrid className='ion-padding'>
                     <IonRow className='info'>
-                        <a style={{ color: assoData?.color }} href={`/association/${eventData.asso_id}`}>{assoData?.names[0]}</a>
+                        <a style={{ color: isColorDark(assoData?.color) ? brightenColor(assoData?.color) : assoData?.color }} href={`/association/${eventData.asso_id}`}>{assoData?.names[0]}</a>
                     </IonRow>
 
                     <IonRow className='info'>
@@ -384,7 +349,7 @@ const EventDetails: React.FC = () => {
                     <IonCol />
                     <IonRow>
                         <IonCol>
-                            <div style={{ backgroundColor: assoData?.color, width: '100%', height: '3px' }} />
+                            <div style={{ backgroundColor: isColorDark(assoData?.color) ? brightenColor(assoData?.color) : assoData?.color, width: '100%', height: '3px' }} />
                         </IonCol>
                     </IonRow>
                     <IonCol />
@@ -402,7 +367,7 @@ const EventDetails: React.FC = () => {
                                     __html:
                                         `<style>
                                         div a {
-                                            color: ${assoData?.color}
+                                            color: ${isColorDark(assoData?.color) ? brightenColor(assoData?.color) : assoData?.color}
                                         }
                                     </style> ${description}`
                                 }} />
@@ -414,7 +379,7 @@ const EventDetails: React.FC = () => {
 
                     <IonCol />
                     <IonRow>
-                        <div style={{ backgroundColor: assoData?.color, width: '100%', height: '3px' }} />
+                        <div style={{ backgroundColor: isColorDark(assoData?.color) ? brightenColor(assoData?.color) : assoData?.color, width: '100%', height: '3px' }} />
                     </IonRow>
                     <IonCol />
 
@@ -451,7 +416,7 @@ const EventDetails: React.FC = () => {
                             <IonCol>
                                 <IonLabel>
                                     🖇&nbsp;
-                                    <a href={eventData.link} target="_blank" rel="noreferrer" style={{ color: assoData?.color }}>{t('event.link')}</a>
+                                    <a href={eventData.link} target="_blank" rel="noreferrer" style={{ color: isColorDark(assoData?.color) ? brightenColor(assoData?.color) : assoData?.color }}>{t('event.link')}</a>
                                 </IonLabel>
                             </IonCol>
                         </IonRow>

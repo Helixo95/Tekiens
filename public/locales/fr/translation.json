@@ -36,7 +36,7 @@
                 }
             },
 
-            "former" : {
+            "old" : {
                 "label" : "Anciennes",
                 "message" : {
                 "title" : "Aucune ancienne association",
@@ -440,7 +440,39 @@
     },
 
     "faq" : {
-        "title" : "FAQ"
+        "title" : "FAQ",
+
+        "part1" : {
+            "title" : "Informations générales",
+
+            "question1" : "Qu'est-ce que tekiens.net et quel est son objectif ?",
+
+            "answer1" : "Tekiens.net est le site de la vie étudiante de CY Tech.<br />Le but de ce site est de centraliser les informations concernant les associations et les événements de l'école."
+        },
+
+        "part2" : {
+            "title" : "Utilisation de la plateforme",
+
+            "question1" : "Comment puis-je ajouter mon association sur tekiens.net ?",
+
+            "answer1" : "Pour ajouter votre association sur tekiens.net, vous devez contacter le bureau de l'association <a href='https://atilla.org/' target='_blank' rel='noreferrer0'>ATILLA</a>. <br />La plateforme n'est actuellement dédiée qu'aux associations de CY Tech."
+        },
+
+        "part3" : {
+            "title" : "Contribution et support",
+
+            "question1" : "Comment puis-je contribuer au projet ?",
+
+            "answer1" : "Nous accueillons volontiers les contributions ! Consultez notre page GitLab pour trouver des opportunités d'aide. Vous pouvez soumettre des suggestions, des rapports de bugs ou même proposer des améliorations. <br />Vous êtes intéressés pour découvrir le code, ou vous voulez simplement participer à l'amélioration de la plateforme ? Rejoignez nous en CY307 ou sur les internets !",
+
+            "question2" : "Comment puis-je trouver le code source de tekiens.net ?",
+
+            "answer2" : "Le code source est disponible sur <a href='https://gitlab.com/ptlc8/tekiens-net' target='_blank' rel='noreferrer0'>le dépôt public GitLab</a>. Vous pouvez le cloner, le fork, et contribuer sur la page du projet.",
+
+            "question3" : "Comment puis-je signaler un problème ou un bug ?",
+
+            "answer3" : "Si vous rencontrez un problème ou un bug, veuillez créer un rapport sur notre page GitLab dans la section des problèmes ou sur le serveur Discord d'ATILLA. <br />Décrivez le problème de manière détaillée, en incluant si possible les étapes pour le reproduire. Notre équipe examinera rapidement votre rapport."
+        }
     },
 
     "schools-links" : {
