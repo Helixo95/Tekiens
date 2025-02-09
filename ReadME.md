@@ -4,6 +4,7 @@
 
 ## Sommaire
 -  [Prérequis](#prérequis)
+-  [Commandes Ionic](#commandes-ionic)
 -  [Utilisation](#utilisation)
 
 ## Prérequis
@@ -62,7 +63,7 @@ Pour la gestion des notifications nous utilisons l'API [local notification de ca
 ```sh
 npm install @capacitor/network
 ```
-
+## Commandes Ionic
 Voici quelques commandes Ionic utiles lors du développement :
 Pour lancer l'application en mode développement dans un navigateur
 ```sh
