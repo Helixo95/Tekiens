@@ -20,7 +20,7 @@ import HeaderTitleBack from "../../components/HeaderTitleBack";
 import RichTextComponent from "../../components/RichTextComponent";
 import ColorPicker from "../../components/ColorPicker";
 import Api from "../../Tools/Api";
-import { AssosData, SocialsDisplay } from "../../Tools/Interfaces/EventAndAssoInterface";
+import { AssosData, SocialsData, SocialsDisplay } from "../../Tools/Interfaces/EventAndAssoInterface";
 import { parseText, unParseText } from "../../Tools/DOMParser";
 import { add, closeOutline, help, navigate, searchOutline } from "ionicons/icons";
 import SocialLinks from "../../components/SocialsLinks";
@@ -39,7 +39,7 @@ const ModifyAsso: React.FC = () => {
     const [colorHexVal, setColorHexVal] = useState<string>("");
     const [errorText, setErrorText] = useState<string>("");
     const [names, setNames] = useState<Array<string>>([""]);
-    const [socials, setSocials] = useState<string[][]>([]);
+    const [socials, setSocials] = useState<SocialsData[]>([]);
     const [images, setImages] = useState<Array<string>>([""]);
     const [showAlert, setShowAlert] = useState(false);
     const [formValues, setFormValues] = useState<any>(null);
@@ -54,16 +54,9 @@ const ModifyAsso: React.FC = () => {
             setNames(asso.names);
             setImages(asso.logos);
 
-            // Convert string based socials into a more readable array where [0] => social_id [1] => account_id
-            const targetSocials: string[][] = [];
-            asso.socials.map(val => {
-                const id = val.id;
-                const value = val.value;
-
-                targetSocials.push([id, value]);
-
-            })
-            setSocials(targetSocials);
+            if (asso.socials && Array.isArray(asso.socials)) {
+                setSocials(asso.socials);
+            }
         }
     }, [location.state]);
 
@@ -128,8 +121,12 @@ const ModifyAsso: React.FC = () => {
     const confirmSubmit = async () => {
         if (!assoData) return;
 
-        const parsedSocials = socials.map(val => `${val[0]}:${val[1]}`);
-
+        const parsedSocials = socials.map(social => ({
+            id: social.id,
+            display: SocialsDisplay[social.id] || social.display,
+            link: social.link,
+            value: social.value
+        }));
 
         try {
             const values: any = Object.fromEntries(formValues.entries());
