@@ -29,13 +29,13 @@ export interface AssosData {
     start: string,
     end: string
 }
-/*
+
 export interface SocialsData {
     id: string;
     display: string;
     link: string;
     value: string;
-}*/
+}
 
 // Register the different ids that can be used in the selectbox of 'SocialsLink.tsx'
 export enum SocialType {
