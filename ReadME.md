@@ -65,6 +65,7 @@ npm install @capacitor/network
 ```
 ## Commandes Ionic
 Voici quelques commandes Ionic utiles lors du développement :
+
 Pour lancer l'application en mode développement dans un navigateur
 ```sh
 ionic serve
